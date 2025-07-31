@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 function HelloComponent() {
   return (
     <div style={{ padding: '20px', fontSize: '1.5rem' }}>
-      Login
+      Login fasz
     </div>
   );
 }

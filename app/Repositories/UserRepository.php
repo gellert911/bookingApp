@@ -6,8 +6,12 @@ use App\Models\User;
 
 class UserRepository {
 
-    public function find ($id) {
-        return User::find($id);
+    public function findById ($id) {
+            return User::find($id);
+    }
+
+    public function findBy ($key, $value) {
+        return User::where($key, $value)->first();
     }
 
     public function create (array $data) {
@@ -15,12 +19,12 @@ class UserRepository {
     }
 
     public function update ($id, array $data) {
-        $user = $this->find($id);
+        $user = $this->findById($id);
 
         if ($user) {
             $user->update($data);
         }
-        
+
         return $user;
     }
     public function delete ($id) {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { showAlert } from '../alert';
 
 function Register() {
     const [loading, setLoading] = useState(false);
@@ -30,10 +31,10 @@ function Register() {
 
             console.error(result);
 
-            if (result.message == "success") {
-                alert("siker")
+            if (result.success) {
+                showAlert(result.message, "success")
             } else {
-                alert("hiba van")
+                showAlert(result.message, "error")
             }
         } catch ($e) {
             alert($e)
@@ -45,9 +46,9 @@ function Register() {
 
     return (
         <form className="col-md-3 mx-auto" onSubmit={handleRegister}>
-            <br />
             <div className="card">
                 <h4 className="card-header">Regisztráció</h4>
+                <br />
                 <div className="card-body">
                     <div className="mb-3">
                         <label htmlFor="username">Felhasználónév</label>
@@ -61,7 +62,7 @@ function Register() {
                         <label htmlFor="password">Jelszó</label>
                         <div className="input-group">
                             <input type="password" className="form-control" id="password" placeholder="Jelszó" />
-                            <span className="input-group-text"><i class="fa-solid fa-eye fa-fw" id="togglePw"></i></span>
+                            <span className="input-group-text"><i className="fa-solid fa-eye fa-fw" id="togglePw"></i></span>
                         </div>
                     </div>
                 </div>

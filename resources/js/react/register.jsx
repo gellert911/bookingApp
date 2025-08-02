@@ -8,7 +8,6 @@ function Register() {
     const handleRegister = async (e) => {
 
         e.preventDefault();
-        console.log("prevent");
 
         const registerData = {
             name: document.getElementById("username").value,
@@ -16,8 +15,9 @@ function Register() {
             password: document.getElementById("password").value
         }
 
+        setLoading(true);
+
         try {
-            setLoading(true);
 
             const response = await fetch("/api/register", {
                 method: "POST",
@@ -37,7 +37,6 @@ function Register() {
                 showAlert(result.message, "error")
             }
         } catch ($e) {
-            alert($e)
             console.error($e)
         } finally {
             setLoading(false);
@@ -46,29 +45,36 @@ function Register() {
 
     return (
         <form className="col-md-3 mx-auto" onSubmit={handleRegister}>
+            <br />
             <div className="card">
-                <h4 className="card-header">Regisztráció</h4>
-                <br />
+                <h4 className="card-header">Register</h4>
                 <div className="card-body">
                     <div className="mb-3">
-                        <label htmlFor="username">Felhasználónév</label>
-                        <input type="text" className="form-control" id="username" placeholder="Felhasználónév" />
+                        <label htmlFor="username">Username</label>
+                        <input type="text" className="form-control" id="username" placeholder="Username" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="email">Email</label>
                         <input type="email" className="form-control" id="email" placeholder="Email" />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="password">Jelszó</label>
+                        <label htmlFor="password">Password</label>
                         <div className="input-group">
-                            <input type="password" className="form-control" id="password" placeholder="Jelszó" />
+                            <input type="password" className="form-control" id="password" placeholder="Password" />
                             <span className="input-group-text"><i className="fa-solid fa-eye fa-fw" id="togglePw"></i></span>
                         </div>
                     </div>
                 </div>
                 <div className="card-footer">
-                    <button type="submit" className="btn btn-primary w-100 mb-1">Regisztráció</button>
-                    <a href="/login" className="btn btn-secondary w-100 mb-1" >Bejelentkezés</a>
+                    {loading ? (
+                        <button className="btn btn-primary w-100 mb-1" type="button" disabled>
+                          <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                          <span role="status"> Registering...</span>
+                        </button>
+                      ) : (
+                        <button type="submit" className="btn btn-primary w-100 mb-1">Register</button>
+                      )}
+                    <a href="/login" className="btn btn-secondary w-100 mb-1" >Login</a>
                 </div>
             </div>
         </form>

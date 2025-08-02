@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller {
+    
     public function register (Request $request) {
 
         $validator = Validator::make($request->all(), [
@@ -49,11 +50,6 @@ class RegisterController extends Controller {
             Log::error("Register error: " . $e->getMessage());
             return response()->json(["success" => false, "message" => __("auth.unknown_error")]);
         }
-
-        return response()->json([
-            "success" => false,
-            "message" => __("auth.unknown_error"),
-        ], 444);
     }
 }
 

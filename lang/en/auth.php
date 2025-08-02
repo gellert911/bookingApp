@@ -20,4 +20,5 @@ return [
     'validation_fail' => "Please fill all fields.",
     'register_success' => "Registration successful. Log in!",
     'unknown_error' => "Unknown error.",
+    'user_not_exists' => "No user found with this combination.",
 ];

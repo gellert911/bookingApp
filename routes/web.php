@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,10 +29,17 @@ Route::get("user/{id?}", function ($id = null) {
 
 Route::get("/login", function () {
     return view("login");
-});
+})->name("login");
 
 Route::get("/register", function () {
     return view("register");
 });
+
+Route::get("/dashboard", function () {
+    return "cs " . Auth::user();
+    //return view("dashboard");
+})->middleware('auth')->name('dashboard');
+
+Route::post("/login", [LoginController::class, "login"]);
 
 ?>

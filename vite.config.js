@@ -7,8 +7,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/app.js',
-                'resources/js/react/login.jsx', 
-                'resources/js/react/register.jsx',
+                'resources/js/react/Login.jsx', 
+                'resources/js/react/Register.jsx',
+                'resources/js/react/Admin.jsx',
             ],
             refresh: true,
             react: true,

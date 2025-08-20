@@ -11,6 +11,15 @@
 </head>
 <body>
     <div class="toast-container position-fixed top-0 end-0 p-3"></div>
+    @auth
+        @if(auth()->user()->is_admin)
+            <div class="bg-light text-dark py-1 px-3 border-bottom">
+                <div class="container d-flex justify-content-between">
+                    <a href="/admin" class="text-decoration-none">Admin</a>
+                </div>
+            </div>
+        @endif
+    @endauth
 
     <div class="content">
         @yield('content')

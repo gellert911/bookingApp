@@ -2,7 +2,7 @@
 
 @section('content')
 
-@vite('resources/js/react/register.jsx')
+@vite('resources/js/react/Register.jsx')
 
 <div id="app"></div>
 @endsection

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-function Menu () {
-    const pages = ["Overview", "Settings", "Appointments"]
-    const [selectedPage, setSelectedPage] = useState(0);
+function Menu ({selectedMenu, setSelectedMenu}) {
+    const menus = ["Overview", "Settings", "Appointments"]
+    //const [selectedPage, setSelectedPage] = useState(0);
 
     return (
         <div>
@@ -21,11 +21,11 @@ function Menu () {
                     <aside>
                         <div className="d-none d-lg-block bg-body-tertiary p-2 sidebar">
                             <ul className="nav nav-pills flex-column">
-                                {pages.map((page, index) => (
+                                {menus.map((menu, index) => (
                                     <li className="nav-item">
-                                        {(selectedPage == index) ? 
-                                            (<button className="btn nav-link link-body-emphasis active w-100">{page}</button>) : 
-                                            (<button className="btn nav-link link-body-emphasis w-100" onClick={(e) => setSelectedPage(index)}>{page}</button>)
+                                        {(selectedMenu == index) ? 
+                                            (<button className="btn nav-link link-body-emphasis active w-100">{menu}</button>) : 
+                                            (<button className="btn nav-link link-body-emphasis w-100" onClick={(e) => setSelectedMenu(index)}>{menu}</button>)
                                         }
                                     </li>
                                 ))}

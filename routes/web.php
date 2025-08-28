@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ScheduleController;
 use App\Repositories\UserRepository;
 
 /*
@@ -53,5 +54,8 @@ Route::post('/logout', function () {
     request()->session()->regenerateToken();
     return redirect('/');
 })->name('logout');
+
+Route::post("/admin/settings/update_schedule", [ScheduleController::class, "updateSchedule"]);
+Route::get("/admin/settings/get_schedule/{employee_id}", [ScheduleController::class, "getSchedule"]);
 
 ?>

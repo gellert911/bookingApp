@@ -7,7 +7,7 @@ use App\Models\User;
 class UserRepository {
 
     public function findById ($id) {
-            return User::find($id);
+        return User::find($id);
     }
 
     public function findBy ($key, $value) {

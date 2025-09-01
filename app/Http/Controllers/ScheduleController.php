@@ -30,20 +30,20 @@ class ScheduleController extends Controller {
 
                     $day_of_week++;
                 }
-                return response()->json(["success" => true, "message" => "letrehozas"]);
+                return response()->json(["success" => true, "message" => __("schedule.update_successful")]);
             } catch (Exception $e) {
-                return response()->json(["success" => false, "message" => $e->getMessage()]);
+                Log::error("Schedule update error: " . $e->getMessage());
             }
         } else {
             try {
                 $repo->update($request->input("employee_id"), $request->input("schedule"));
 
-                return response()->json(["success" => true, "message" => "update"]);
+                return response()->json(["success" => true, "message" => __("schedule.update_successful")]);
             } catch (Exception $e) {
-                return response()->json(["success" => false, "message" => $e->getMessage()]);
+                Log::error("Schedule update error: " . $e->getMessage());
             }
         }
-        return response()->json(["success" => false, "message" => count($schedule)]);
+        return response()->json(["success" => false, "message" => __("schedule.update_error")]);
     }
 
     function getSchedule($employee_id) {
@@ -53,8 +53,9 @@ class ScheduleController extends Controller {
             $schedule = $repo->getByEmployee($employee_id);
             return response()->json(["success" => true, "message" => $employee_id, "result" => $repo->getByEmployee($employee_id)]);
         } catch (Exception $e) {
-            return response()->json(["success" => false, "message" => $e->getMessage()]);
+            Log::erroer("Schedule load: " . $e->getMessage());
         }
+        return response()->json(["success" => false, "message" => __("schedule.update_error")]);
     }
 }
 

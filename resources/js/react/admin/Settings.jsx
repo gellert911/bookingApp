@@ -5,6 +5,12 @@ function Settings () {
 
     const [showingOpeningHours, setShowingOpeningHours] = useState(false);
 
+    function showModal(modalName) {
+        setTimeout(() => {
+            const modal = new bootstrap.Modal(document.getElementById(modalName))
+            modal.show()
+        }, 50);
+    }
 
     return (
         <div className="container-fluid">
@@ -21,7 +27,7 @@ function Settings () {
             <div className="row mb-3">
                 <h5>Opening hours</h5>
 
-                <button className="btn btn-primary" onClick={() => setShowingOpeningHours(true)} data-bs-toggle="modal" data-bs-target="#editOpeningHours">Employee ➔</button>
+                <button className="btn btn-primary" onClick={() => {setShowingOpeningHours(true); showModal("editOpeningHours")}} data-bs-target="#editOpeningHours">Employee ➔</button>
 
                 {showingOpeningHours && (
                     <OpeningHours/>

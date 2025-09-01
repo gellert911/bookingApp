@@ -3,15 +3,7 @@ import TimePicker from 'react-bootstrap-time-picker';
 import { showAlert } from '@/alert';
 
 function OpeningHours () {
-    const [openingHours, setOpeningHours] = useState([])/*useState({
-        0: {open_at: "08:00", close_at: "16:00", closed: false},
-        1: {open_at: "08:00", close_at: "16:00", closed: false},
-        2: {open_at: "08:00", close_at: "16:00", closed: false},
-        3: {open_at: "08:00", close_at: "16:00", closed: false},
-        4: {open_at: "08:00", close_at: "16:00", closed: false},
-        5: {open_at: "08:00", close_at: "16:00", closed: true},
-        6: {open_at: "08:00", close_at: "16:00", closed: true},
-    })*/
+    const [openingHours, setOpeningHours] = useState([])
 
     const [loading, setLoading] = useState(false);
 
@@ -22,8 +14,6 @@ function OpeningHours () {
             employee_id: 1,
             schedule: openingHours,
         }
-
-        //setLoading(true);
 
         try {
             const response = await fetch("/admin/settings/update_schedule", {
@@ -39,14 +29,11 @@ function OpeningHours () {
 
             if (result.success) {
                 showAlert(result.message, "success")
-                //window.location.href = result.redirect_url
             } else {
                 showAlert(result.message, "error")
             }
         } catch ($e) {
             console.error($e)
-        } finally {
-            //setLoading(false);
         }
     }
 
@@ -66,12 +53,9 @@ function OpeningHours () {
             const result = await response.json();
 
             if (result.success) {
-                showAlert(result.message, "success")
-                //window.location.href = result.redirect_url
-                setOpeningHours(mapServerDataToState(result.result))
-                console.log(result.result)
+                setOpeningHours(prepareData(result.result))
             } else {
-                showAlert(result.message, "error")
+                console.log(result.message)
             }
         } catch ($e) {
             console.error($e)
@@ -90,12 +74,19 @@ function OpeningHours () {
         return `${h}:${m}`;
     }
 
-    function mapServerDataToState(arrayFromServer) {
+    function prepareData(arrayFromServer) {
         return arrayFromServer.map(item => ({
-            open_at: item.open_at.slice(0,5), // "HH:MM" formátum
+            open_at: item.open_at.slice(0,5),
             close_at: item.close_at.slice(0,5),
             closed: !!item.closed
         }));
+    }
+
+    function showModal(modalName) {
+        setTimeout(() => {
+            const modal = new bootstrap.Modal(document.getElementById(modalName))
+            modal.show()
+        }, 50);
     }
 
     useEffect(() => {
@@ -165,7 +156,7 @@ function OpeningHours () {
 
                     </div>
                     <div className="modal-footer">
-                        <button className="btn btn-primary" onClick={() => updateSchedule()}>Save</button>
+                        <button className="btn btn-primary" onClick={() => updateSchedule()} data-bs-dismiss="modal" data-bs-target="editOpeningHours">Save</button>
                     </div>
                 </div>
             </div>

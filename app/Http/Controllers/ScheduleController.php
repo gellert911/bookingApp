@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\ScheduleRepository;
-use Exception;
 use Illuminate\Support\Facades\Log;
+
+use DateTime;
+use DateInterval;
+use DatePeriod;
+use Exception;
 
 class ScheduleController extends Controller {
 
-    function updateSchedule(Request $request) {
+    public function updateSchedule(Request $request) {
         $repo = new ScheduleRepository;
         $schedule = $repo->getByEmployee($request->input("employee_id"));
 
@@ -46,16 +50,53 @@ class ScheduleController extends Controller {
         return response()->json(["success" => false, "message" => __("schedule.update_error")]);
     }
 
-    function getSchedule($employee_id) {
+    public function getSchedule($employee_id) {
         $repo = new ScheduleRepository;
         
         try {
             $schedule = $repo->getByEmployee($employee_id);
             return response()->json(["success" => true, "message" => $employee_id, "result" => $repo->getByEmployee($employee_id)]);
         } catch (Exception $e) {
-            Log::erroer("Schedule load: " . $e->getMessage());
+            Log::error("Schedule load: " . $e->getMessage());
         }
         return response()->json(["success" => false, "message" => __("schedule.update_error")]);
+    }
+
+
+    public function getFreeSlots(Request $request) {
+        $repo = new ScheduleRepository;
+        $today = new DateTime();
+        $schedule = $repo->getDayScheduleByEmployee(1, ($today->format("N") - 1));
+
+        $slots = $this->sliceInterval($today->format("Y-m-d"), $schedule->open_at, $schedule->close_at);
+
+
+        return response()->json(["success" => true, "message" => $slots]);
+    }
+
+    private function sliceInterval($date, $intervalStart, $intervalEnd, $size = 30) {
+        $slots = [];
+        $start = new DateTime("$date $intervalStart");
+        $end = new DateTime("$date $intervalEnd");
+        
+        $interval = new DateInterval("PT{$size}M");
+        $period = new DatePeriod($start, $interval, $end);
+
+        foreach ($period as $dt) {
+            $slotStart = $dt;
+            $slotEnd = (clone $dt)->add($interval);
+
+            if ($slotEnd > $end) break;
+
+            $slots[] = [
+                "date" => $date,
+                "start" => $slotStart->format("H:i"),
+                "end" => $slotEnd->format("H:i"),
+            ];
+        }
+
+
+        return $slots;
     }
 }
 

@@ -48,6 +48,12 @@ Route::get("/dashboard", function () {
     return view("dashboard", compact('user'));
 })->middleware('auth')->name('dashboard');
 
+Route::get("/booking", function () {
+    return view("booking");
+});
+
+Route::get("/booking/get_free_slots", [ScheduleController::class, "getFreeSlots"]);
+
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();

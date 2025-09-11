@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\BookingController;
 use App\Repositories\UserRepository;
 
 /*
@@ -52,7 +53,8 @@ Route::get("/booking", function () {
     return view("booking");
 });
 
-Route::get("/booking/get_free_slots", [ScheduleController::class, "getFreeSlots"]);
+Route::get("/booking/get_free_slots", [BookingController::class, "getFreeSlots"]);
+Route::post("/booking/create_appointment", [BookingController::class, "createAppointment"]);
 
 Route::post('/logout', function () {
     Auth::logout();

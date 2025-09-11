@@ -73,31 +73,6 @@ class ScheduleController extends Controller {
 
         return response()->json(["success" => true, "message" => $slots]);
     }
-
-    private function sliceInterval($date, $intervalStart, $intervalEnd, $size = 30) {
-        $slots = [];
-        $start = new DateTime("$date $intervalStart");
-        $end = new DateTime("$date $intervalEnd");
-        
-        $interval = new DateInterval("PT{$size}M");
-        $period = new DatePeriod($start, $interval, $end);
-
-        foreach ($period as $dt) {
-            $slotStart = $dt;
-            $slotEnd = (clone $dt)->add($interval);
-
-            if ($slotEnd > $end) break;
-
-            $slots[] = [
-                "date" => $date,
-                "start" => $slotStart->format("H:i"),
-                "end" => $slotEnd->format("H:i"),
-            ];
-        }
-
-
-        return $slots;
-    }
 }
 
 ?>

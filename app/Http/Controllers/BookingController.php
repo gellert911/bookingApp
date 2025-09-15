@@ -30,30 +30,29 @@ class BookingController extends Controller {
         });
 
         if ($validator->fails()) {
-            return response()->json(["success" => false, "message" => "validalas hiba"]);
+            return response()->json(["success" => false, "message" => "booking.booking_error"]);
         }
 
         $available = $this->service->isSlotAvailable($data);
 
         if (!$available) {
-            return response()->json(["success" => false, "message" => "Mar letezik"]);
+            return response()->json(["success" => false, "message" => __("booking.booking_not_available")]);
         }
 
         $created = $this->service->createAppointment($data);
 
         if ($created) {
-            return response()->json(["success" => true, "message" => "Foglalva"]);
+            return response()->json(["success" => true, "message" => __("booking.booking_successful")]);
         }
 
-        return response()->json(["success" => false, "message" => "Something went wrong."]);
+        return response()->json(["success" => false, "message" => "booking.booking_error"]);
     }
 
     public function getFreeSlots(Request $request) {
         $slots = $this->service->getFreeSlots(1, date("Y-m-d"));
         if ($slots) {
-             return response()->json(["success" => true, "message" => $slots]);
+            return response()->json(["success" => true, "message" => $slots]);
         }
-        return response()->json(["success" => false, "message" => ["date" => "2030-05-22", "start" => "01:11", "end" => "22:22"]]);
     }
 }
 ?>

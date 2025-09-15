@@ -67,7 +67,6 @@ class BookingService {
 
     public function getFreeSlots($employee_id, $date) {
         $scheduleRepo = new ScheduleRepository;
-        $appointmentRepo = new AppointmentRepository;
 
         $today = new DateTime();
         $schedule = $scheduleRepo->getDayScheduleByEmployee($employee_id, ($today->format("N") - 1));

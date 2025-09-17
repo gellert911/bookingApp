@@ -48,8 +48,8 @@ class BookingController extends Controller {
         return response()->json(["success" => false, "message" => "booking.booking_error"]);
     }
 
-    public function getFreeSlots(Request $request) {
-        $slots = $this->service->getFreeSlots(1, date("Y-m-d"));
+    public function getFreeSlots($date) {
+        $slots = $this->service->getFreeSlots(1, $date);
         if ($slots) {
             return response()->json(["success" => true, "message" => $slots]);
         }

@@ -53,7 +53,7 @@ Route::get("/booking", function () {
     return view("booking");
 });
 
-Route::get("/booking/get_free_slots", [BookingController::class, "getFreeSlots"]);
+Route::get("/booking/get_free_slots/{date}", [BookingController::class, "getFreeSlots"]);
 Route::post("/booking/create_appointment", [BookingController::class, "createAppointment"]);
 
 Route::post('/logout', function () {

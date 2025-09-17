@@ -2,18 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { showAlert } from '../alert';
 import BookingModal from './Booking/BookingModal';
+import BookingDatepicker from './Booking/BookingDatepicker';
 
 function Booking () {
 
+    const now = new Date()
     const [availableSlots, setAvailableSlots] = useState([]);
     const [selectedSlot, setSelectedSlot] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(now.toISOString().slice(0, 10)); 
 
     async function getSlots() {
        
         //setLoading(true);
 
         try {
-            const response = await fetch("/booking/get_free_slots", {
+            const response = await fetch(`/booking/get_free_slots/${selectedDate}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,11 +50,15 @@ function Booking () {
 
     useEffect(() => {
         getSlots()
-    }, [])
+    }, [selectedDate])
 
     return (
         <div className="container">
+
+            <BookingDatepicker selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
+
             <div className="row">
+                <p>test</p>
                 {availableSlots.map((slot) => (
                     <div className="card mb-3">
                         <div className="card-body">

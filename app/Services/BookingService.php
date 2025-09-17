@@ -68,14 +68,17 @@ class BookingService {
     public function getFreeSlots($employee_id, $date) {
         $scheduleRepo = new ScheduleRepository;
 
-        $today = new DateTime();
+        $today = new DateTime($date);
         $schedule = $scheduleRepo->getDayScheduleByEmployee($employee_id, ($today->format("N") - 1));
+
+        if ($schedule->closed) {
+            return false;
+        }
 
         $slots = $this->sliceInterval($today->format("Y-m-d"), $schedule->open_at, $schedule->close_at);
         $free_slots = [];
 
         foreach ($slots as $slot) {
-
             $available = $this->isSlotAvailable([
                 "employee_id" => $employee_id, 
                 "date" => $date, 
@@ -86,8 +89,8 @@ class BookingService {
             if ($available) {
                 $free_slots[] = $slot;
             }
+            
         }
-
         return $free_slots;
     }
 }

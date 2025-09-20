@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { showAlert } from '../alert';
 import Menu from './admin/Menu';
 import Settings from './admin/Settings';
+import Appointments from './admin/Appointments';
 
 function Admin() {
    const [selectedMenu, setSelectedMenu] = useState(0);
@@ -16,6 +17,10 @@ function Admin() {
                     <div>
                         <Settings/>
                     </div>
+                )}
+
+                {selectedMenu == 2 && (
+                    <Appointments/>
                 )}
             </main>
         </div>

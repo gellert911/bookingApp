@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { showAlert } from '../../alert';
 
-function BookingModal ( { selectedSlot }) {
+function BookingModal ( { selectedSlot, onBooking }) {
 
     async function bookAppointment(date, start_at, end_at) {
         const appointmentData = {
@@ -24,6 +24,7 @@ function BookingModal ( { selectedSlot }) {
 
         if (result.success) {
             showAlert(result.message, "success")
+            onBooking();
         } else {
             showAlert(result.message, "danger")
         }

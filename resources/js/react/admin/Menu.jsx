@@ -22,7 +22,7 @@ function Menu ({selectedMenu, setSelectedMenu}) {
                         <div className="d-none d-lg-block bg-body-tertiary p-2 sidebar">
                             <ul className="nav nav-pills flex-column">
                                 {menus.map((menu, index) => (
-                                    <li className="nav-item">
+                                    <li key={index} className="nav-item">
                                         {(selectedMenu == index) ? 
                                             (<button className="btn nav-link link-body-emphasis active w-100">{menu}</button>) : 
                                             (<button className="btn nav-link link-body-emphasis w-100" onClick={(e) => setSelectedMenu(index)}>{menu}</button>)

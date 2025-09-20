@@ -14,8 +14,9 @@
     @auth
         @if(auth()->user()->is_admin)
             <div class="bg-light text-dark py-1 px-3 border-bottom">
-                <div class="container d-flex justify-content-between">
+                <div class="container d-flex gap-3">
                     <a href="/admin" class="text-decoration-none">Admin</a>
+                    <a href="/" class="text-decoration-none">Site</a>
                 </div>
             </div>
         @endif

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { showAlert } from '../alert';
 import BookingModal from './Booking/BookingModal';
 import BookingDatepicker from './Booking/BookingDatepicker';
+import BookingList from './Booking/BookingList';
 
 function Booking () {
 
@@ -29,9 +30,9 @@ function Booking () {
             if (result.success) {
                 //setOpeningHours(prepareData(result.result))
                 setAvailableSlots(result.message);
-                showAlert(result.message, "success");
+                //showAlert(result.message, "success");
             } else {
-                console.log(result.message)
+                console.log(result.message);
             }
         } catch ($e) {
             console.log($e)
@@ -39,13 +40,6 @@ function Booking () {
             //setLoading(false);
         }
     
-    }
-
-    function showModal(modalName) {
-        setTimeout(() => {
-            const modal = new bootstrap.Modal(document.getElementById(modalName))
-            modal.show()
-        }, 50);
     }
 
     useEffect(() => {
@@ -57,22 +51,11 @@ function Booking () {
 
             <BookingDatepicker selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
 
-            <div className="row">
-                <p>test</p>
-                {availableSlots.map((slot) => (
-                    <div className="card mb-3">
-                        <div className="card-body">
-                            <h5 className="card-title">{slot.date}</h5>
-                            <p className="card-text">{slot.start} ➔ {slot.end}</p>
-                            <a href="#" className="btn btn-primary" onClick={() => {setSelectedSlot(slot); showModal("bookAppointment");}} data-bs-target="bookAppointtment">Book</a>
-                        
-                            {selectedSlot && (
-                                <BookingModal selectedSlot={selectedSlot}/>
-                            )}
-                        </div>
-                    </div>
-                ))}
-            </div>
+            <BookingList availableSlots={availableSlots} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot}/>
+
+            {selectedSlot && (
+                <BookingModal selectedSlot={selectedSlot} onBooking={getSlots}/>
+            )}
         </div>
     )
 }

@@ -50,9 +50,8 @@ class BookingController extends Controller {
 
     public function getFreeSlots($date) {
         $slots = $this->service->getFreeSlots(1, $date);
-        if ($slots) {
-            return response()->json(["success" => true, "message" => $slots]);
-        }
+        
+        return response()->json(["success" => true, "message" => $slots]);
     }
 }
 ?>

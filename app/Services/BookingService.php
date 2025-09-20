@@ -72,7 +72,7 @@ class BookingService {
         $schedule = $scheduleRepo->getDayScheduleByEmployee($employee_id, ($today->format("N") - 1));
 
         if ($schedule->closed) {
-            return false;
+            return [];
         }
 
         $slots = $this->sliceInterval($today->format("Y-m-d"), $schedule->open_at, $schedule->close_at);

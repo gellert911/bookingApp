@@ -16,7 +16,7 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'user_exists' => 'Username already exists.',
+    'user_exists' => 'Username or email already exists.',
     'validation_fail' => "Please fill all fields.",
     'register_success' => "Registration successful. Log in!",
     'unknown_error' => "Unknown error.",

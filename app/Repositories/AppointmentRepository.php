@@ -18,6 +18,12 @@ class AppointmentRepository {
         return Appointment::where("employee_id", $employee_id)->get();
     }
 
+    public function getByEmployeeAndDateRange($employeeId, $startDate, $endDate) {
+        return Appointment::where("employee_id", $employeeId)
+            ->whereBetween("date", [$startDate, $endDate])
+            ->get();
+    }
+
     public function getByEmployeeAndTimeRange($employee_id, $date, $start_at, $end_at) {
         return Appointment::where("employee_id", $employee_id)
             ->where("date", $date)

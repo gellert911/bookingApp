@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\AppointmentController;
 use App\Repositories\UserRepository;
 
 /*
@@ -55,6 +56,8 @@ Route::get("/booking", function () {
 
 Route::get("/booking/get_free_slots/{date}", [BookingController::class, "getFreeSlots"]);
 Route::post("/booking/create_appointment", [BookingController::class, "createAppointment"]);
+
+Route::get("/appointments/get_appointments/{employee_id}/{view}", [AppointmentController::class, "getAppointments"]);
 
 Route::post('/logout', function () {
     Auth::logout();

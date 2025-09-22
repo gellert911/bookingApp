@@ -12,7 +12,7 @@ function Admin() {
         <div className='d-flex'>
             <Menu selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu}/>
 
-            <main>
+            <main className="flex-grow-1">
                 {selectedMenu == 1 && (
                     <div>
                         <Settings/>

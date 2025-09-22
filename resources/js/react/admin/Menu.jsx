@@ -16,7 +16,6 @@ function Menu ({selectedMenu, setSelectedMenu}) {
                 `}
             </style>
 
-            <div className="d-flex">
                 <div className="navbar p-0">
                     <aside>
                         <div className="d-none d-lg-block bg-body-tertiary p-2 sidebar">
@@ -34,7 +33,6 @@ function Menu ({selectedMenu, setSelectedMenu}) {
                     </aside>
                 </div>
              </div>
-         </div>
     );
 }
 

@@ -8,11 +8,15 @@ function Appointments() {
 
     const [appointments, setAppointments] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+
     async function loadAppointments(dateStart, dateEnd) {
         const loadData = {
             dateStart: dateStart.toISOString().slice(0, 10),
             dateEnd: dateEnd.toISOString().slice(0, 10),
         }
+
+        //setLoading(true)
 
         try {
             const response = await fetch(`/appointments/get_appointments/1/week?start=${loadData.dateStart}&end=${loadData.dateEnd}`, {
@@ -42,7 +46,9 @@ function Appointments() {
         <div className="container">
             <h5>View Appointments</h5>
 
-            <AppointmentsDatepicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} loader={loadAppointments} appointments={appointments}/>
+            {!loading && (
+                <AppointmentsDatepicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} loader={loadAppointments} appointments={appointments}/>
+            )}
 
         </div>
     )

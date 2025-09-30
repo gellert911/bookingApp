@@ -44,6 +44,10 @@ class AppointmentRepository {
         }
     }
 
+    public function delete ($id) {
+        return Appointment::destroy($id);
+    }
+
 }
 
 ?>

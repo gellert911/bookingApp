@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import AppointmentDetailsModal from "./AppointmentDetailsModal";
 
-function AppointmentsDatepicker ( { selectedDate, setSelectedDate, loader, appointments } ) {
-
+function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange, setCurrentRange, loader, appointments, onDelete } ) {
+    
     const now = moment();
     const [events, setEvents] = useState([])
-    const [currentRange, setCurrentRange] = useState([])
+    const [selectedAppointment, setSelectedAppointment] = useState([])
 
     const [initializing, setInitializing] = useState(true);
 
@@ -17,6 +18,7 @@ function AppointmentsDatepicker ( { selectedDate, setSelectedDate, loader, appoi
        
         const weekStart = now.clone().startOf("week").add(1, "day")
         const weekEnd = now.clone().endOf("week").add(1, "day")
+        setCurrentRange([weekStart, weekEnd])
 
         await loader(weekStart, weekEnd);
 
@@ -28,12 +30,20 @@ function AppointmentsDatepicker ( { selectedDate, setSelectedDate, loader, appoi
         if (!appointments) return
         const prepared = appointments.map((appointment, index) => ({
             id: index,
+            dbId: appointment.id,
             title: "Appointment " + index,
             start: new Date(`${appointment.date}T${appointment.start_at}`),
             end: new Date(`${appointment.date}T${appointment.end_at}`),
         }))
         setEvents(prepared)
         console.log("event set")
+    }
+
+    function showModal(modalName) {
+        setTimeout(() => {
+            const modal = new bootstrap.Modal(document.getElementById(modalName))
+            modal.show()
+        }, 50);
     }
 
     useEffect(() => {
@@ -50,7 +60,6 @@ function AppointmentsDatepicker ( { selectedDate, setSelectedDate, loader, appoi
 
     return (
         <div>
-            <p>Datepick</p>
             {initializing && (
                 <div class="spinner-border spinner-border-sm" role="status">
                     <span class="visually-hidden">Loading...</span>
@@ -68,11 +77,18 @@ function AppointmentsDatepicker ( { selectedDate, setSelectedDate, loader, appoi
                     
                     onRangeChange={(range, view) => {
                         setCurrentRange([range[0], range[6]]);
-                        if (view === "week") {
-                            //loader(range[0], range[6])
-                        }
                     }}
+
+                    onSelectEvent={(event) => {
+                        const appointment = appointments.find(item => item.id === event.dbId);
+                        setSelectedAppointment(appointment);
+                        showModal("appointmentDetails")}
+                    }
                 />
+            )}
+
+            {selectedAppointment && (
+                <AppointmentDetailsModal selectedAppointment={selectedAppointment} onDelete={onDelete}/>
             )}
         </div>
     )

@@ -58,6 +58,8 @@ Route::get("/booking/get_free_slots/{date}", [BookingController::class, "getFree
 Route::post("/booking/create_appointment", [BookingController::class, "createAppointment"]);
 
 Route::get("/appointments/get_appointments/{employee_id}/{view}", [AppointmentController::class, "getAppointments"]);
+Route::get("/appointments/get_appointment/{id}", [AppointmentController::class, "getAppointment"]);
+Route::delete("appointments/delete/{id}", [AppointmentController::class, "deleteAppointment"]);
 
 Route::post('/logout', function () {
     Auth::logout();

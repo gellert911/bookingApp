@@ -6,20 +6,22 @@ function Appointments() {
 
     const [selectedDate, setSelectedDate] = useState(now.toISOString().slice(0, 10))
     const [currentRange, setCurrentRange] = useState([])
+    const [currentView, setCurrentView] = useState("week");
     const [appointments, setAppointments] = useState([]);
 
     const [loading, setLoading] = useState(false);
 
-    async function loadAppointments(dateStart, dateEnd) {
+    async function loadAppointments(dateStart, dateEnd, view = 'week') {
         const loadData = {
             dateStart: dateStart.toISOString().slice(0, 10),
             dateEnd: dateEnd.toISOString().slice(0, 10),
+            view: view,
         }
 
         //setLoading(true)
-
+        console.log("loading -> " + dateStart + " - " + dateEnd)
         try {
-            const response = await fetch(`/appointments/get_appointments/1/week?start=${loadData.dateStart}&end=${loadData.dateEnd}`, {
+            const response = await fetch(`/appointments/get_appointments/1/${loadData.view}?start=${loadData.dateStart}&end=${loadData.dateEnd}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,6 +76,8 @@ function Appointments() {
                 setSelectedDate={setSelectedDate} 
                 currentRange={currentRange}
                 setCurrentRange={setCurrentRange}
+                currentView={currentView}
+                setCurrentView={setCurrentView}
                 loader={loadAppointments} 
                 appointments={appointments} 
                 onDelete={deleteAppointment}/>

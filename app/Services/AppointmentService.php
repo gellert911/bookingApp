@@ -12,7 +12,7 @@ class AppointmentService {
         $this->repo = new AppointmentRepository;
     }
 
-    public function getAppointmentsInRange($employeeId, $start, $end) {
+    public function getAppointmentsInRange($employeeId, $start, $end, $view) {
         $appointments = $this->repo->getByEmployeeAndDateRange($employeeId, $start, $end);
 
         return $appointments;

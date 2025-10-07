@@ -4,7 +4,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import AppointmentDetailsModal from "./AppointmentDetailsModal";
 
-function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange, setCurrentRange, loader, appointments, onDelete } ) {
+function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange, setCurrentRange, currentView, setCurrentView, loader, appointments, onDelete } ) {
     
     const now = moment();
     const [events, setEvents] = useState([])
@@ -39,6 +39,17 @@ function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange,
         console.log("event set")
     }
 
+    function handleRangeChange (range, view = currentView) {
+        if (view == "week") {
+            setCurrentRange([range[0], range[6]])
+        } else if (view == "day") {
+            setCurrentRange([range[0], range[0]]);
+            console.log(range)
+        } else if (view == "month") {
+            setCurrentRange([range.start, range.end])
+        }
+    }
+
     function showModal(modalName) {
         setTimeout(() => {
             const modal = new bootstrap.Modal(document.getElementById(modalName))
@@ -51,7 +62,7 @@ function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange,
     }, [])
 
     useEffect(() => {
-        loader(currentRange[0], currentRange[1]);
+        loader(currentRange[0], currentRange[1], currentView);
     }, [currentRange])
 
     useEffect(() => {
@@ -66,25 +77,32 @@ function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange,
                 </div>
             )}
             {!initializing && (
-                <Calendar
-                    localizer={localizer}
-                    events={events}
-                    defaultDate={now}
-                    defaultView="week"
-                    startAccessor="start"
-                    endAccessor="end"
-                    views={["month", "week", "day"]}
-                    
-                    onRangeChange={(range, view) => {
-                        setCurrentRange([range[0], range[6]]);
-                    }}
+                <div className="container-fluid" style={{ height: "100vh" }}>
+                    <Calendar
+                        localizer={localizer}
+                        events={events}
+                        defaultDate={now}
+                        defaultView={currentView}
+                        startAccessor="start"
+                        endAccessor="end"
+                        views={["month", "week", "day"]}
+                        
+                        onRangeChange={(range, view) => {
+                            //setCurrentRange([range[0], range[6]]);
+                            handleRangeChange(range, view);
+                        }}
+                        
+                        onView={(view) => {
+                            setCurrentView(view);
+                        }}
 
-                    onSelectEvent={(event) => {
-                        const appointment = appointments.find(item => item.id === event.dbId);
-                        setSelectedAppointment(appointment);
-                        showModal("appointmentDetails")}
-                    }
-                />
+                        onSelectEvent={(event) => {
+                            const appointment = appointments.find(item => item.id === event.dbId);
+                            setSelectedAppointment(appointment);
+                            showModal("appointmentDetails")}
+                        }
+                    />
+                </div>
             )}
 
             {selectedAppointment && (

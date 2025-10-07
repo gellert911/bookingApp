@@ -15,7 +15,7 @@ class AppointmentController extends Controller {
 
     public function getAppointments(Request $request) {
 
-        $appointments = $this->service->getAppointmentsInRange($request->route("employee_id"), $request->query("start"), $request->query("end"));
+        $appointments = $this->service->getAppointmentsInRange($request->route("employee_id"), $request->query("start"), $request->query("end"), $request->route("view"));
         return response()->json(["success" => true, "message" => $appointments]);
     }
 

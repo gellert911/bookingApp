@@ -22,6 +22,19 @@
         @endif
     @endauth
 
+
+    <div>
+        <div id="navbar-root"></div>
+
+        <script>
+            window.__INITIAL_DATA__ = @json([
+                "user" => auth()->user(),
+            ]);
+        </script>
+
+        @vite('resources/js/react/Navbar.jsx')
+    </div>
+
     <div class="content">
         @yield('content')
     </div> 

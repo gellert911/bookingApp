@@ -16,6 +16,8 @@ export default defineConfig({
                 'resources/js/react/Register.jsx',
                 'resources/js/react/Admin.jsx',
                 'resources/js/react/Booking.jsx',
+                'resources/js/react/Dashboard.jsx',
+                'resources/js/react/Navbar.jsx',
             ],
             refresh: true,
             react: true,

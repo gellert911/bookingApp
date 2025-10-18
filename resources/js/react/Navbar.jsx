@@ -19,7 +19,7 @@ function Navbar () {
                     <a className="navbar-brand col-lg-3 me-0" href="#">BookingApp</a>
                     <ul className="navbar-nav col-lg-6 justify-content-lg-center">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">Home</a>
+                            <a className="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/booking">Booking</a>
@@ -33,10 +33,10 @@ function Navbar () {
                     </ul>
                     <div className="d-lg-flex col-lg-3 justify-content-lg-end">
                         <div className="dropdown">
-                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{user.name}</a>
+                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{user.email}</a>
 
                             <ul className="dropdown-menu dropdown-menu-end">
-                                <li className="dropdown-item">Profile</li>
+                                <li><a className='dropdown-item' href={`/profile/${user.id}`}>Profile</a></li>
                                 <li>
                                     <form action="/logout" method="post">
                                         <input type="hidden" name="_token" 

@@ -6,7 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AppointmentController;
-use App\Repositories\UserRepository;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +20,7 @@ use App\Repositories\UserRepository;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('home');
 })->middleware("auth");
 
 Route::get("/admin", function () {
@@ -45,10 +45,12 @@ Route::get("/register", function () {
     return view("register");
 });
 
-Route::get("/dashboard", function () {
+Route::get("/home", function () {
     $user = Auth::user();
-    return view("dashboard", compact('user'));
-})->middleware('auth')->name('dashboard');
+    return view("home", compact('user'));
+})->middleware('auth')->name('home');
+
+Route::get("/profile/{id}", [ProfileController::class, 'show']);
 
 Route::get("/booking", function () {
     return view("booking");

@@ -13,7 +13,7 @@
     <div class="toast-container position-fixed top-0 end-0 p-3"></div>
     @auth
         @if(auth()->user()->is_admin)
-            <div class="bg-light text-dark py-1 px-3 border-bottom">
+            <div class="bg-body-secondary text-dark py-1 px-3 border-bottom">
                 <div class="container d-flex gap-3">
                     <a href="/admin" class="text-decoration-none">Admin</a>
                     <a href="/" class="text-decoration-none">Site</a>

@@ -15,7 +15,6 @@ class RegisterController extends Controller {
     public function register (Request $request) {
 
         $validator = Validator::make($request->all(), [
-            "name" => "required|string|max:255",
             "email" => "required|string",
             "password" => "required",
         ]);
@@ -25,17 +24,15 @@ class RegisterController extends Controller {
         }
 
         $repo = new UserRepository();
-        $name_exists = $repo->findBy("name", $request["name"]);
         $email_exists = $repo->findBy("email", $request["email"]);
 
 
-        if ($name_exists || $email_exists) {
+        if ($email_exists) {
             return response()->json(["success" => false, "message" => __("auth.user_exists")]);
         }
 
         try {
              $user = $repo->create([
-                "name" => $request["name"],
                 "email" => $request["email"],
                 "password" => Hash::make($request["password"]),
             ]);

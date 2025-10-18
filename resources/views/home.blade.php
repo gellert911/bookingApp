@@ -6,7 +6,6 @@
     <form method="POST" action="{{ route('logout') }}">
         @csrf
     <button type="submit">logout</button>-->
-    @vite('resources/js/react/Dashboard.jsx')
+    @vite('resources/js/react/Home.jsx')
     <div id="app"></div>
-</form>
 @endsection

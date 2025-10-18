@@ -10,7 +10,7 @@ function Login() {
         e.preventDefault();
 
         const loginData = {
-            name_or_email: document.getElementById("name_or_email").value,
+            email: document.getElementById("email").value,
             password: document.getElementById("pw").value
         }
 
@@ -49,8 +49,8 @@ function Login() {
                 <h4 className="card-header">Login</h4>
                 <div className="card-body">
                     <div className="mb-3">
-                        <label htmlFor="username">User</label>
-                        <input type="text" className="form-control" id="name_or_email" placeholder="Username or Email" />
+                        <label htmlFor="email">Email</label>
+                        <input type="text" className="form-control" id="email" placeholder="Email" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="pw">Password</label>
@@ -79,6 +79,6 @@ function Login() {
 }
 
 
-const container = document.getElementById('app');
+const container = document.getElementById('login-root');
 const root = createRoot(container);
 root.render(<Login />);

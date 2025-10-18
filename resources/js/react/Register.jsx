@@ -10,7 +10,6 @@ function Register() {
         e.preventDefault();
 
         const registerData = {
-            name: document.getElementById("username").value,
             email: document.getElementById("email").value,
             password: document.getElementById("password").value
         }
@@ -49,10 +48,6 @@ function Register() {
             <div className="card">
                 <h4 className="card-header">Register</h4>
                 <div className="card-body">
-                    <div className="mb-3">
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" id="username" placeholder="Username" />
-                    </div>
                     <div className="mb-3">
                         <label htmlFor="email">Email</label>
                         <input type="email" className="form-control" id="email" placeholder="Email" />

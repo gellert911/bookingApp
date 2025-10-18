@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { createRoot } from 'react-dom/client';
+import Menu from "./Profile/Menu";
+import Settings from "./Profile/Settings";
+
+const initialData = window.__INITIAL_DATA__;
 
 function Profile () {
+    const user = initialData.user;
+    const [selectedMenu, setSelectedMenu] = useState(0)
 
     return (
 
-       <>
-        <div>
-            <a href="/booking">Profile</a>
-        </div>
-       </>
+       <div className="d-flex">
+            <aside>
+                <Menu selectedMenu={selectedMenu}
+                    setSelectedMenu={setSelectedMenu}
+                    user={user}
+                />
+            </aside>
+
+
+            <main className="flex-grow-1">
+                {selectedMenu === 0 && (
+                    <Settings user={user}/>
+                )}
+            </main>
+       </div>
     )
 }
 

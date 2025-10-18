@@ -15,34 +15,28 @@ class LoginController extends Controller {
     public function login (Request $request) {
 
         $validator = Validator::make($request->all(), [
-            "name_or_email" => "required",
+            "email" => "required",
             "password" => "required"
         ]);
 
         if ($validator->fails()) {
-            return response()->json(["success" => false, "message" => __("auth.validation_fail")]);
+            return response()->json(["success" => false, "message" => $request['password']]);
         }
 
         $repo = new UserRepository;
 
-        if (str_contains($request["name_or_email"], "@")) {
-            $user_found = $repo->findBy("email", $request["name_or_email"]);
-            $auth_key = "email";
-        } else {
-            $user_found = $repo->findBy("name", $request["name_or_email"]);
-            $auth_key = "name";
-        }
+        $userFound = $repo->findBy("email", $request['email']);
 
-        if (!$user_found) {
+        if (!$userFound) {
             return response()->json(["success" => false, "message" => __("auth.user_not_exists")]);
         }
 
         try {
-            $login = Auth::attempt([$auth_key => $request["name_or_email"], "password" => $request["password"]]);
+            $login = Auth::attempt(['email' => $request["email"], "password" => $request["password"]]);
 
             if ($login) {
                 session()->regenerate();
-                return response()->json(["success" => true, "message" => "siker", "redirect_url" => "/dashboard"]);
+                return response()->json(["success" => true, "message" => "siker", "redirect_url" => "/"]);
             }
 
             return response()->json(["success" => false, "message" => __("auth.password")]);

@@ -1,7 +1,13 @@
 @extends('layouts/app')
 
 @section('content')
-    @vite('resources/js/react/Profile.jsx')
     <div id="profile-root"></div>
-</form>
+
+    <script>
+        window.__INITIAL_DATA__ = @json([
+            'user' => $user,
+        ]);
+    </script>
+
+    @vite('resources/js/react/Profile.jsx')
 @endsection

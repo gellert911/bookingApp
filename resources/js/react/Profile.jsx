@@ -25,6 +25,9 @@ function Profile () {
                     <Settings user={user}/>
                 )}
             </main>
+
+            <aside>
+            </aside>
        </div>
     )
 }

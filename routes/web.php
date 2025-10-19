@@ -51,6 +51,7 @@ Route::get("/home", function () {
 })->middleware('auth')->name('home');
 
 Route::get("/profile/{id}", [ProfileController::class, 'show']);
+Route::patch("/profile/{id}/{field}", [ProfileController::class, "partialUpdate"]);
 
 Route::get("/booking", function () {
     return view("booking");

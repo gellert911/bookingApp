@@ -1,24 +1,86 @@
 import React, { useState } from "react";
+import { showAlert } from '../../alert';
 
 function Settings ( {user} ) {
     //const [editing, setEditing] = useState(false)
+
+    const defaultInputData = {
+        fullName: user.full_name,
+        phoneCountry: user.phone_country,
+        phoneNumber: user.phone_number,
+    };
+
+    const [inputData, setInputData] = useState(defaultInputData);
+
+    const [passwordData, setPasswordData] = useState({
+        newPassword: "",
+        newPasswordConfirm: ""
+    })
 
     const countries = [
         {name: "RO", code: '+40'},
         {name: 'HU', code: '+36'},
     ]
+
+    const handleInputChange = (e) => {
+        const {name, value} = e.target;
+        setInputData({...inputData, [name]: value});
+    }
+
+    const handlePasswordChange = (e) => {
+        const {name, value} = e.target;
+        setPasswordData({...passwordData, [name]: value});
+    }
+
+    const handleSave = async  (type = "all") => {
+        if (type == "all") {
+            
+        } else if (type == "password") {
+            if (passwordData.newPassword == passwordData.newPasswordConfirm) {
+                try {
+                    const response = await fetch(`/profile/${user.id}/password`, {
+                        method: "PATCH",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({password: passwordData.newPassword})
+                    })
+
+                    const result = await response.json()
+
+                    if (result.success) {
+                        setPasswordData({
+                            newPassword: "",
+                            newPasswordConfirm: "",
+                        })
+                        showAlert(result.message, "success");
+
+                        const collapse = document.getElementById("changePasswordCollapse")
+                        bootstrap.Collapse.getInstance(collapse).hide();
+                    } else {
+                        showAlert(result.message, "danger");
+                    }
+                } catch ($e) {
+                    console.log($e)
+                }
+            }
+        }
+    }
+
+
     return (
         <div className="container py-1">
-            <h3 class='mb-3'>Settings</h3>
+            <h3 className='mb-3'>Settings</h3>
             {!(user.email_verified_at) && (
-                <div class="alert alert-danger" role="alert">
+                <div className="alert alert-danger" role="alert">
                     Your email is not verified. <a href="">Verify it now!</a>
                 </div>
             )}
             <div className="row mb-3">
                 <label htmlFor='0' className='col-sm-2 col-form-label'>Full name</label>
                 <div className="col-sm-10">
-                    <input type='text' class="form-control w-25" value={user.full_name}/>
+                    <input name="fullName" type='text' className="form-control w-25" value={inputData.fullName} onChange={handleInputChange}/>
                 </div>
             </div>
 
@@ -31,12 +93,12 @@ function Settings ( {user} ) {
                 <label htmlFor='country_codeSelect' className='col-sm-2 col-form-label'>Phone number</label>
                 <div className="col-sm-10">
                     <div className="input-group w-25">
-                        <select name="Country code" id="country_codeSelect" className="form-select no-arrow" style={{maxWidth: "80px"}}>
+                        <select name="phoneCountry" id="country_codeSelect" className="form-select" value={inputData.phoneCountry} onChange={handleInputChange} style={{maxWidth: "80px"}}>
                             {countries.map((country, index) => (
                                <option key={index}>{country.code}</option> 
                             ))}
                         </select>
-                        <input type="text" className="form-control"/>
+                        <input name="phoneNumber" type="text" className="form-control" value={inputData.phoneNumber} onChange={handleInputChange}/>
                     </div>
                 </div>
             </div>
@@ -44,7 +106,33 @@ function Settings ( {user} ) {
             <div className="row mb-3">
                 <label htmlFor='1' className='col-sm-2 col-form-label'>Password</label>
                 <div className="col-sm-10">
-                    <button className="btn btn-primary">Change password</button>
+                    <button className="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#changePasswordCollapse">Change password</button>
+                </div>
+
+                <div className="collapse mt-3" id="changePasswordCollapse">
+                    <div class="card">
+                        <div className="card-body">
+                            <div className="row mb-3">
+                                <label htmlFor="" className="col-sm-2 col-form-label">New password</label>
+                                <div className="col-sm-10">
+                                    <input name="newPassword" type="password" className="form-control w-25" value={passwordData.newPassword} onChange={handlePasswordChange}/>
+                                </div>
+                            </div>
+                            <div className="row mb-3">
+                                <label htmlFor="" className="col-sm-2 col-form-label">Confirm new password</label>
+                                <div className="col-sm-10">
+                                    <input name="newPasswordConfirm" type="password" className="form-control w-25" value={passwordData.newPasswordConfirm} onChange={handlePasswordChange}/>
+                                </div>
+                            </div>
+                            {passwordData.newPassword != passwordData.newPasswordConfirm && (
+                                <p className="text-danger">The passwords must match!</p>
+                            )}
+                        </div>
+                         <div className="card-footer">
+                        <button className="btn btn-primary mx-1" onClick={() => handleSave("password")}>Save</button>
+                        <button className="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#changePasswordCollapse">Cancel</button>
+                    </div>
+                    </div>
                 </div>
             </div>
             <div className="row mb-3">
@@ -60,7 +148,7 @@ function Settings ( {user} ) {
                 </div>
             </div>
             <hr />
-            <button className="btn btn-primary">Save</button>
+            <button className="btn mt-1" onClick={() => handleSave(false)}>Save</button>
         </div>
     )
 }

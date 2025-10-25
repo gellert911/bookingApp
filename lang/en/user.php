@@ -2,5 +2,6 @@
     return [
         "not_exists" => "User not found.",
         "update_successful" => "User updated successfully!",
+        "validation_fail" => "Please fill all fields properly!",
     ]
 ?>

@@ -34,8 +34,31 @@ function Settings ( {user} ) {
 
     const handleSave = async  (type = "all") => {
         if (type == "all") {
-            
+            try {
+                const response = await fetch(`/profile/${user.id}`, {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(inputData)
+                })
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert(result.message, "success");
+                } else {
+                    showAlert(result.message, "danger");
+                }
+            } catch (e) {
+                console.log(e)
+            }
         } else if (type == "password") {
+            if (passwordData.newPassword == "" && passwordData.newPasswordConfirm == "") {
+                showAlert("Field cannot be empty!", "danger")
+                return;
+            }
             if (passwordData.newPassword == passwordData.newPasswordConfirm) {
                 try {
                     const response = await fetch(`/profile/${user.id}/password`, {
@@ -61,8 +84,8 @@ function Settings ( {user} ) {
                     } else {
                         showAlert(result.message, "danger");
                     }
-                } catch ($e) {
-                    console.log($e)
+                } catch (e) {
+                    console.log(e)
                 }
             }
         }
@@ -72,9 +95,9 @@ function Settings ( {user} ) {
     return (
         <div className="container py-1">
             <h3 className='mb-3'>Settings</h3>
-            {!(user.email_verified_at) && (
-                <div className="alert alert-danger" role="alert">
-                    Your email is not verified. <a href="">Verify it now!</a>
+            {!(user.full_name) && (
+                <div className="alert alert-warning" role="alert">
+                    Your profile is not completed. <strong>Please complete it!</strong>
                 </div>
             )}
             <div className="row mb-3">
@@ -106,7 +129,7 @@ function Settings ( {user} ) {
             <div className="row mb-3">
                 <label htmlFor='1' className='col-sm-2 col-form-label'>Password</label>
                 <div className="col-sm-10">
-                    <button className="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#changePasswordCollapse">Change password</button>
+                    <button className="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#changePasswordCollapse">Change password</button>
                 </div>
 
                 <div className="collapse mt-3" id="changePasswordCollapse">
@@ -148,7 +171,7 @@ function Settings ( {user} ) {
                 </div>
             </div>
             <hr />
-            <button className="btn mt-1" onClick={() => handleSave(false)}>Save</button>
+            <button className="btn btn-primary" onClick={() => handleSave("all")}>Save</button>
         </div>
     )
 }

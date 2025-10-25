@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { createRoot } from 'react-dom/client';
 import Menu from "./Profile/Menu";
 import Settings from "./Profile/Settings";
+import BookingHistory from "./Profile/BookingHistory";
 
 const initialData = window.__INITIAL_DATA__;
 
@@ -23,6 +24,9 @@ function Profile () {
             <main className="flex-grow-1">
                 {selectedMenu === 0 && (
                     <Settings user={user}/>
+                )}
+                {selectedMenu === 1 && (
+                    <BookingHistory user={user}/>
                 )}
             </main>
 

@@ -52,6 +52,7 @@ Route::get("/home", function () {
 
 Route::get("/profile/{id}", [ProfileController::class, 'show']);
 Route::patch("/profile/{id}/{field}", [ProfileController::class, "partialUpdate"]);
+Route::put("profile/{id}", [ProfileController::class, "update"]);
 
 Route::get("/booking", function () {
     return view("booking");

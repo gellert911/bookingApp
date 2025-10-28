@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
@@ -23,9 +23,7 @@ class LoginController extends Controller {
             return response()->json(["success" => false, "message" => $request['password']]);
         }
 
-        $repo = new UserRepository;
-
-        $userFound = $repo->findBy("email", $request['email']);
+        $userFound = User::where("email", $request["email"])->firstOrFail();
 
         if (!$userFound) {
             return response()->json(["success" => false, "message" => __("auth.user_not_exists")]);

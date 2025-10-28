@@ -13,6 +13,11 @@ class Appointment extends Model {
         "end_at",
         "active",
     ];
+
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
 
 ?>

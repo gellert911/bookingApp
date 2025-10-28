@@ -2,32 +2,34 @@
 
 namespace App\Services;
 
-use App\Repositories\AppointmentRepository;
+use App\Models\Appointment;
 
 class AppointmentService {
-    private $repo;
-
-    public function __construct()
-    {
-        $this->repo = new AppointmentRepository;
-    }
 
     public function getAppointmentsInRange($employeeId, $start, $end, $view) {
-        $appointments = $this->repo->getByEmployeeAndDateRange($employeeId, $start, $end);
+        $appointments = Appointment::where("employee_id", $employeeId)
+            ->whereBetween("date", [$start, $end])
+            ->get();
 
         return $appointments;
     }
 
     public function getAppointmentById($id) {
-        $appointment = $this->repo->find($id);
+        $appointment = Appointment::find($id);
 
         return $appointment;
     }
 
     public function deleteAppointment($id) {
-        $deleted = $this->repo->delete($id);
+        $appointment = Appointment::find($id);
 
-        return $deleted;
+        return $appointment->delete();
+    }
+
+    public function getActiveAppointmentsByUser($userId) {
+        // tbd
+        //return $this->repo->getActiveAppointmentsByUser($userId);
+        
     }
 }
 

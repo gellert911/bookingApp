@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
@@ -23,8 +23,7 @@ class RegisterController extends Controller {
             return response()->json(["success" => false, "message" => __("auth.validation_fail")]);
         }
 
-        $repo = new UserRepository();
-        $email_exists = $repo->findBy("email", $request["email"]);
+        $email_exists = User::where("email", $request["email"])->first();
 
 
         if ($email_exists) {
@@ -32,7 +31,7 @@ class RegisterController extends Controller {
         }
 
         try {
-             $user = $repo->create([
+             $user = User::create([
                 "email" => $request["email"],
                 "password" => Hash::make($request["password"]),
             ]);

@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\AppointmentRepository;
-use App\Repositories\ScheduleRepository;
+use App\Models\Appointment;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -17,10 +17,8 @@ use DatePeriod;
 class BookingService {
 
     public function createAppointment(array $data) {
-        $repo = new AppointmentRepository;
-
         try {            
-            $repo->create([
+            Appointment::create([
                 "user_id" => Auth::user()->id,
                 "employee_id" => $data["employee_id"],
                 "date" => $data["date"],
@@ -59,17 +57,20 @@ class BookingService {
     }
 
     public function isSlotAvailable(array $data) {
-        $repo = new AppointmentRepository;
-        $check = $repo->getByEmployeeAndTimeRange($data["employee_id"], $data["date"], $data["start_at"], $data["end_at"]);
+        $check = Appointment::where("employee_id", $data["employee_id"])
+            ->where("date", $data["date"])
+            ->where("start_at", "<=", $data["start_at"])
+            ->where("end_at", ">=", $data["end_at"])
+            ->get();
 
         return $check->isEmpty();
     }
 
-    public function getFreeSlots($employee_id, $date) {
-        $scheduleRepo = new ScheduleRepository;
-
+    public function getFreeSlots($employeeId, $date) {
         $today = new DateTime($date);
-        $schedule = $scheduleRepo->getDayScheduleByEmployee($employee_id, ($today->format("N") - 1));
+        $schedule = Schedule::where("employee_id", $employeeId)
+            ->where("day_of_week", $today->format("N") - 1)
+            ->first();
 
         if ($schedule->closed) {
             return [];
@@ -80,7 +81,7 @@ class BookingService {
 
         foreach ($slots as $slot) {
             $available = $this->isSlotAvailable([
-                "employee_id" => $employee_id, 
+                "employee_id" => $employeeId, 
                 "date" => $date, 
                 "start_at" => $slot["start"], 
                 "end_at" => $slot["end"]

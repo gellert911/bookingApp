@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\AppointmentService;
 use Illuminate\Http\Request;
 
@@ -23,6 +24,15 @@ class AppointmentController extends Controller {
         $appointment = $this->service->getAppointmentById($request->route("id"));
 
         return response()->json(["success" => true, "message" => $appointment]);
+    }
+
+    public function getActiveAppointments(Request $request) {
+        $user = User::find($request->input("userId"));
+
+        if ($user) {
+            $appointments = $user->appointments()->get();
+            return response()->json(["success" => true, "message" => $appointments]);
+        }
     }
 
     public function deleteAppointment (Request $request) {

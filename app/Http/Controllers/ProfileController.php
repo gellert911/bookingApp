@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\UserRepository;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller {
     public function show($id) {
-        $repo = new UserRepository;
-
-        $user = $repo->findById($id);
+        $user = User::find($id);
 
         if ($user) {
             return view('profile', compact('user'));
@@ -21,11 +19,9 @@ class ProfileController extends Controller {
     }
 
     public function partialUpdate(Request $request, $id, $field) {
-        $repo = new UserRepository;
-
         // validation
         
-        $user = $repo->findById($id);
+        $user = User::find($id);
         $value = $request->input($field);
 
         if ($user) {
@@ -48,7 +44,6 @@ class ProfileController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $repo = new UserRepository;
 
         $validator = Validator::make($request->all(), [
             "fullName" => "string",
@@ -60,7 +55,7 @@ class ProfileController extends Controller {
             return response()->json(["success" => false, "message" => __("user.validation_fail")]);
         }
 
-        $user = $repo->findById($id);
+        $user = User::find($id);
         $value = $request->input();
 
         if ($user) {
@@ -77,7 +72,6 @@ class ProfileController extends Controller {
             return response()->json(["success" => true, "message" => __("user.update_successful")]);
         }
         return response()->json(["success" => false, "message" => __("user.not_exists")]);
-        //return response()->json(["success" => true, "message" => $value["fullName"]]);
     }
 }
 ?>

@@ -9,6 +9,7 @@ class AppointmentService {
     public function getAppointmentsInRange($employeeId, $start, $end, $view) {
         $appointments = Appointment::where("employee_id", $employeeId)
             ->whereBetween("date", [$start, $end])
+            ->whereNull("cancelled_at")
             ->get();
 
         return $appointments;

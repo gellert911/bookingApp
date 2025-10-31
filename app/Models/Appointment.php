@@ -13,12 +13,17 @@ class Appointment extends Model {
         "end_at",
         "comment",
         "active",
-        "cancelled",
+        "cancelled_at"
     ];
 
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function cancel () {
+        $this->cancelled_at = now();
+        $this->save();
     }
 }
 

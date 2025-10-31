@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\User;
 use App\Services\AppointmentService;
 use Illuminate\Http\Request;
@@ -41,6 +42,16 @@ class AppointmentController extends Controller {
         $delete = $this->service->deleteAppointment($request->route("id"));
 
         return response()->json(["success" => true, "message" => $delete]);
+    }
+
+    public function cancelAppointment(Request $request, $appointmentId) {
+        $appointment = Appointment::find($appointmentId);
+
+        if ($appointment) {
+            $appointment->cancel();
+
+            return response()->json(["success" => true, "message" => __("booking.appointment_cancelled")]);
+        }
     }
 }
 

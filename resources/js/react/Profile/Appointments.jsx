@@ -41,12 +41,40 @@ const Appointments = ( { user } ) => {
         const today = new Date("2025-10-31");
         let filteredAppointments = [];
         if (scope == "active") {
-            filteredAppointments = array.filter((appointment) => new Date(appointment.date) >= today);
+            filteredAppointments = array.filter((appointment) => new Date(appointment.date) >= today && !appointment.cancelled_at);
         } else if (scope == "inactive") {
-            filteredAppointments = array.filter((appointment) => new Date(appointment.date) < today);
+            filteredAppointments = array.filter((appointment) => new Date(appointment.date) < today || appointment.cancelled_at);
         }
         
         return filteredAppointments;
+    }
+
+    const handleCancel = async () => {
+        if (!selectedAppointment) return;
+
+         try {
+            const response = await fetch(`/appointments/${selectedAppointment.id}/cancel`, {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({"action": "cancel_appointment"})
+            })
+
+            const result = await response.json();
+
+            if (result.success) {
+                showAlert(result.message, "success")
+                setActiveAppointments(prev => prev.filter(a => a.id != selectedAppointment.id))
+                setInactiveAppointments(prev => [...prev, selectedAppointment])
+                setSelectedAppointment(null)
+            } else {
+                showAlert(result.message, "danger");
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     useEffect(() => {
@@ -78,6 +106,7 @@ const Appointments = ( { user } ) => {
                 selectedFilter={selectedFilter}
                 selectedAppointment={selectedAppointment}
                 setSelectedAppointment={setSelectedAppointment}
+                onCancel={handleCancel}
             />
             
         </div>

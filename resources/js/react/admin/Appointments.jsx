@@ -47,7 +47,7 @@ function Appointments() {
 
     async function deleteAppointment(id) {
         try {
-            const response = await fetch(`appointments/delete/${id}`, {
+            const response = await fetch(`appointments/${id}/delete`, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import React from "react";
 
-const AppointmentDetailsModal = ({ selectedAppointment }) => {
+const AppointmentDetailsModal = ({ selectedAppointment, onCancel }) => {
     return (
         <>
         {selectedAppointment && (
@@ -34,7 +34,7 @@ const AppointmentDetailsModal = ({ selectedAppointment }) => {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button className="btn btn-danger" data-bs-dismiss="modal" onClick={onCancel}>Cancel</button>
                             <button className='btn btn-secondary' data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>

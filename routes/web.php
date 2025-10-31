@@ -64,7 +64,8 @@ Route::post("/booking/create_appointment", [BookingController::class, "createApp
 
 Route::get("/appointments/get_appointments/{employee_id}/{view}", [AppointmentController::class, "getAppointments"]);
 Route::get("/appointments/get_appointment/{id}", [AppointmentController::class, "getAppointment"]);
-Route::delete("appointments/delete/{id}", [AppointmentController::class, "deleteAppointment"]);
+Route::delete("appointments/{id}/delete", [AppointmentController::class, "deleteAppointment"]);
+Route::patch("/appointments/{id}/cancel", [AppointmentController::class, "cancelAppointment"]);
 
 Route::post('/logout', function () {
     Auth::logout();

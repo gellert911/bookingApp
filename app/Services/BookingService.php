@@ -62,6 +62,7 @@ class BookingService {
             ->where("date", $data["date"])
             ->where("start_at", "<=", $data["start_at"])
             ->where("end_at", ">=", $data["end_at"])
+            ->whereNull("cancelled_at")
             ->get();
 
         return $check->isEmpty();

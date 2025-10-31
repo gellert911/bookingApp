@@ -1,7 +1,7 @@
 import React from "react";
 import AppointmentDetailsModal from "./AppointmentDetailsModal";
 
-const AppointmentsList = ( { activeAppointments, inactiveAppointments, selectedFilter, selectedAppointment, setSelectedAppointment }) => {
+const AppointmentsList = ( { activeAppointments, inactiveAppointments, selectedFilter, selectedAppointment, setSelectedAppointment, onCancel }) => {
     function showModal(modalName) {
         setTimeout(() => {
             const modal = new bootstrap.Modal(document.getElementById(modalName))
@@ -13,6 +13,9 @@ const AppointmentsList = ( { activeAppointments, inactiveAppointments, selectedF
         <div>
             {selectedFilter == "active" && (
                 <div className="row g-3 mb-3">
+                    {activeAppointments.length == 0 && (
+                        <p>You don't have any active appointments :(</p>
+                    )}
                     {activeAppointments.map((appointment, index) => (
                         <div key={index} className="col-12 col-md-6 col-lg-3">
                             <div className="card">
@@ -46,6 +49,7 @@ const AppointmentsList = ( { activeAppointments, inactiveAppointments, selectedF
             {selectedAppointment && (
                 <AppointmentDetailsModal 
                     selectedAppointment={selectedAppointment}
+                    onCancel={onCancel}
                 />
             )}
         </div>

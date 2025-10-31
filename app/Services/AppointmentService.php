@@ -27,9 +27,13 @@ class AppointmentService {
     }
 
     public function getActiveAppointmentsByUser($userId) {
-        // tbd
-        //return $this->repo->getActiveAppointmentsByUser($userId);
-        
+        $today = today();
+        $activeAppointments = Appointment::where("user_id", $userId)
+            ->where("date", ">=", $today)
+            ->get();    
+
+
+        return $activeAppointments;
     }
 }
 

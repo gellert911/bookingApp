@@ -3,12 +3,13 @@ import { showAlert } from '../../alert';
 
 function BookingModal ( { selectedSlot, onBooking }) {
 
-    async function bookAppointment(date, start_at, end_at) {
+    async function bookAppointment(date, start_at, end_at, comment) {
         const appointmentData = {
             employee_id: 1,
             date: date,
             start_at: start_at,
-            end_at: end_at
+            end_at: end_at,
+            comment: comment,
         }
 
         const response = await fetch("booking/create_appointment", {
@@ -54,15 +55,15 @@ function BookingModal ( { selectedSlot, onBooking }) {
                         </div>
 
                         <div className="row mb">
-                            <label htmlFor="duration" className='col-form-label col-sm-6'>Comment</label>
+                            <label className='col-form-label col-sm-6'>Comment</label>
                             <div className="col-sm-6" id='duration'>
-                               <input type="text" className="form-control" placeholder='Optional'/>
+                               <input id="bookingComment" type="text" className="form-control" placeholder='Optional'/>
                             </div>
                         </div>
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button className='btn btn-primary' onClick={() => bookAppointment(selectedSlot.date, selectedSlot.start, selectedSlot.end)} data-bs-dismiss="modal">Book</button>
+                        <button className='btn btn-primary' onClick={() => bookAppointment(selectedSlot.date, selectedSlot.start, selectedSlot.end, document.getElementById("bookingComment").value)} data-bs-dismiss="modal">Book</button>
                     </div>
                 </div>
             </div>

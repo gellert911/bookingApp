@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createRoot } from 'react-dom/client';
 import Menu from "./Profile/Menu";
 import Settings from "./Profile/Settings";
-import BookingHistory from "./Profile/BookingHistory";
+import Appointments from "./Profile/Appointments";
 
 const initialData = window.__INITIAL_DATA__;
 
@@ -26,7 +26,7 @@ function Profile () {
                     <Settings user={user}/>
                 )}
                 {selectedMenu === 1 && (
-                    <BookingHistory user={user}/>
+                    <Appointments user={user}/>
                 )}
             </main>
 

@@ -25,7 +25,7 @@ function AppointmentDetailsModal ( { selectedAppointment, onDelete } ) {
                                 <div className="row mb-3">
                                     <label htmlFor="note" className='col-sm-6'>Note</label>
                                     <div className="col-sm-6 text-muted" id='note'>
-                                        -
+                                        {selectedAppointment.comment}
                                     </div>
                                 </div>
                             </div>

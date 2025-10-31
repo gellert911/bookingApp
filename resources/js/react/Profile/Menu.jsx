@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 
 function Menu ({selectedMenu, setSelectedMenu}) {
-    const menus = ["Profile settings", "Booking history"]
+    const menus = ["Profile settings", "Appointments"]
 
 
     return (

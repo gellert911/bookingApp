@@ -24,6 +24,7 @@ class BookingService {
                 "date" => $data["date"],
                 "start_at" => $data["start_at"],
                 "end_at" => $data["end_at"],
+                "comment" => $data["comment"],
                 "active" => 1,
             ]);
             return true;

@@ -17,7 +17,7 @@ class BookingController extends Controller {
     }
 
     public function createAppointment(Request $request) {
-        $data = $request->only(["employee_id", "date", "start_at", "end_at"]);
+        $data = $request->only(["employee_id", "date", "start_at", "end_at", "comment"]);
 
         $validator = Validator::make($data, [
             "start_at" => "required",

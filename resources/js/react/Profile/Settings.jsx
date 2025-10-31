@@ -133,7 +133,7 @@ function Settings ( {user} ) {
                 </div>
 
                 <div className="collapse mt-3" id="changePasswordCollapse">
-                    <div class="card">
+                    <div className="card">
                         <div className="card-body">
                             <div className="row mb-3">
                                 <label htmlFor="" className="col-sm-2 col-form-label">New password</label>

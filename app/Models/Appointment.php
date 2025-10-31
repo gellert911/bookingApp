@@ -11,7 +11,9 @@ class Appointment extends Model {
         "date",
         "start_at",
         "end_at",
+        "comment",
         "active",
+        "cancelled",
     ];
 
 

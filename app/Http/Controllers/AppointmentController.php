@@ -26,13 +26,15 @@ class AppointmentController extends Controller {
         return response()->json(["success" => true, "message" => $appointment]);
     }
 
-    public function getActiveAppointments(Request $request) {
-        $user = User::find($request->input("userId"));
+    public function getAppointmentsByUser(Request $request, $userId) {
+        //$activeAppointments = $this->service->getActiveAppointmentsByUser($userId);
+        $user = User::find($userId);
 
         if ($user) {
             $appointments = $user->appointments()->get();
             return response()->json(["success" => true, "message" => $appointments]);
         }
+        return response()->json(["success" => false, "message" => "error"]);
     }
 
     public function deleteAppointment (Request $request) {

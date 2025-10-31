@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { showAlert } from '../../alert';
+import { showAlert } from '@/utility/alert';
 
 function BookingModal ( { selectedSlot, onBooking }) {
 

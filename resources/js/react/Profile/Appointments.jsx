@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { showAlert } from '../../alert';
+import { showAlert } from '@/utility/alert';
 import AppointmentsList from "./Appointments/AppointmentsList";
 
 const Appointments = ( { user } ) => {
@@ -95,8 +95,8 @@ const Appointments = ( { user } ) => {
             </ul>
 
             {loading && (
-                <div class="spinner-border spinner-border-sm" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                <div className="spinner-border spinner-border-sm" role="status">
+                    <span className="visually-hidden">Loading...</span>
                 </div>
             )}
             

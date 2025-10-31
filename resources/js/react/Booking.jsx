@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import { showAlert } from '../alert';
+import { showAlert } from '../utility/alert';
 import BookingModal from './Booking/BookingModal';
 import BookingDatepicker from './Booking/BookingDatepicker';
 import BookingList from './Booking/BookingList';

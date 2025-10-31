@@ -1,13 +1,8 @@
 import React from "react";
 import AppointmentDetailsModal from "./AppointmentDetailsModal";
+import {showModal} from "@/utility/modal"
 
 const AppointmentsList = ( { activeAppointments, inactiveAppointments, selectedFilter, selectedAppointment, setSelectedAppointment, onCancel }) => {
-    function showModal(modalName) {
-        setTimeout(() => {
-            const modal = new bootstrap.Modal(document.getElementById(modalName))
-            modal.show()
-        }, 50);
-    }
 
     return (
         <div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { showAlert } from '../../alert';
+import { showAlert } from '@/utility/alert';
 
 function Settings ( {user} ) {
     //const [editing, setEditing] = useState(false)

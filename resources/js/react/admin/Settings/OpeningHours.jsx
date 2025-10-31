@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TimePicker from 'react-bootstrap-time-picker';
-import { showAlert } from '@/alert';
+import { showAlert } from '@/utility/alert';
 
 function OpeningHours () {
     const [openingHours, setOpeningHours] = useState([])

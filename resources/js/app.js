@@ -1,2 +1,2 @@
 import './bootstrap';
-import './alert'
+import '@/utility/alert'

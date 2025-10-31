@@ -3,6 +3,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import AppointmentDetailsModal from "./AppointmentDetailsModal";
+import { showModal } from "@/utility/modal";
 
 function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange, setCurrentRange, currentView, setCurrentView, loader, appointments, onDelete } ) {
     
@@ -48,13 +49,6 @@ function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange,
         } else if (view == "month") {
             setCurrentRange([range.start, range.end])
         }
-    }
-
-    function showModal(modalName) {
-        setTimeout(() => {
-            const modal = new bootstrap.Modal(document.getElementById(modalName))
-            modal.show()
-        }, 50);
     }
 
     useEffect(() => {

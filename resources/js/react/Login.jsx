@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { showAlert } from '../alert';
+import { showAlert } from '@/utility/alert';
 
 function Login() {
     const [loading, setLoading] = useState(false);

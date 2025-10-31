@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import OpeningHours from './Settings/OpeningHours';
+import { showModal } from "@/utility/modal"
 
 function Settings () {
 
     const [showingOpeningHours, setShowingOpeningHours] = useState(false);
-
-    function showModal(modalName) {
-        setTimeout(() => {
-            const modal = new bootstrap.Modal(document.getElementById(modalName))
-            modal.show()
-        }, 50);
-    }
 
     return (
         <div className="container-fluid">

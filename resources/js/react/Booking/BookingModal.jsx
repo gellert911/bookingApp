@@ -28,6 +28,12 @@ function BookingModal ( { selectedSlot, onBooking }) {
             onBooking();
         } else {
             showAlert(result.message, "danger")
+
+            if (result.redirect) {
+                setTimeout(() => {
+                    window.location.href = "/login";
+                }, 500)
+            }
         }
     }
 

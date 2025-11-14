@@ -1,12 +1,7 @@
 import React from 'react';
+import { showModal } from "@/utility/modal";
 
 function BookingList ( { availableSlots, selectedSlot, setSelectedSlot } ) {
-    function showModal(modalName) {
-        setTimeout(() => {
-            const modal = new bootstrap.Modal(document.getElementById(modalName))
-            modal.show()
-        }, 50);
-    }
 
     function formatDate(date) {
         date = new Date(date);

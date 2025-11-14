@@ -38,7 +38,7 @@ const Appointments = ( { user } ) => {
     }
 
     const filterAppointments = (array, scope) => {
-        const today = new Date("2025-10-31");
+        const today = new Date();
         let filteredAppointments = [];
         if (scope == "active") {
             filteredAppointments = array.filter((appointment) => new Date(appointment.date) >= today && !appointment.cancelled_at);

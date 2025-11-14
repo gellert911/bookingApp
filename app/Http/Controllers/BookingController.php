@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\BookingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 use Exception;
 
@@ -17,6 +18,12 @@ class BookingController extends Controller {
     }
 
     public function createAppointment(Request $request) {
+        $loggedin = Auth::check();
+
+        if (!$loggedin) {
+            return response()->json(["success" => false, "message" => __("booking.not_loggedin"), "redirect" => "login"]);
+        }
+
         $data = $request->only(["employee_id", "date", "start_at", "end_at", "comment"]);
 
         $validator = Validator::make($data, [
@@ -30,7 +37,7 @@ class BookingController extends Controller {
         });
 
         if ($validator->fails()) {
-            return response()->json(["success" => false, "message" => "booking.booking_error"]);
+            return response()->json(["success" => false, "message" => __("booking.booking_error")]);
         }
 
         $available = $this->service->isSlotAvailable($data);

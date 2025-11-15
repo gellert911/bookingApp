@@ -32,21 +32,29 @@ function Navbar () {
                         </li>
                     </ul>
                     <div className="d-lg-flex col-lg-3 justify-content-lg-end">
-                        <div className="dropdown">
-                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{user.email}</a>
+                        {user ? (
+                            <div className="dropdown">
+                                <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{user.full_name}</a>
 
-                            <ul className="dropdown-menu dropdown-menu-end">
-                                <li><a className='dropdown-item' href={`/profile/${user.id}`}>Profile</a></li>
-                                <li>
-                                    <form action="/logout" method="post">
-                                        <input type="hidden" name="_token" 
-                                            value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}
-                                        />
-                                        <button className="dropdown-item" type='submit'>Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
+                                <ul className="dropdown-menu dropdown-menu-end">
+                                    <li><a className='dropdown-item' href={`/profile/${user.id}`}>Profile</a></li>
+                                    <li>
+                                        <form action="/logout" method="post">
+                                            <input type="hidden" name="_token" 
+                                                value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}
+                                            />
+                                            <button className="dropdown-item" type='submit'>Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        ):
+                        (   
+                            <div>
+                                <a href="/login" className="btn btn-primary mx-1">Log in</a>
+                                <a href="/register" className="btn btn-outline-secondary">Sign up</a>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

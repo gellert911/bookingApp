@@ -14,6 +14,11 @@ class ProfileController extends Controller {
         $user = User::find($id);
 
         if ($user) {
+            
+            if (request()->expectsJson()) {
+                return response()->json(["success" => true, "message" => $user]);
+            }
+
             return view('profile', compact('user'));
         }
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function Menu ({selectedMenu, setSelectedMenu}) {
-    const menus = ["Overview", "Settings", "Appointments"]
+    const menus = ["Overview", "Settings", "Opening hours", "Appointments"]
     //const [selectedPage, setSelectedPage] = useState(0);
 
     return (

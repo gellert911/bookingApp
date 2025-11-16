@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { showAlert } from '@/utility/alert';
 import Menu from './admin/Menu';
 import Settings from './admin/Settings';
+import OpeningHours from './admin/OpeningHours';
 import Appointments from './admin/Appointments';
 
 function Admin() {
@@ -20,6 +21,10 @@ function Admin() {
                 )}
 
                 {selectedMenu == 2 && (
+                    <OpeningHours/>
+                )}
+
+                {selectedMenu == 3 && (
                     <Appointments/>
                 )}
             </main>

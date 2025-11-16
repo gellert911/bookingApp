@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TimePicker from 'react-bootstrap-time-picker';
 import { showAlert } from '@/utility/alert';
+import { showModal } from '@/utility/modal';
 
 function OpeningHours () {
     const [openingHours, setOpeningHours] = useState([])
@@ -32,8 +33,8 @@ function OpeningHours () {
             } else {
                 showAlert(result.message, "error")
             }
-        } catch ($e) {
-            console.error($e)
+        } catch (e) {
+            console.error(e)
         }
     }
 
@@ -94,6 +95,12 @@ function OpeningHours () {
     }, [])
 
     return (
+        <>
+        <div className="row mb-3">
+            <h5>Opening hours</h5>
+
+            <button className="btn btn-primary" onClick={() => showModal("editOpeningHours")} data-bs-target="#editOpeningHours">Employee ➔</button>
+        </div>
         <div className="modal fade" id="editOpeningHours" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -161,6 +168,7 @@ function OpeningHours () {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

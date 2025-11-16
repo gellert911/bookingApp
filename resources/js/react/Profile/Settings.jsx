@@ -159,13 +159,13 @@ function Settings ( {user} ) {
                 </div>
             </div>
             <div className="row mb-3">
-                <label htmlFor='1' className='col-sm-2 col-sm-form-label'>Registration date</label>
+                <label className='col-sm-2 col-sm-form-label'>Registration date</label>
                 <div className="col-sm-10">
                     {user.created_at.slice(0, 10)}
                 </div>
             </div>
             <div className="row mb-3">
-                <label htmlFor='1' className='col-sm-2 col-sm-form-label'>Email verified</label>
+                <label className='col-sm-2 col-sm-form-label'>Email verified</label>
                 <div className="col-sm-10">
                     {(user.email_verified_at) ? ("Verified"):("Not verified")}
                 </div>

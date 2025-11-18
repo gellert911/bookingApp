@@ -59,12 +59,12 @@ Route::get("/booking", function () {
     return view("booking");
 });
 
-Route::get("/booking/get_free_slots/{date}", [BookingController::class, "getFreeSlots"]);
-Route::post("/booking/create_appointment", [BookingController::class, "createAppointment"]);
+Route::get("/booking/slots", [BookingController::class, "getFreeSlots"]);
+Route::post("/appointments", [BookingController::class, "createAppointment"]);
 
-Route::get("/appointments/get_appointments/{employee_id}/{view}", [AppointmentController::class, "getAppointments"]);
-Route::get("/appointments/get_appointment/{id}", [AppointmentController::class, "getAppointment"]);
-Route::delete("appointments/{id}/delete", [AppointmentController::class, "deleteAppointment"]);
+Route::get("/appointments", [AppointmentController::class, "getAppointments"]);
+Route::get("/appointments/{id}", [AppointmentController::class, "getAppointment"]);
+Route::delete("/appointments/{id}/delete", [AppointmentController::class, "deleteAppointment"]);
 Route::patch("/appointments/{id}/cancel", [AppointmentController::class, "cancelAppointment"]);
 
 Route::post('/logout', function () {
@@ -74,7 +74,7 @@ Route::post('/logout', function () {
     return redirect('/');
 })->name('logout');
 
-Route::post("/admin/settings/update_schedule", [ScheduleController::class, "updateSchedule"]);
-Route::get("/admin/settings/get_schedule/{employee_id}", [ScheduleController::class, "getSchedule"]);
+Route::put("/schedules/{employee_id}", [ScheduleController::class, "updateSchedule"]);
+Route::get("/schedules/{employee_id}", [ScheduleController::class, "getSchedule"]);
 
 ?>

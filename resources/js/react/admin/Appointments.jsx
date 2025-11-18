@@ -21,7 +21,7 @@ function Appointments() {
         //setLoading(true)
         console.log("loading -> " + dateStart + " - " + dateEnd)
         try {
-            const response = await fetch(`/appointments/get_appointments/1/${loadData.view}?start=${loadData.dateStart}&end=${loadData.dateEnd}`, {
+            const response = await fetch(`/appointments?employee_id=1&start=${loadData.dateStart}&end=${loadData.dateEnd}&view=${view}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',

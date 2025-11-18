@@ -17,11 +17,10 @@ function Booking () {
         //setLoading(true);
 
         try {
-            const response = await fetch(`/booking/get_free_slots/${selectedDate}`, {
+            const response = await fetch(`/booking/slots?date=${selectedDate}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
             });
 

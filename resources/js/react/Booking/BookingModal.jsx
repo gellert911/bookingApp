@@ -12,7 +12,7 @@ function BookingModal ( { selectedSlot, onBooking }) {
             comment: comment,
         }
 
-        const response = await fetch("booking/create_appointment", {
+        const response = await fetch("/appointments", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

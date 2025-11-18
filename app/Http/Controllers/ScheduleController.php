@@ -14,10 +14,9 @@ use Exception;
 
 class ScheduleController extends Controller {
 
-    public function updateSchedule(Request $request) {
-        $schedule = Schedule::where("employee_id", $request->input("employee_id"))->get();
+    public function updateSchedule(Request $request, $employeeId) {
+        $schedule = Schedule::where("employee_id", $employeeId)->get();
         $scheduleData = $request->input("schedule");
-        $employeeId = $request->input("employee_id");
 
         if (count($schedule) != 7) {
 

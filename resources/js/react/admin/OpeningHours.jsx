@@ -10,15 +10,15 @@ function OpeningHours () {
 
     const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
-    async function updateSchedule() {
+    const updateSchedule = async () => {
         const updateData = {
             employee_id: 1,
             schedule: openingHours,
         }
 
         try {
-            const response = await fetch("/admin/settings/update_schedule", {
-                method: "POST",
+            const response = await fetch("/schedules/1", {
+                method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -38,16 +38,14 @@ function OpeningHours () {
         }
     }
 
-    async function loadSchedule() {
-
+    const loadSchedule = async () => {
         setLoading(true);
 
         try {
-            const response = await fetch("/admin/settings/get_schedule/1", {
+            const response = await fetch("/schedules/1", {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
             });
 
@@ -58,8 +56,8 @@ function OpeningHours () {
             } else {
                 console.log(result.message)
             }
-        } catch ($e) {
-            console.error($e)
+        } catch (e) {
+            console.error(e)
         } finally {
             setLoading(false);
         }
@@ -82,14 +80,7 @@ function OpeningHours () {
             closed: !!item.closed
         }));
     }
-
-    function showModal(modalName) {
-        setTimeout(() => {
-            const modal = new bootstrap.Modal(document.getElementById(modalName))
-            modal.show()
-        }, 50);
-    }
-
+    
     useEffect(() => {
         loadSchedule();
     }, [])
@@ -99,7 +90,7 @@ function OpeningHours () {
         <div className="row mb-3">
             <h5>Opening hours</h5>
 
-            <button className="btn btn-primary" onClick={() => showModal("editOpeningHours")} data-bs-target="#editOpeningHours">Employee ➔</button>
+            <a onClick={() => showModal("editOpeningHours")} data-bs-target="#editOpeningHours">Employee ➔</a>
         </div>
         <div className="modal fade" id="editOpeningHours" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div className="modal-dialog">

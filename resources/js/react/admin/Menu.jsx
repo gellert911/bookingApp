@@ -11,7 +11,7 @@ function Menu ({selectedMenu, setSelectedMenu}) {
                     <li key={index} className="nav-item">
                         {(selectedMenu === index) ? 
                             (<a className="btn btn-outline-primary active">{menu}</a>):
-                            (<a className="btn text-light-emphasis" onClick={() => setSelectedMenu(index)}>{menu}</a>)
+                            (<a className="btn text-dark-emphasis" onClick={() => setSelectedMenu(index)}>{menu}</a>)
                         }
                     </li>
                 ))}

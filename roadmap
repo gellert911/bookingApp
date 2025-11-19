@@ -1,8 +1,10 @@
 + megcsinalni h ne lehessen kijelentkezve foglalni X
 + adminpanel menu javitas X
 + user osszekapcsolasa a foglalassal, adminpanelbol latszodjon h ki foglalta, es a teloszamot is X
++ opening hours REST-esitese X
 
-+ opening hours REST-esitese
++ opening hours bugfix ha ures a tabla tolti a semmit;
+
 + foglalasnal kerje a telefonszamot es a nevet is ha nincsen beallitva mar
 + beallitasok megcsinalasa
 + employee hozzaadas (kesobb?)

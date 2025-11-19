@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Schedule;
 use App\Http\Controllers\Controller;
+use App\Services\ScheduleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -14,75 +15,29 @@ use Exception;
 
 class ScheduleController extends Controller {
 
+    private $service;
+
+    public function __construct()
+    {
+        $this->service = new ScheduleService;
+    }
+
     public function updateSchedule(Request $request, $employeeId) {
-        $schedule = Schedule::where("employee_id", $employeeId)->get();
-        $scheduleData = $request->input("schedule");
-
-        if (count($schedule) != 7) {
-
-            try {
-                 $day_of_week = 0;
-                foreach ($request->input("schedule") as $day) {
-                    Schedule::create([
-                        "employee_id" => $employeeId,
-                        "day_of_week" => $day_of_week,
-                        "open_at" => gmdate("H:i", $day["open_at"]),
-                        "close_at" => gmdate("H:i", $day["close_at"]),
-                        "closed" => $day["closed"]
-                    ]);
-
-                    $day_of_week++;
-                }
-                return response()->json(["success" => true, "message" => __("schedule.update_successful")]);
-            } catch (Exception $e) {
-                Log::error("Schedule update error: " . $e->getMessage());
-            }
-        } else {
-            try {
-                $day_of_week = 0;
-                foreach ($scheduleData as $day) {
-                    Schedule::where("employee_id", $employeeId)
-                    ->where("day_of_week", $day_of_week)
-                    ->update([
-                        "open_at" => $day["open_at"],
-                        "close_at" => $day["close_at"],
-                        "closed" => $day["closed"],
-                    ]);
-
-                    $day_of_week++;
-                }
-
-                return response()->json(["success" => true, "message" => __("schedule.update_successful")]);
-            } catch (Exception $e) {
-                Log::error("Schedule update error: " . $e->getMessage());
-            }
+        $schedule = $this->service->updateSchedule($employeeId, $request->input("schedule"));
+        
+        if($schedule) {
+            return response()->json(["success" => true, "message" => __("schedule.update_successful")]);
         }
+
         return response()->json(["success" => false, "message" => __("schedule.update_error")]);
     }
 
     public function getSchedule($employeeId) {
-
-        try {
-            $schedule = Schedule::where("employee_id", $employeeId)->get();
+        $schedule = $this->service->getSchedule($employeeId);
+        if ($schedule) {
             return response()->json(["success" => true, "message" => $employeeId, "result" => $schedule]);
-        } catch (Exception $e) {
-            Log::error("Schedule load: " . $e->getMessage());
         }
         return response()->json(["success" => false, "message" => __("schedule.update_error")]);
-    }
-
-
-    public function getFreeSlots(Request $request) {
-
-        $today = new DateTime();
-        $schedule = Schedule::where("employee_id", 1)
-            ->where("day_of_week", $today->format("N")-1)
-            ->get();
-
-        $slots = $this->sliceInterval($today->format("Y-m-d"), $schedule->open_at, $schedule->close_at);
-
-
-        return response()->json(["success" => true, "message" => $slots]);
     }
 }
 

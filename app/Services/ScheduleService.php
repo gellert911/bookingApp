@@ -11,7 +11,7 @@ class ScheduleService {
         try {
             $schedule = Schedule::where("employee_id", $employeeId)->get();
             
-            if (!$schedule) {
+            if ($schedule->isEmpty()) {
                 $schedule = $this->createSchedule($employeeId);
             }
 
@@ -24,12 +24,12 @@ class ScheduleService {
 
     private function createSchedule($employeeId, $values = null) {
         try {
-            for ($day_of_week=0; $day_of_week<6; $day_of_week++) {
+            for ($day_of_week=0; $day_of_week<7; $day_of_week++) {
                 Schedule::create([
                     "employee_id" => $employeeId,
                     "day_of_week" => $day_of_week,
-                    "open_at" => gmdate("H:i", ($values ? $values[$day_of_week]["open_at"]:"08:00")),
-                    "close_at" => gmdate("H:i", ($values ? $values[$day_of_week]["close_at"]:"16:00")),
+                    "open_at" => ($values ? $values[$day_of_week]["open_at"]:"08:00"),
+                    "close_at" => ($values ? $values[$day_of_week]["close_at"]:"16:00"),
                     "closed" => ($values ? $values[$day_of_week]["closed"]:1),
                 ]);
             }

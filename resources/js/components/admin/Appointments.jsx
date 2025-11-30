@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AppointmentsDatepicker from './Appointments/AppointmentsDatepicker';
+import { getAppointments, deleteAppointment } from "@/api/appointment";
 
 function Appointments() {
     const now = new Date()
@@ -12,24 +13,17 @@ function Appointments() {
     const [loading, setLoading] = useState(false);
 
     async function loadAppointments(dateStart, dateEnd, view = 'week') {
-        const loadData = {
-            dateStart: dateStart.toISOString().slice(0, 10),
-            dateEnd: dateEnd.toISOString().slice(0, 10),
+        const filters = {
+            employee_id: 1,
+            start: dateStart.toISOString().slice(0, 10),
+            end: dateEnd.toISOString().slice(0, 10),
             view: view,
         }
 
         //setLoading(true)
         console.log("loading -> " + dateStart + " - " + dateEnd)
         try {
-            const response = await fetch(`/appointments?employee_id=1&start=${loadData.dateStart}&end=${loadData.dateEnd}&view=${view}`, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-            });
-
-            const result = await response.json();
+            const result = await getAppointments(filters);
 
             if (result.success) {
                 setAppointments(result.message)
@@ -45,17 +39,9 @@ function Appointments() {
 
     }
 
-    async function deleteAppointment(id) {
+    const handleDelete = async (id) => {
         try {
-            const response = await fetch(`appointments/${id}/delete`, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-            })
-
-            const result = await response.json()
+            const result = await deleteAppointment(id);
 
             if (result.success) {
                 loadAppointments(currentRange[0], currentRange[1])
@@ -80,7 +66,7 @@ function Appointments() {
                 setCurrentView={setCurrentView}
                 loader={loadAppointments} 
                 appointments={appointments} 
-                onDelete={deleteAppointment}/>
+                onDelete={handleDelete}/>
             )}
 
         </div>

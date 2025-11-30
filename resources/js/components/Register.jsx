@@ -1,37 +1,29 @@
 import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
+import { Link, useNavigate } from 'react-router-dom';
 import { showAlert } from '@/utility/alert';
+import { register } from '../api/auth';
 
 function Register() {
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
 
     const handleRegister = async (e) => {
 
         e.preventDefault();
 
-        const registerData = {
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-        }
-
         setLoading(true);
 
         try {
-
-            const response = await fetch("/api/register", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(registerData),
-            });
-
-            const result = await response.json();
+            const result = await register({email, password});
 
             console.error(result);
 
             if (result.success) {
                 showAlert(result.message, "success")
+                navigate("/login")
             } else {
                 showAlert(result.message, "error")
             }
@@ -50,12 +42,12 @@ function Register() {
                 <div className="card-body">
                     <div className="mb-3">
                         <label htmlFor="email">Email</label>
-                        <input type="email" className="form-control" id="email" placeholder="Email" />
+                        <input type="email" className="form-control" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password">Password</label>
                         <div className="input-group">
-                            <input type="password" className="form-control" id="password" placeholder="Password" />
+                            <input type="password" className="form-control" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                             <span className="input-group-text"><i className="fa-solid fa-eye fa-fw" id="togglePw"></i></span>
                         </div>
                     </div>
@@ -69,14 +61,11 @@ function Register() {
                       ) : (
                         <button type="submit" className="btn btn-primary w-100 mb-1">Register</button>
                       )}
-                    <a href="/login" className="btn btn-secondary w-100 mb-1" >Login</a>
+                    <Link to="/login" className="btn btn-secondary w-100 mb-1" >Login</Link>
                 </div>
             </div>
         </form>
     );
 }
 
-
-const container = document.getElementById('app');
-const root = createRoot(container);
-root.render(<Register />);
+export default Register;

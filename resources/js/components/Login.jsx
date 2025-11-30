@@ -1,41 +1,43 @@
-import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { showAlert } from '@/utility/alert';
+import { UserContext } from '../context/UserContext';
+import { login } from '../api/auth';
 
 function Login() {
     const [loading, setLoading] = useState(false);
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const { setUser } = useContext(UserContext);
+    const navigate = useNavigate()
 
     const handleLogin = async (e) => {
 
         e.preventDefault();
 
-        const loginData = {
-            email: document.getElementById("email").value,
-            password: document.getElementById("pw").value
-        }
-
         setLoading(true);
         
         try {
-            const response = await fetch("/login", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify(loginData),
-            });
-
-            const result = await response.json();
+            const result = await login({email, password});
 
             if (result.success) {
+                const csrfRefresh = await fetch("/csrf-refresh", {credentials: "include"})
+                const newCsrf = await csrfRefresh.json()
+
+                document.querySelector('meta[name="csrf-token"]').setAttribute("content", newCsrf.token);
+
+                setUser(result.user)
                 showAlert(result.message, "success")
-                window.location.href = result.redirect_url
+    
+                navigate("/")
             } else {
                 showAlert(result.message, "error")
             }
-        } catch ($e) {
-            console.error($e)
+
+        } catch (e) {
+            console.error(e)
         } finally {
             setLoading(false);
         }
@@ -50,12 +52,12 @@ function Login() {
                 <div className="card-body">
                     <div className="mb-3">
                         <label htmlFor="email">Email</label>
-                        <input type="text" className="form-control" id="email" placeholder="Email" />
+                        <input type="text" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="pw">Password</label>
+                        <label>Password</label>
                         <div className="input-group">
-                            <input type="password" className="form-control" id="pw" placeholder="Password" />
+                            <input type="password" className="form-control" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                             <span className="input-group-text"><i className="fa-solid fa-eye fa-fw" id="togglePw"></i></span>
                         </div>
                     </div>
@@ -70,7 +72,7 @@ function Login() {
                       ) : (
                         <button type="submit" className="btn btn-primary w-100 mb-1">Login</button>
                       )}
-                    <a href="/register"><button type="button" className="btn btn-secondary w-100 mb-1">Register</button></a>
+                    <Link to="/register" className="btn btn-secondary w-100 mb-1">Register</Link>
                 </div>
             </div>
         </form>
@@ -78,7 +80,4 @@ function Login() {
     );
 }
 
-
-const container = document.getElementById('login-root');
-const root = createRoot(container);
-root.render(<Login />);
+export default Login;

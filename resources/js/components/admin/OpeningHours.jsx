@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TimePicker from 'react-bootstrap-time-picker';
 import { showAlert } from '@/utility/alert';
 import { showModal } from '@/utility/modal';
+import { updateSchedule, getSchedule } from '@/api/schedule';
 
 function OpeningHours () {
     const [openingHours, setOpeningHours] = useState([])
@@ -10,23 +11,9 @@ function OpeningHours () {
 
     const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
-    const updateSchedule = async () => {
-        const updateData = {
-            employee_id: 1,
-            schedule: openingHours,
-        }
-
+    const handleUpdate = async () => {
         try {
-            const response = await fetch("/schedules/1", {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify(updateData),
-            });
-
-            const result = await response.json();
+            const result = await updateSchedule(1, {schedule: openingHours});
 
             if (result.success) {
                 showAlert(result.message, "success")
@@ -42,14 +29,7 @@ function OpeningHours () {
         setLoading(true);
 
         try {
-            const response = await fetch("/schedules/1", {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const result = await response.json();
+            const result = await getSchedule(1);
 
             if (result.success) {
                 setOpeningHours(prepareData(result.result))
@@ -154,7 +134,7 @@ function OpeningHours () {
 
                     </div>
                     <div className="modal-footer">
-                        <button className="btn btn-primary" onClick={() => updateSchedule()} data-bs-dismiss="modal" data-bs-target="editOpeningHours">Save</button>
+                        <button className="btn btn-primary" onClick={() => handleUpdate()} data-bs-dismiss="modal" data-bs-target="editOpeningHours">Save</button>
                     </div>
                 </div>
             </div>

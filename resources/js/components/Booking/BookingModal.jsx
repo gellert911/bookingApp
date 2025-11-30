@@ -1,27 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { showAlert } from '@/utility/alert';
+import { createAppointment } from '../../api/appointment';
+import { useNavigate } from 'react-router-dom';
 
 function BookingModal ( { selectedSlot, onBooking }) {
 
+    const navigate = useNavigate()
+
     async function bookAppointment(date, start_at, end_at, comment) {
-        const appointmentData = {
-            employee_id: 1,
-            date: date,
-            start_at: start_at,
-            end_at: end_at,
-            comment: comment,
-        }
+        const employee_id = 1;
 
-        const response = await fetch("/appointments", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify(appointmentData)
-        });
-
-        const result = await response.json()
+        const result = await createAppointment({employee_id, date, start_at, end_at, comment})
 
         if (result.success) {
             showAlert(result.message, "success")
@@ -30,9 +19,7 @@ function BookingModal ( { selectedSlot, onBooking }) {
             showAlert(result.message, "danger")
 
             if (result.redirect) {
-                setTimeout(() => {
-                    window.location.href = "/login";
-                }, 500)
+                navigate('/login')
             }
         }
     }

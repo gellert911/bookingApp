@@ -2,8 +2,9 @@
 + adminpanel menu javitas X
 + user osszekapcsolasa a foglalassal, adminpanelbol latszodjon h ki foglalta, es a teloszamot is X
 + opening hours REST-esitese X
++ opening hours bugfix ha ures a tabla tolti a semmit; X
 
-+ opening hours bugfix ha ures a tabla tolti a semmit;
++react router bevezetese, hogy rendes SPA legyen + emiatt API ujratervezes?
 
 + foglalasnal kerje a telefonszamot es a nevet is ha nincsen beallitva mar
 + beallitasok megcsinalasa

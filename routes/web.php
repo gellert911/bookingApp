@@ -19,13 +19,9 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->middleware("auth");
-
-Route::get("/admin", function () {
+/*Route::get("/admin", function () {
     return view("admin.login");
-});
+});*/
 
 Route::middleware(["auth", "admin"])->group(
     function() {
@@ -35,29 +31,33 @@ Route::middleware(["auth", "admin"])->group(
     }
 );
 
-Route::get("/login", function () {
+/*Route::get("/login", function () {
     return view("login");
-})->name("login");
+})->name("login");*/
+
+Route::get("/user", function () {
+    return auth()->user();
+});
 
 Route::post("/login", [LoginController::class, "login"]);
 
-Route::get("/register", function () {
+/*Route::get("/register", function () {
     return view("register");
-});
+});*/
 
-Route::get("/home", function () {
+/*Route::get("/home", function () {
     $user = Auth::user();
     return view("home", compact('user'));
-})->middleware('auth')->name('home');
+})->middleware('auth')->name('home');*/
 
 Route::get("/profile/{id}", [ProfileController::class, 'show']);
 Route::patch("/profile/{id}/{field}", [ProfileController::class, "partialUpdate"]);
 Route::put("profile/{id}", [ProfileController::class, "update"]);
 Route::get("users/{id}/appointments", [AppointmentController::class, "getAppointmentsByUser"]);
 
-Route::get("/booking", function () {
+/*Route::get("/booking", function () {
     return view("booking");
-});
+});*/
 
 Route::get("/booking/slots", [BookingController::class, "getFreeSlots"]);
 Route::post("/appointments", [BookingController::class, "createAppointment"]);
@@ -71,10 +71,18 @@ Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
-    return redirect('/');
+    return response()->json(["success" => true]);
 })->name('logout');
+
+Route::get("/csrf-refresh", function () {
+    return response()->json(["token" => csrf_token()]);
+});
 
 Route::put("/schedules/{employee_id}", [ScheduleController::class, "updateSchedule"]);
 Route::get("/schedules/{employee_id}", [ScheduleController::class, "getSchedule"]);
+
+Route::get('/{any}', function () {
+    return view('layouts.app');
+})->where('any', '.*');
 
 ?>

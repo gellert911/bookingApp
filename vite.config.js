@@ -11,15 +11,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/js/app.js',
-                'resources/js/react/Register.jsx',
-                'resources/js/react/Admin.jsx',
-                'resources/js/react/Booking.jsx',
-                'resources/js/react/Home.jsx',
-                'resources/js/react/Navbar.jsx',
-                'resources/js/react/Profile.jsx',
-                'resources/js/react/Login.jsx',
-                
+                'resources/js/app.jsx',
             ],
             refresh: true,
             react: true,

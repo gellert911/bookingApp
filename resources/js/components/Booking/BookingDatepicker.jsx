@@ -29,7 +29,7 @@ function BookingDatepicker ({selectedDate, setSelectedDate}) {
             <p>Datepicker {selectedDate}</p>
             <div className="d-flex gap-3 mb-3">
                 {days.map((day, index) => (
-                    <button className={`btn btn-outline-primary flex-fill ${(day.date === selectedDate) ? "active" : ""}`} onClick={() => setSelectedDate(day.date)}>
+                    <button key={index} className={`btn btn-outline-primary flex-fill ${(day.date === selectedDate) ? "active" : ""}`} onClick={() => setSelectedDate(day.date)}>
                         <span className='fw-bold'>{day.dayName}</span><br />
                         <span>{day.day}</span>
                     </button>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
 import { showAlert } from '@/utility/alert';
+import { getAvailableSlots } from '../api/appointment';
+
 import BookingModal from './Booking/BookingModal';
 import BookingDatepicker from './Booking/BookingDatepicker';
 import BookingList from './Booking/BookingList';
@@ -8,35 +9,25 @@ import BookingList from './Booking/BookingList';
 function Booking () {
 
     const now = new Date()
+    const [loading, setLoading] = useState(true);
     const [availableSlots, setAvailableSlots] = useState([]);
     const [selectedSlot, setSelectedSlot] = useState(null);
     const [selectedDate, setSelectedDate] = useState(now.toISOString().slice(0, 10)); 
 
-    async function getSlots() {
-       
-        //setLoading(true);
+    const getSlots = async () => {
 
         try {
-            const response = await fetch(`/booking/slots?date=${selectedDate}`, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const result = await response.json();
+            const result = await getAvailableSlots(selectedDate);
 
             if (result.success) {
-                //setOpeningHours(prepareData(result.result))
                 setAvailableSlots(result.message);
-                //showAlert(result.message, "success");
             } else {
                 console.log(result.message);
             }
-        } catch ($e) {
-            console.log($e)
+        } catch (e) {
+            console.log(e)
         } finally {
-            //setLoading(false);
+            setLoading(false);
         }
     
     }
@@ -50,6 +41,11 @@ function Booking () {
 
             <BookingDatepicker selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
 
+            {loading && (
+                <div className="spinner-border spinner-border-sm" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            )}
             <BookingList availableSlots={availableSlots} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot}/>
 
             {selectedSlot && (
@@ -59,6 +55,4 @@ function Booking () {
     )
 }
 
-const container = document.getElementById('app');
-const root = createRoot(container);
-root.render(<Booking />);
+export default Booking;

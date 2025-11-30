@@ -34,7 +34,7 @@ class LoginController extends Controller {
 
             if ($login) {
                 session()->regenerate();
-                return response()->json(["success" => true, "message" => "siker", "redirect_url" => "/"]);
+                return response()->json(["success" => true, "message" => "siker", "user" => auth()->user()]);
             }
 
             return response()->json(["success" => false, "message" => __("auth.password")]);

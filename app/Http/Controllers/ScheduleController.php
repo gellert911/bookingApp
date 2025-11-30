@@ -33,7 +33,6 @@ class ScheduleController extends Controller {
     }
 
     public function getSchedule($employeeId) {
-        //return response()->json(["success" => false, "message" => "lekeres"]);
         $schedule = $this->service->getSchedule($employeeId);
         if ($schedule) {
             return response()->json(["success" => true, "message" => $employeeId, "result" => $schedule]);

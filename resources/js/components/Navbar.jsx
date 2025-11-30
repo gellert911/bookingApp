@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
-const initialData = window.__INITIAL_DATA__;
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../context/UserContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../api/auth';
 
 function Navbar () {
 
-    const user = initialData.user;
+    const {user, loading, setUser} = useContext(UserContext);
 
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            const result = await logout();
+
+            if (result.success) {
+                setUser(null)
+
+                const csrfRefresh = await fetch("/csrf-refresh", {credentials: "include"})
+                const newCsrf = await csrfRefresh.json()
+
+                document.querySelector('meta[name="csrf-token"]').setAttribute("content", newCsrf.token);
+                
+                navigate("/")
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
     const menus = ["Home", "Appointments", "Appointments"]
     //const [selectedPage, setSelectedPage] = useState(0);
 
@@ -19,10 +40,10 @@ function Navbar () {
                     <a className="navbar-brand col-lg-3 me-0" href="#">BookingApp</a>
                     <ul className="navbar-nav col-lg-6 justify-content-lg-center">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="/">Home</a>
+                            <Link to="/" className="nav-link active" aria-current="page">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/booking">Booking</a>
+                            <Link to="/booking" className="nav-link">Booking</Link>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#">Pricing</a>
@@ -37,22 +58,17 @@ function Navbar () {
                                 <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{user.full_name}</a>
 
                                 <ul className="dropdown-menu dropdown-menu-end">
-                                    <li><a className='dropdown-item' href={`/profile/${user.id}`}>Profile</a></li>
+                                    <li><Link to="/profile" className='dropdown-item'>Profile</Link></li>
                                     <li>
-                                        <form action="/logout" method="post">
-                                            <input type="hidden" name="_token" 
-                                                value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}
-                                            />
-                                            <button className="dropdown-item" type='submit'>Logout</button>
-                                        </form>
+                                        <button className="dropdown-item" onClick={() => handleLogout()}>Logout</button>
                                     </li>
                                 </ul>
                             </div>
                         ):
                         (   
                             <div>
-                                <a href="/login" className="btn btn-primary mx-1">Log in</a>
-                                <a href="/register" className="btn btn-outline-secondary">Sign up</a>
+                                <Link to="/login" className="btn btn-primary mx-1">Log in</Link>
+                                <Link to="/register" className="btn btn-outline-secondary">Sign up</Link>
                             </div>
                         )}
                     </div>
@@ -62,6 +78,4 @@ function Navbar () {
     );
 }
 
-const container = document.getElementById('navbar-root');
-const root = createRoot(container);
-root.render(<Navbar />);
+export default Navbar;

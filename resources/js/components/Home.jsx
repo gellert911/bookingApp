@@ -1,5 +1,5 @@
 import React from "react";
-import { createRoot } from 'react-dom/client';
+import { Link } from 'react-router-dom';
 
 function Home () {
 
@@ -13,7 +13,7 @@ function Home () {
             </div>
 
             <div className="d-grid gap-2 d-sm-flex justify-content-center">
-                <a className='btn btn-primary btn-lg' href='/booking'>Book now</a>
+                <Link to="/booking" className='btn btn-primary btn-lg'>Book now</Link>
                 <button className="btn btn-outline-secondary btn-lg">Prices</button>
             </div>
         </div>
@@ -21,6 +21,4 @@ function Home () {
     )
 }
 
-const container = document.getElementById('app');
-const root = createRoot(container);
-root.render(<Home />);
+export default Home;

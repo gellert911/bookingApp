@@ -27,7 +27,7 @@ function BookingList ( { availableSlots, selectedSlot, setSelectedSlot } ) {
                             <h5 className="card-title">{formatDate(slot.date)}</h5>
                             <p className="card-text">{slot.start.slice(0, 5)} ➔ {slot.end.slice(0, 5)}</p>
                             <a href="#" className="btn btn-primary" onClick={() => {setSelectedSlot(slot); showModal("bookAppointment");}} data-bs-target="bookAppointtment">Book</a>
-
+                            
                         </div>
                     </div>
                 </div>

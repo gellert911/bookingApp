@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { showAlert } from '@/utility/alert';
 import AppointmentsList from "./Appointments/AppointmentsList";
+import { cancelAppointment, getUserAppointments } from "../../api/appointment";
 
 const Appointments = ( { user } ) => {
     const [loading, setLoading] = useState(false)
@@ -13,20 +14,11 @@ const Appointments = ( { user } ) => {
     const fetchAppointments = async () => {
         setLoading(true)
         try {
-            const response = await fetch(`/users/${user.id}/appointments`, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-            })
-
-            const result = await response.json();
+            const result = await getUserAppointments(user.id);
 
             if (result.success) {
                 setInactiveAppointments(filterAppointments(result.message, "inactive"));
                 setActiveAppointments(filterAppointments(result.message, "active"));
-
             } else {
                 showAlert(result.message, "danger");
             }
@@ -53,16 +45,7 @@ const Appointments = ( { user } ) => {
         if (!selectedAppointment) return;
 
          try {
-            const response = await fetch(`/appointments/${selectedAppointment.id}/cancel`, {
-                method: "PATCH",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({"action": "cancel_appointment"})
-            })
-
-            const result = await response.json();
+            const result = await cancelAppointment(selectedAppointment.id);
 
             if (result.success) {
                 showAlert(result.message, "success")

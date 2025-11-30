@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
 import { showAlert } from '@/utility/alert';
 import Menu from './admin/Menu';
 import Settings from './admin/Settings';
@@ -32,6 +31,4 @@ function Admin() {
    )
 }
 
-const container = document.getElementById('app');
-const root = createRoot(container);
-root.render(<Admin />);
+export default Admin;

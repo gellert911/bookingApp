@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { showAlert } from '@/utility/alert';
+import { updateUser, updateUserPassword } from "@/api/user";
 
-function Settings ( {user} ) {
+function Settings ( { user, onEdit } ) {
     //const [editing, setEditing] = useState(false)
 
     const defaultInputData = {
@@ -35,16 +36,7 @@ function Settings ( {user} ) {
     const handleSave = async  (type = "all") => {
         if (type == "all") {
             try {
-                const response = await fetch(`/profile/${user.id}`, {
-                    method: "PUT",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify(inputData)
-                })
-
-                const result = await response.json();
+                const result = await updateUser(user.id, inputData);
 
                 if (result.success) {
                     showAlert(result.message, "success");
@@ -61,16 +53,7 @@ function Settings ( {user} ) {
             }
             if (passwordData.newPassword == passwordData.newPasswordConfirm) {
                 try {
-                    const response = await fetch(`/profile/${user.id}/password`, {
-                        method: "PATCH",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({password: passwordData.newPassword})
-                    })
-
-                    const result = await response.json()
+                    const result = await updateUserPassword(user.id, passwordData.newPassword)
 
                     if (result.success) {
                         setPasswordData({
@@ -89,6 +72,7 @@ function Settings ( {user} ) {
                 }
             }
         }
+        onEdit();
     }
 
 

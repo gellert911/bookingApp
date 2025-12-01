@@ -32,6 +32,25 @@ export async function updateUser(id, data) {
     }
 }
 
+export async function partialUpdateUser(id, data) {
+     try {
+        const response = await fetch(`/profile/${id}`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(data)
+        })
+
+        const result = await response.json();
+
+        return result;
+    } catch (e) {
+        console.error(e)
+    }
+}
+
 export async function updateUserPassword(id, newPassword) {
     try {
         const response = await fetch(`/profile/${id}/password`, {

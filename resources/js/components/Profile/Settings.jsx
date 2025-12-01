@@ -6,9 +6,9 @@ function Settings ( { user, onEdit } ) {
     //const [editing, setEditing] = useState(false)
 
     const defaultInputData = {
-        fullName: user.full_name,
-        phoneCountry: user.phone_country,
-        phoneNumber: user.phone_number,
+        full_name: user.full_name,
+        phone_country: user.phone_country,
+        phone_number: user.phone_number,
     };
 
     const [inputData, setInputData] = useState(defaultInputData);
@@ -79,79 +79,77 @@ function Settings ( { user, onEdit } ) {
     return (
         <div className="container py-1">
             <h3 className='mb-3'>Settings</h3>
+
             {!(user.full_name) && (
                 <div className="alert alert-warning" role="alert">
                     Your profile is not completed. <strong>Please complete it!</strong>
                 </div>
             )}
+
+            <h5>Profile details</h5>
             <div className="row mb-3">
-                <label htmlFor='0' className='col-sm-2 col-form-label'>Full name</label>
-                <div className="col-sm-10">
-                    <input name="fullName" type='text' className="form-control w-25" value={inputData.fullName} onChange={handleInputChange}/>
+                <div className="col-sm-6">
+                    <label className='form-label'>Full name</label>
+                    <input name="full_name" type='text' className="form-control w-75" value={inputData.full_name} onChange={handleInputChange}/>
+                </div>
+
+                <div className="col-sm-6">
+                    <label className="form-label">E-mail</label>
+                    <input className="form-control w-75" value={user.email} disabled/>
                 </div>
             </div>
 
             <div className="row mb-3">
-                <label htmlFor='0' className='col-sm-2'>E-mail</label>
-                <div className="col-sm-10">{user.email}</div>
-            </div>
-
-            <div className="row mb-3">
-                <label htmlFor='country_codeSelect' className='col-sm-2 col-form-label'>Phone number</label>
-                <div className="col-sm-10">
-                    <div className="input-group w-25">
-                        <select name="phoneCountry" id="country_codeSelect" className="form-select" value={inputData.phoneCountry} onChange={handleInputChange} style={{maxWidth: "80px"}}>
+                <div className="col-sm-6">
+                    <label className='col-form-label'>Phone number</label>
+                     <div className="input-group w-75">
+                        <select name="phone_country" id="country_codeSelect" className="form-select" value={inputData.phone_country} onChange={handleInputChange} style={{maxWidth: "80px"}}>
                             {countries.map((country, index) => (
                                <option key={index}>{country.code}</option> 
                             ))}
                         </select>
-                        <input name="phoneNumber" type="text" className="form-control" value={inputData.phoneNumber} onChange={handleInputChange}/>
+                        <input name="phone_number" type="text" className="form-control" value={inputData.phone_number} onChange={handleInputChange}/>
+                    </div>
+                </div>
+                <div className="col-sm-6">
+                    <label className='col-form-label'>Registration date</label>
+                    <div>
+                        {user.created_at.slice(0, 10)}
                     </div>
                 </div>
             </div>
+            
+            <h5>Password</h5>
 
             <div className="row mb-3">
-                <label htmlFor='1' className='col-sm-2 col-form-label'>Password</label>
-                <div className="col-sm-10">
+                <div className="col-sm-6">
                     <button className="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#changePasswordCollapse">Change password</button>
-                </div>
 
-                <div className="collapse mt-3" id="changePasswordCollapse">
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="row mb-3">
-                                <label htmlFor="" className="col-sm-2 col-form-label">New password</label>
-                                <div className="col-sm-10">
-                                    <input name="newPassword" type="password" className="form-control w-25" value={passwordData.newPassword} onChange={handlePasswordChange}/>
+                    <div className="collapse mt-3" id="changePasswordCollapse">
+                        <div className="card">
+                            <div className="card-body">
+                                <div className="row mb-3">
+                                    <label htmlFor="" className="col-sm-4 col-form-label">New password</label>
+                                    <div className="col-sm-8">
+                                        <input name="newPassword" type="password" className="form-control" value={passwordData.newPassword} onChange={handlePasswordChange}/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="row mb-3">
-                                <label htmlFor="" className="col-sm-2 col-form-label">Confirm new password</label>
-                                <div className="col-sm-10">
-                                    <input name="newPasswordConfirm" type="password" className="form-control w-25" value={passwordData.newPasswordConfirm} onChange={handlePasswordChange}/>
+                                <div className="row mb-3">
+                                    <label htmlFor="" className="col-sm-4 col-form-label">Confirm new password</label>
+                                    <div className="col-sm-8">
+                                        <input name="newPasswordConfirm" type="password" className="form-control" value={passwordData.newPasswordConfirm} onChange={handlePasswordChange}/>
+                                    </div>
                                 </div>
+                                {passwordData.newPassword != passwordData.newPasswordConfirm && (
+                                    <p className="text-danger">The passwords must match!</p>
+                                )}
                             </div>
-                            {passwordData.newPassword != passwordData.newPasswordConfirm && (
-                                <p className="text-danger">The passwords must match!</p>
-                            )}
+                                <div className="card-footer">
+                            <button className="btn btn-primary mx-1" onClick={() => handleSave("password")}>Save</button>
+                            <button className="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#changePasswordCollapse">Cancel</button>
                         </div>
-                         <div className="card-footer">
-                        <button className="btn btn-primary mx-1" onClick={() => handleSave("password")}>Save</button>
-                        <button className="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#changePasswordCollapse">Cancel</button>
+                        </div>
                     </div>
-                    </div>
-                </div>
-            </div>
-            <div className="row mb-3">
-                <label className='col-sm-2 col-sm-form-label'>Registration date</label>
-                <div className="col-sm-10">
-                    {user.created_at.slice(0, 10)}
-                </div>
-            </div>
-            <div className="row mb-3">
-                <label className='col-sm-2 col-sm-form-label'>Email verified</label>
-                <div className="col-sm-10">
-                    {(user.email_verified_at) ? ("Verified"):("Not verified")}
                 </div>
             </div>
             <hr />

@@ -51,7 +51,7 @@ Route::post("/login", [LoginController::class, "login"]);
 })->middleware('auth')->name('home');*/
 
 Route::get("/profile/{id}", [ProfileController::class, 'show']);
-Route::patch("/profile/{id}/{field}", [ProfileController::class, "partialUpdate"]);
+Route::patch("/profile/{id}", [ProfileController::class, "partialUpdate"]);
 Route::put("profile/{id}", [ProfileController::class, "update"]);
 Route::get("users/{id}/appointments", [AppointmentController::class, "getAppointmentsByUser"]);
 

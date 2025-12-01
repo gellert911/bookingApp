@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function Menu ({selectedMenu, setSelectedMenu}) {
     const menus = ["Overview", "Settings", "Opening hours", "Appointments"]
-    //const [selectedPage, setSelectedPage] = useState(0);
+    const icons = ["fa-bars-progress", "fa-gear", "fa-clock", "fa-calendar-days"]
 
     return (
         <div className="position-static d-flex flex-column flex-lg-row align-items-stretch justify-content-start p-3" style={{width: "200px"}}>
@@ -10,8 +10,14 @@ function Menu ({selectedMenu, setSelectedMenu}) {
                 {menus.map((menu, index) => (
                     <li key={index} className="nav-item">
                         {(selectedMenu === index) ? 
-                            (<a className="btn btn-outline-primary active">{menu}</a>):
-                            (<a className="btn text-dark-emphasis" onClick={() => setSelectedMenu(index)}>{menu}</a>)
+                            (<a className="btn btn-outline-primary active">
+                                <i className={`fa-solid ${icons[index]} me-2`}></i>
+                                {menu}
+                            </a>):
+                            (<a className="btn text-dark-emphasis" onClick={() => setSelectedMenu(index)}>
+                                <i className={`fa-solid ${icons[index]} me-2`}></i>
+                                {menu}
+                            </a>)
                         }
                     </li>
                 ))}

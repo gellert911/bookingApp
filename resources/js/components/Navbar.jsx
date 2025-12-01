@@ -58,9 +58,17 @@ function Navbar () {
                                 <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{user.full_name}</a>
 
                                 <ul className="dropdown-menu dropdown-menu-end">
-                                    <li><Link to="/profile" className='dropdown-item'>Profile</Link></li>
                                     <li>
-                                        <button className="dropdown-item" onClick={() => handleLogout()}>Logout</button>
+                                        <Link to="/profile" className='dropdown-item'> 
+                                            <i className="fa-regular fa-user me-2"></i>
+                                            Profile
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <button className="dropdown-item" onClick={() => handleLogout()}>
+                                            <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
+                                             Logout
+                                        </button>
                                     </li>
                                 </ul>
                             </div>

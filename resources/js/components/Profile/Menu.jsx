@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 
 function Menu ({selectedMenu, setSelectedMenu}) {
-    const menus = ["Profile settings", "Appointments"]
+    const menus = ["Account", "Appointments"]
+    const icons = ["fa-address-card", "fa-calendar-check"]
 
 
     return (
@@ -11,8 +12,14 @@ function Menu ({selectedMenu, setSelectedMenu}) {
                 {menus.map((menu, index) => (
                     <li key={index} className="nav-item">
                         {(selectedMenu === index) ? 
-                            (<a className="btn btn-outline-primary active">{menu}</a>):
-                            (<a className="btn text-light-emphasis" onClick={() => setSelectedMenu(index)}>{menu}</a>)
+                            (<a className="btn btn-outline-primary active">
+                                <i className={`fa-regular ${icons[index]} me-2`}></i>
+                                {menu}
+                            </a>):
+                            (<a className="btn text-light-emphasis" onClick={() => setSelectedMenu(index)}>
+                                <i className={`fa-regular ${icons[index]} me-2`}></i>
+                                {menu}
+                            </a>)
                         }
                     </li>
                 ))}

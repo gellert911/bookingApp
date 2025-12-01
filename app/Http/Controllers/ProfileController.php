@@ -23,22 +23,23 @@ class ProfileController extends Controller {
         }
     }
 
-    public function partialUpdate(Request $request, $id, $field) {
+    public function partialUpdate(Request $request, $id) {
         // validation
         
         $user = User::find($id);
-        $value = $request->input($field);
+
+        $allowedFields = ["password", "full_name", "phone_country", "phone_number"];
+
+        $values = $request->only($allowedFields);
 
         if ($user) {
 
-            if ($field == "password") {
-                $value = Hash::make($value);
+            if (isset($values["password"])) {
+                $values["password"] = Hash::make($values["password"]);
             }
 
             try {
-                $user->update([
-                    $field => $value,
-                ]);
+                $user->update($values);
             } catch (Exception $e) {
                 Log::error("ProfileController error: " . $e->getMessage());
                 return response()->json(["success" => false, "message" => __("auth.unknown_error")]);
@@ -51,9 +52,9 @@ class ProfileController extends Controller {
     public function update(Request $request, $id) {
 
         $validator = Validator::make($request->all(), [
-            "fullName" => "string",
-            "phoneCountry" => "max:4",
-            "phoneNumber" => "numeric|regex:/^[0-9]{1,11}$/",
+            "full_name" => "string",
+            "phone_country" => "max:4",
+            "phone_number" => "numeric|regex:/^[0-9]{1,11}$/",
         ]);
 
         if ($validator->fails()) {
@@ -66,9 +67,9 @@ class ProfileController extends Controller {
         if ($user) {
             try {
               $user->update([
-                "full_name" => $value["fullName"],
-                "phone_country" => $value["phoneCountry"],
-                "phone_number" => $value["phoneNumber"]
+                "full_name" => $value["full_name"],
+                "phone_country" => $value["phone_country"],
+                "phone_number" => $value["phone_number"]
               ]);
             } catch (Exception $e) {
                 Log::error("ProfileController error: " . $e->getMessage());

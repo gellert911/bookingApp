@@ -30,12 +30,12 @@ const Appointments = ( { user } ) => {
     }
 
     const filterAppointments = (array, scope) => {
-        const today = new Date();
+        const today = new Date().toISOString().slice(0, 10);
         let filteredAppointments = [];
         if (scope == "active") {
-            filteredAppointments = array.filter((appointment) => new Date(appointment.date) >= today && !appointment.cancelled_at);
+            filteredAppointments = array.filter((appointment) => appointment.date >= today && !appointment.cancelled_at);
         } else if (scope == "inactive") {
-            filteredAppointments = array.filter((appointment) => new Date(appointment.date) < today || appointment.cancelled_at);
+            filteredAppointments = array.filter((appointment) => appointment.date < today || appointment.cancelled_at);
         }
         
         return filteredAppointments;

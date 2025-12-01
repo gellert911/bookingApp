@@ -3,9 +3,10 @@
 + user osszekapcsolasa a foglalassal, adminpanelbol latszodjon h ki foglalta, es a teloszamot is X
 + opening hours REST-esitese X
 + opening hours bugfix ha ures a tabla tolti a semmit; X
++react router bevezetese, hogy rendes SPA legyen + emiatt API ujratervezes? X
++ foglalasnal kerje a telefonszamot es a nevet is ha nincsen beallitva mar X
 
-+react router bevezetese, hogy rendes SPA legyen + emiatt API ujratervezes?
++ foglalasnal csak idopontot lehessen nezni, ha nem v bejelentkezve irja h jelentkezz be akar egy gomb is
 
-+ foglalasnal kerje a telefonszamot es a nevet is ha nincsen beallitva mar
 + beallitasok megcsinalasa
 + employee hozzaadas (kesobb?)

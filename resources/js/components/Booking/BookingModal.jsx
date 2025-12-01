@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { UserContext } from '@/context/UserContext';
 
@@ -18,7 +18,7 @@ function BookingModal ( { selectedSlot, onBooking }) {
     const initialFormData = {
         full_name: "",
         phone_country: "",
-        phone_number: "",
+        phone_number: "+40",
     }
 
     const [formData, setFormData] = useState(initialFormData)
@@ -110,7 +110,7 @@ function BookingModal ( { selectedSlot, onBooking }) {
                             </div>
                         </div>
 
-                        {!user?.full_name && (
+                        {(user && !user?.full_name) && (
                             <div className="row mb-3">
                                 <label className='col-form-label col-sm-6'>Full name</label>
                                 <div className="col-sm-6">
@@ -119,7 +119,7 @@ function BookingModal ( { selectedSlot, onBooking }) {
                          </div>
                         )}
 
-                        {(!user?.phone_country || !user?.phone_number) && (
+                        {(user && (!user?.phone_country || !user?.phone_number)) && (
                             <div className="row mb-3">
                                 <label className='col-form-label col-sm-6'>Phone number</label>
                                 <div className="col-sm-6">
@@ -133,17 +133,22 @@ function BookingModal ( { selectedSlot, onBooking }) {
                                 </div>
                             </div>
                         )}
-
-                        <div className="row mb">
-                            <label className='col-form-label col-sm-6'>Comment</label>
-                            <div className="col-sm-6">
-                               <input type="text" className="form-control" value={comment} onChange={(e) => setComment(e.target.value)} placeholder='Optional'/>
+                        
+                        {user && (
+                            <div className="row mb">
+                                <label className='col-form-label col-sm-6'>Comment</label>
+                                <div className="col-sm-6">
+                                <input type="text" className="form-control" value={comment} onChange={(e) => setComment(e.target.value)} placeholder='Optional'/>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button className='btn btn-primary' onClick={handleBooking} disabled={loading}>Book</button>
+                        {(user) ? 
+                            (<button className='btn btn-primary' onClick={handleBooking} disabled={loading}>Book</button>):
+                            (<Link to="/login" className='btn btn-primary' onClick={() => hideModal("bookAppointment")}>Log in to continue</Link>)
+                        }
                     </div>
                 </div>
             </div>

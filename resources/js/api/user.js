@@ -53,7 +53,7 @@ export async function partialUpdateUser(id, data) {
 
 export async function updateUserPassword(id, newPassword) {
     try {
-        const response = await fetch(`/profile/${id}/password`, {
+        const response = await fetch(`/profile/${id}`, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',

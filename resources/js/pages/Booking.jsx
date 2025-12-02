@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { showAlert } from '@/utility/alert';
-import { getAvailableSlots } from '../api/appointment';
+import { getAvailableSlots } from '@/api/appointment';
 
-import BookingModal from './Booking/BookingModal';
-import BookingDatepicker from './Booking/BookingDatepicker';
-import BookingList from './Booking/BookingList';
+import BookingModal from './booking/BookingModal';
+import BookingDatepicker from './booking/BookingDatepicker';
+import BookingList from './booking/BookingList';
 
 function Booking () {
 
@@ -38,7 +38,9 @@ function Booking () {
 
     return (
         <div className="container">
-
+            
+            <h3>Available dates</h3>
+            
             <BookingDatepicker selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
 
             {loading && (

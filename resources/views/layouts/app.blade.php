@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-bs-theme="light">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,16 +12,6 @@
 </head>
 <body>
     <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
-    @auth
-        @if(auth()->user()->is_admin)
-            <div class="bg-body-secondary text-dark py-1 px-3 border-bottom">
-                <div class="container d-flex gap-3">
-                    <a href="/admin" class="text-decoration-none">Admin</a>
-                    <a href="/" class="text-decoration-none">Site</a>
-                </div>
-            </div>
-        @endif
-    @endauth
 
     <div class="content">
         <div id="app"></div>

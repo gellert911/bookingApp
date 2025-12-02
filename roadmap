@@ -5,8 +5,9 @@
 + opening hours bugfix ha ures a tabla tolti a semmit; X
 +react router bevezetese, hogy rendes SPA legyen + emiatt API ujratervezes? X
 + foglalasnal kerje a telefonszamot es a nevet is ha nincsen beallitva mar X
++ foglalasnal csak idopontot lehessen nezni, ha nem v bejelentkezve irja h jelentkezz be akar egy gomb is X
 
-+ foglalasnal csak idopontot lehessen nezni, ha nem v bejelentkezve irja h jelentkezz be akar egy gomb is
+datepickerhez kulon datum valaszto, valamint ilyen leghamarabbi idopontok
 
 + beallitasok megcsinalasa
 + employee hozzaadas (kesobb?)

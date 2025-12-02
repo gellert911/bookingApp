@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+
 import { showAlert } from '@/utility/alert';
-import AppointmentsList from "./Appointments/AppointmentsList";
-import { cancelAppointment, getUserAppointments } from "../../api/appointment";
+import { cancelAppointment, getUserAppointments } from "@/api/appointment";
+
+import AppointmentsList from "./appointments/AppointmentsList";
 
 const Appointments = ( { user } ) => {
     const [loading, setLoading] = useState(false)

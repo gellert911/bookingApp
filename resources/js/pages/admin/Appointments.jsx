@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AppointmentsDatepicker from './Appointments/AppointmentsDatepicker';
+import AppointmentsDatepicker from './appointments/AppointmentsDatepicker';
 import { getAppointments, deleteAppointment } from "@/api/appointment";
 
 function Appointments() {

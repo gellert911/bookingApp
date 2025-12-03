@@ -23,7 +23,7 @@ class LoginController extends Controller {
             return response()->json(["success" => false, "message" => $request['password']]);
         }
 
-        $userFound = User::where("email", $request["email"])->firstOrFail();
+        $userFound = User::where("email", $request["email"])->first();
 
         if (!$userFound) {
             return response()->json(["success" => false, "message" => __("auth.user_not_exists")]);

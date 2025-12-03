@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { register } from '@/api/auth';
 import { showAlert } from '@/utility/alert';
-import { register } from '../api/auth';
+import PasswordInput from '@/components/ui/PasswordInput';
 
 function Register() {
     const [loading, setLoading] = useState(false);
@@ -11,7 +13,7 @@ function Register() {
     const [password, setPassword] = useState("")
 
     const handleRegister = async (e) => {
-
+        if (loading) return;
         e.preventDefault();
 
         setLoading(true);
@@ -46,10 +48,7 @@ function Register() {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password">Password</label>
-                        <div className="input-group">
-                            <input type="password" className="form-control" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                            <span className="input-group-text"><i className="fa-solid fa-eye fa-fw" id="togglePw"></i></span>
-                        </div>
+                        <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                 </div>
                 <div className="card-footer">

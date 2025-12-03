@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '@/context/UserContext';
+import { login } from '@/api/auth';
+
 import { showAlert } from '@/utility/alert';
-import { UserContext } from '../context/UserContext';
-import { login } from '../api/auth';
+import PasswordInput from '@/components/ui/PasswordInput';
 
 function Login() {
     const [loading, setLoading] = useState(false);
@@ -56,10 +58,7 @@ function Login() {
                     </div>
                     <div className="mb-3">
                         <label>Password</label>
-                        <div className="input-group">
-                            <input type="password" className="form-control" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                            <span className="input-group-text"><i className="fa-solid fa-eye fa-fw" id="togglePw"></i></span>
-                        </div>
+                        <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                     <small><a href="">Forgot my password</a></small>
                 </div>

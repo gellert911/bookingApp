@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { showAlert } from '@/utility/alert';
 import { updateUser, updateUserPassword } from "@/api/user";
 
+import PasswordInput from "@/components/ui/PasswordInput";
+
 function Settings ( { user, onEdit } ) {
     //const [editing, setEditing] = useState(false)
 
@@ -17,6 +19,8 @@ function Settings ( { user, onEdit } ) {
         newPassword: "",
         newPasswordConfirm: ""
     })
+    const [newPassword, setNewPassword] = useState("");
+    const [newPasswordConfirm, setNewPasswordConfirm] = useState("")
 
     const countries = [
         {name: "RO", code: '+40'},
@@ -47,19 +51,17 @@ function Settings ( { user, onEdit } ) {
                 console.log(e)
             }
         } else if (type == "password") {
-            if (passwordData.newPassword == "" && passwordData.newPasswordConfirm == "") {
+            if (newPassword == "" && newPasswordConfirm == "") {
                 showAlert("Field cannot be empty!", "danger")
                 return;
             }
-            if (passwordData.newPassword == passwordData.newPasswordConfirm) {
+            if (newPassword == newPasswordConfirm) {
                 try {
-                    const result = await updateUserPassword(user.id, passwordData.newPassword)
+                    const result = await updateUserPassword(user.id, newPassword)
 
                     if (result.success) {
-                        setPasswordData({
-                            newPassword: "",
-                            newPasswordConfirm: "",
-                        })
+                        setNewPassword("")
+                        setNewPasswordConfirm("")
                         showAlert(result.message, "success");
 
                         const collapse = document.getElementById("changePasswordCollapse")
@@ -131,16 +133,16 @@ function Settings ( { user, onEdit } ) {
                                 <div className="row mb-3">
                                     <label htmlFor="" className="col-sm-4 col-form-label">New password</label>
                                     <div className="col-sm-8">
-                                        <input name="newPassword" type="password" className="form-control" value={passwordData.newPassword} onChange={handlePasswordChange}/>
+                                        <PasswordInput value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder=""/>
                                     </div>
                                 </div>
                                 <div className="row mb-3">
                                     <label htmlFor="" className="col-sm-4 col-form-label">Confirm new password</label>
                                     <div className="col-sm-8">
-                                        <input name="newPasswordConfirm" type="password" className="form-control" value={passwordData.newPasswordConfirm} onChange={handlePasswordChange}/>
+                                        <PasswordInput value={newPasswordConfirm} onChange={(e) => setNewPasswordConfirm(e.target.value)} placeholder=""/>
                                     </div>
                                 </div>
-                                {passwordData.newPassword != passwordData.newPasswordConfirm && (
+                                {newPassword != newPasswordConfirm && (
                                     <p className="text-danger">The passwords must match!</p>
                                 )}
                             </div>

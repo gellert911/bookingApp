@@ -3,12 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { UserContext } from '@/context/UserContext';
 
+import { createAppointment } from '@/api/appointment';
+import { partialUpdateUser } from "@/api/user";
+
 import { showAlert } from '@/utility/alert';
 import { hideModal } from '@/utility/modal';
 import { getNonEmptyFields } from '@/utility/helpers';
 
-import { createAppointment } from '@/api/appointment';
-import { partialUpdateUser } from "@/api/user";
+import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
+
 
 function BookingModal ( { selectedSlot, onBooking }) {
     const { user, refreshUser } = useContext(UserContext);
@@ -17,8 +20,8 @@ function BookingModal ( { selectedSlot, onBooking }) {
 
     const initialFormData = {
         full_name: "",
-        phone_country: "",
-        phone_number: "+40",
+        phone_country: "+40",
+        phone_number: "",
     }
 
     const [formData, setFormData] = useState(initialFormData)
@@ -123,13 +126,11 @@ function BookingModal ( { selectedSlot, onBooking }) {
                             <div className="row mb-3">
                                 <label className='col-form-label col-sm-6'>Phone number</label>
                                 <div className="col-sm-6">
-                                    <div className="input-group">
-                                        <select name="phone_country" className="form-select" value={formData.phone_country} onChange={handleChange} style={{maxWidth: "80px"}}>
-                                            <option value="+40">+40</option>
-                                            <option value="+36">+36</option>
-                                        </select>
-                                        <input name="phone_number" type="text" className="form-control" value={formData.phone_number} onChange={handleChange}/>
-                                    </div>
+                                    <PhoneNumberInput 
+                                        prefixValue={formData.phone_country} 
+                                        numberValue={formData.phone_number} 
+                                        onChange={handleChange}
+                                    />
                                 </div>
                             </div>
                         )}

@@ -3,6 +3,7 @@ import { showAlert } from '@/utility/alert';
 import { updateUser, updateUserPassword } from "@/api/user";
 
 import PasswordInput from "@/components/ui/PasswordInput";
+import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 
 function Settings ( { user, onEdit } ) {
     //const [editing, setEditing] = useState(false)
@@ -104,13 +105,12 @@ function Settings ( { user, onEdit } ) {
             <div className="row mb-3">
                 <div className="col-sm-6">
                     <label className='col-form-label'>Phone number</label>
-                     <div className="input-group w-75">
-                        <select name="phone_country" id="country_codeSelect" className="form-select" value={inputData.phone_country} onChange={handleInputChange} style={{maxWidth: "80px"}}>
-                            {countries.map((country, index) => (
-                               <option key={index}>{country.code}</option> 
-                            ))}
-                        </select>
-                        <input name="phone_number" type="text" className="form-control" value={inputData.phone_number} onChange={handleInputChange}/>
+                    <div className="w-75">
+                        <PhoneNumberInput 
+                            prefixValue={inputData.phone_country} 
+                            numberValue={inputData.phone_number} 
+                            onChange={handleInputChange}
+                        />
                     </div>
                 </div>
                 <div className="col-sm-6">

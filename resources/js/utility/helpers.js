@@ -6,6 +6,10 @@ export function getNonEmptyFields(data) {
     );
 }
 
-export function resetForm(setForm, initialFormState) {
-    return setForm(initialFormState);
+export function toISOFormat(date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth()+1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+   
+    return `${y}-${m}-${d}`;
 }

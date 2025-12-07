@@ -39,9 +39,9 @@ function Navbar () {
 
     return (
         <>
-            {(user && user.is_admin) && (
-                <div className="bg-body-secondary text-dark py-1 px-3 border-bottom">
-                    <div className="container d-flex gap-3">
+            {(user && !!user?.is_admin) && (
+                <div className="bg-body-secondary text-dark border-bottom">
+                    <div className="container-fluid d-flex gap-3">
                         <Link to="/admin" className="text-decoration-none">Admin</Link>
                         <Link to="/" className="text-decoration-none">Site</Link>
                     </div>

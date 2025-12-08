@@ -68,7 +68,7 @@ const Appointments = ( { user } ) => {
 
     return (
         <div className="container py-1">
-            <h3>Appointments</h3>
+            <h3 className="mb-3">Appointments</h3>
 
             <ul className="nav nav-pills mb-3">
                 <li className="nav-item">

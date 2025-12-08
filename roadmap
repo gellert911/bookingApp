@@ -1,0 +1,16 @@
++ megcsinalni h ne lehessen kijelentkezve foglalni X
++ adminpanel menu javitas X
++ user osszekapcsolasa a foglalassal, adminpanelbol latszodjon h ki foglalta, es a teloszamot is X
++ opening hours REST-esitese X
++ opening hours bugfix ha ures a tabla tolti a semmit; X
++react router bevezetese, hogy rendes SPA legyen + emiatt API ujratervezes? X
++ foglalasnal kerje a telefonszamot es a nevet is ha nincsen beallitva mar X
++ foglalasnal csak idopontot lehessen nezni, ha nem v bejelentkezve irja h jelentkezz be akar egy gomb is X
+
+datepickerhez kulon datum valaszto, valamint ilyen leghamarabbi idopontok
+
++ beallitasok megcsinalasa
++ employee hozzaadas (kesobb?)
+
+inspo
+https://dribbble.com/shots/18954862-Plannic-A-Calendar-UI-Concept-by-Obtic-Design

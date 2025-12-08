@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import { showAlert } from '@/utility/alert';
+
 import Menu from './admin/Menu';
 import Settings from './admin/Settings';
 import OpeningHours from './admin/OpeningHours';
@@ -10,9 +12,16 @@ function Admin() {
 
    return (
         <div className="container">
+            <div className="d-sm-none d-block">
+                <Menu selectedMenu={selectedMenu}
+                    setSelectedMenu={setSelectedMenu}
+                />
+            </div>
             <div className='d-flex'>
-                <aside>
-                    <Menu selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu}/>
+                <aside className="d-none d-sm-block">
+                    <Menu selectedMenu={selectedMenu} 
+                        setSelectedMenu={setSelectedMenu}
+                    />
                 </aside>
                 <main className="flex-grow-1">
                     {selectedMenu == 1 && (

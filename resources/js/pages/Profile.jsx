@@ -31,11 +31,15 @@ function Profile () {
 
     return (
         <div className="container">
+            <div className="d-sm-none d-block">
+                <Menu selectedMenu={selectedMenu}
+                    setSelectedMenu={setSelectedMenu}
+                />
+            </div>
             <div className="d-flex">
-                    <aside>
+                    <aside className="d-none d-sm-block">
                         <Menu selectedMenu={selectedMenu}
                             setSelectedMenu={setSelectedMenu}
-                            user={user}
                         />
                     </aside>
 

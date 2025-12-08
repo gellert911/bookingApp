@@ -71,7 +71,9 @@ function Navbar () {
                         <div className="d-lg-flex col-lg-3 justify-content-lg-end">
                             {user ? (
                                 <div className="dropdown">
-                                    <i className="fa-regular fa-user dropdown-toggle" data-bs-toggle="dropdown"></i>
+                                    <button className="btn dropdown-toggle" data-bs-toggle="dropdown">
+                                        <i className="fa-regular fa-user"></i>
+                                    </button>
 
                                     <ul className="dropdown-menu dropdown-menu-end p-2 rounded-3">
                                         <li>
@@ -87,7 +89,7 @@ function Navbar () {
                                             </button>
                                         </li>
                                         <li>
-                                            <button className="dropdown-item rounded" onClick={() => handleLogout()}>
+                                            <button className="dropdown-item rounded" onClick={handleLogout}>
                                                 <i className="fa-solid fa-arrow-right-from-bracket me-2"></i>
                                                 Logout
                                             </button>

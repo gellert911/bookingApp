@@ -37,33 +37,35 @@ function Register() {
     }
 
     return (
-        <form className="col-md-3 mx-auto" onSubmit={handleRegister}>
-            <br />
-            <div className="card">
-                <h4 className="card-header">Register</h4>
-                <div className="card-body">
-                    <div className="mb-3">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" className="form-control" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+        <div className="container">
+            <form className="col-md-3 mx-auto" onSubmit={handleRegister}>
+                <br />
+                <div className="card">
+                    <h4 className="card-header">Register</h4>
+                    <div className="card-body">
+                        <div className="mb-3">
+                            <label htmlFor="email">Email</label>
+                            <input type="email" className="form-control" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password">Password</label>
+                            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        </div>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password">Password</label>
-                        <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <div className="card-footer">
+                        {loading ? (
+                            <button className="btn btn-primary w-100 mb-1" type="button" disabled>
+                            <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                            <span role="status"> Registering...</span>
+                            </button>
+                        ) : (
+                            <button type="submit" className="btn btn-primary w-100 mb-1">Register</button>
+                        )}
+                        <Link to="/login" className="btn btn-secondary w-100 mb-1" >Login</Link>
                     </div>
                 </div>
-                <div className="card-footer">
-                    {loading ? (
-                        <button className="btn btn-primary w-100 mb-1" type="button" disabled>
-                          <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                          <span role="status"> Registering...</span>
-                        </button>
-                      ) : (
-                        <button type="submit" className="btn btn-primary w-100 mb-1">Register</button>
-                      )}
-                    <Link to="/login" className="btn btn-secondary w-100 mb-1" >Login</Link>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     );
 }
 

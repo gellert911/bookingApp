@@ -46,35 +46,35 @@ function Login() {
     }
 
     return (
-        <div>
-        <form className="col-md-3 mx-auto" onSubmit={handleLogin}>
-            <br />
-            <div className="card">
-                <h4 className="card-header">Login</h4>
-                <div className="card-body">
-                    <div className="mb-3">
-                        <label htmlFor="email">Email</label>
-                        <input type="text" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+        <div className="container">
+            <form className="col-md-3 mx-auto" onSubmit={handleLogin}>
+                <br />
+                <div className="card">
+                    <h4 className="card-header">Login</h4>
+                    <div className="card-body">
+                        <div className="mb-3">
+                            <label htmlFor="email">Email</label>
+                            <input type="text" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        </div>
+                        <div className="mb-3">
+                            <label>Password</label>
+                            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        </div>
+                        <small><a href="">Forgot my password</a></small>
                     </div>
-                    <div className="mb-3">
-                        <label>Password</label>
-                        <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <div className="card-footer">
+                        {loading ? (
+                            <button className="btn btn-primary w-100 mb-1" type="button" disabled>
+                            <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                            <span role="status"> Logging in...</span>
+                            </button>
+                        ) : (
+                            <button type="submit" className="btn btn-primary w-100 mb-1">Login</button>
+                        )}
+                        <Link to="/register" className="btn btn-secondary w-100 mb-1">Register</Link>
                     </div>
-                    <small><a href="">Forgot my password</a></small>
                 </div>
-                <div className="card-footer">
-                     {loading ? (
-                        <button className="btn btn-primary w-100 mb-1" type="button" disabled>
-                          <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                          <span role="status"> Logging in...</span>
-                        </button>
-                      ) : (
-                        <button type="submit" className="btn btn-primary w-100 mb-1">Login</button>
-                      )}
-                    <Link to="/register" className="btn btn-secondary w-100 mb-1">Register</Link>
-                </div>
-            </div>
-        </form>
+            </form>
         </div>
     );
 }

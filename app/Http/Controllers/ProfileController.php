@@ -79,5 +79,19 @@ class ProfileController extends Controller {
         }
         return response()->json(["success" => false, "message" => __("user.not_exists")]);
     }
+
+    public function delete(Request $request, $id) {
+        $user = User::find($id);
+
+        if ($user) {
+            try {
+                $user->delete();
+            } catch (Exception $e) {
+                Log::error("User controller: " . $e->getMessage());
+                return response()->json(["success" => false, "message" => __("auth.unknown_error")]);
+            }
+            return response()->json(["success" => true, "message" => "Goodbye"]);
+        }
+    }
 }
 ?>

@@ -1,17 +1,24 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { showAlert } from '@/utility/alert';
-import { updateUser, updateUserPassword } from "@/api/user";
+
+import { updateUser, updateUserPassword, deleteUser } from "@/api/user";
+import { logout } from '@/api/auth';
 
 import PasswordInput from "@/components/ui/PasswordInput";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
+import DeleteAccountModal from "./account/DeleteAccountModal";
 
 function Settings ( { user, onEdit } ) {
     //const [editing, setEditing] = useState(false)
+    const navigate = useNavigate();
+
+    const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
 
     const defaultInputData = {
-        full_name: user.full_name,
-        phone_country: user.phone_country,
-        phone_number: user.phone_number,
+        full_name: user.full_name || "",
+        phone_country: user.phone_country || "+40",
+        phone_number: user.phone_number || "",
     };
 
     const [inputData, setInputData] = useState(defaultInputData);
@@ -22,11 +29,6 @@ function Settings ( { user, onEdit } ) {
     })
     const [newPassword, setNewPassword] = useState("");
     const [newPasswordConfirm, setNewPasswordConfirm] = useState("")
-
-    const countries = [
-        {name: "RO", code: '+40'},
-        {name: 'HU', code: '+36'},
-    ]
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
@@ -78,6 +80,26 @@ function Settings ( { user, onEdit } ) {
         onEdit();
     }
 
+    const handleAccountDelete = async () => {
+        try {
+            const result = await deleteUser(user.id);
+
+            if (result.success) {
+                await logout();
+                onEdit();
+                navigate("/");
+                showAlert(result.message, "danger");
+
+                const csrfRefresh = await fetch("/csrf-refresh", {credentials: "include"})
+                const newCsrf = await csrfRefresh.json()
+
+                document.querySelector('meta[name="csrf-token"]').setAttribute("content", newCsrf.token);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
 
     return (
         <div className="container py-1">
@@ -116,7 +138,7 @@ function Settings ( { user, onEdit } ) {
                 <div className="col-sm-6">
                     <label className='col-form-label'>Registration date</label>
                     <div>
-                        {user.created_at.slice(0, 10)}
+                        {user?.created_at?.slice(0, 10)}
                     </div>
                 </div>
             </div>
@@ -152,6 +174,19 @@ function Settings ( { user, onEdit } ) {
                         </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <h5>Delete account</h5>
+            <div className="row mb-3">
+                <div className="col-sm-6">
+                    <button className="btn btn-outline-danger" onClick={() => setShowDeleteAccountModal(true)}>Delete account</button>
+
+                    <DeleteAccountModal user={user}
+                        show={showDeleteAccountModal}
+                        onClose={() => setShowDeleteAccountModal(false)}
+                        onAccountDelete={handleAccountDelete}
+                    />
                 </div>
             </div>
             <hr />

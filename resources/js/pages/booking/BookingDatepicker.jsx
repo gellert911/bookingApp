@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Datepicker from "@/components/ui/Datepicker";
 import { toISOFormat } from '@/utility/helpers';
 
-function BookingDatepicker ({selectedDate, setSelectedDate}) {
+function BookingDatepicker ({ selectedDate, setSelectedDate }) {
     const now = new Date();
 
     const pickerRef = useRef(null);
@@ -48,9 +48,9 @@ function BookingDatepicker ({selectedDate, setSelectedDate}) {
                             </div>
                         </button>
                     ))}
-                    <button className='btn flex-shrink-0'>
+                    <a className='btn flex-shrink-0'>
                         <Datepicker ref={pickerRef} value={selectedDate} onChange={(date) => setSelectedDate(toISOFormat(date))} mode="icon"/>
-                    </button>
+                    </a>
                     <button onClick={() => setCurrentShift(currentShift+1)} className='btn flex-shrink-0'>
                         <i className="fa-solid fa-chevron-right"></i>
                     </button>

@@ -36,7 +36,9 @@ Route::middleware(["auth", "admin"])->group(
 })->name("login");*/
 
 Route::get("/user", function () {
-    return auth()->user();
+    $user = auth()->user();
+
+    return response()->json(["success" => (bool) $user, "user" => $user]);
 });
 
 Route::post("/login", [LoginController::class, "login"]);
@@ -53,6 +55,7 @@ Route::post("/login", [LoginController::class, "login"]);
 Route::get("/profile/{id}", [ProfileController::class, 'show']);
 Route::patch("/profile/{id}", [ProfileController::class, "partialUpdate"]);
 Route::put("profile/{id}", [ProfileController::class, "update"]);
+Route::delete("users/{id}", [ProfileController::class, "delete"]);
 Route::get("users/{id}/appointments", [AppointmentController::class, "getAppointmentsByUser"]);
 
 /*Route::get("/booking", function () {

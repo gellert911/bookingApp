@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import AppointmentsDatepicker from './appointments/AppointmentsDatepicker';
+import AppointmentDetailsModal from "./appointments/AppointmentDetailsModal";
 import { getAppointments, deleteAppointment } from "@/api/appointment";
 
 function Appointments() {
@@ -10,13 +12,17 @@ function Appointments() {
     const [currentView, setCurrentView] = useState("week");
     const [appointments, setAppointments] = useState([]);
 
+    const [selectedAppointment, setSelectedAppointment] = useState(null)
+
+    const [showAppointmentDetailsModal, setShowAppointmentDetailsModal] = useState(false);
+
     const [loading, setLoading] = useState(false);
 
     async function loadAppointments(dateStart, dateEnd, view = 'week') {
         const filters = {
             employee_id: 1,
-            start: dateStart.toISOString().slice(0, 10),
-            end: dateEnd.toISOString().slice(0, 10),
+            start: dateStart?.toISOString().slice(0, 10),
+            end: dateEnd?.toISOString().slice(0, 10),
             view: view,
         }
 
@@ -45,6 +51,7 @@ function Appointments() {
 
             if (result.success) {
                 loadAppointments(currentRange[0], currentRange[1])
+                setShowAppointmentDetailsModal(false)
             } else {
                 console.log(result.message);
             }
@@ -53,20 +60,37 @@ function Appointments() {
         }
     }
 
+    useEffect(() => {
+        if (selectedAppointment) {
+            setShowAppointmentDetailsModal(true);
+        } else {
+            setShowAppointmentDetailsModal(false);
+        }
+    }, [selectedAppointment])
+
     return (
         <div className="container">
-            <h4>View Appointments</h4>
+            <h5>View Appointments</h5>
 
             {!loading && (
-                <AppointmentsDatepicker selectedDate={selectedDate} 
-                setSelectedDate={setSelectedDate} 
-                currentRange={currentRange}
-                setCurrentRange={setCurrentRange}
-                currentView={currentView}
-                setCurrentView={setCurrentView}
-                loader={loadAppointments} 
-                appointments={appointments} 
-                onDelete={handleDelete}/>
+                <AppointmentsDatepicker currentRange={currentRange}
+                    setCurrentRange={setCurrentRange}
+                    currentView={currentView}
+                    setCurrentView={setCurrentView}
+                    loader={loadAppointments} 
+                    appointments={appointments} 
+                    setSelectedAppointment={setSelectedAppointment}
+                    setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}
+                    onDelete={handleDelete}
+                />
+            )}
+
+            {selectedAppointment && (
+                <AppointmentDetailsModal show={showAppointmentDetailsModal}
+                    onClose={() => setShowAppointmentDetailsModal(false)}
+                    selectedAppointment={selectedAppointment} 
+                    onDelete={handleDelete}
+                />
             )}
 
         </div>

@@ -17,10 +17,11 @@ export function UserProvider ( {children} ) {
 
             const result = await response.json()
 
-            if (!result) {
-                throw ("not logged in")
+            if (result.success) {
+                setUser(result.user);
+            } else {
+                setUser(null);
             }
-            setUser(result);
         } catch (e) {
             setUser(null)
             console.error(e)

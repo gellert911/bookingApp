@@ -1,7 +1,6 @@
-import React from 'react';
-import { showModal } from "@/utility/modal";
+import React, { useState } from 'react';
 
-function BookingList ( { availableSlots, selectedSlot, setSelectedSlot } ) {
+function BookingList ( { availableSlots, selectedSlot, setSelectedSlot, setShowBookingModal } ) {
 
     function formatDate(date) {
         date = new Date(date);
@@ -26,7 +25,7 @@ function BookingList ( { availableSlots, selectedSlot, setSelectedSlot } ) {
                         <div className="card-body">
                             <h5 className="card-title">{formatDate(slot.date)}</h5>
                             <p className="card-text">{slot.start.slice(0, 5)} ➔ {slot.end.slice(0, 5)}</p>
-                            <a href="#" className="btn btn-primary" onClick={() => {setSelectedSlot(slot); showModal("bookAppointment");}} data-bs-target="bookAppointtment">Book</a>
+                            <a href="#" className="btn btn-primary" onClick={() => {setSelectedSlot(slot); setShowBookingModal(true)}}>Book</a>
                             
                         </div>
                     </div>

@@ -14,6 +14,8 @@ function Booking () {
     const [selectedSlot, setSelectedSlot] = useState(null);
     const [selectedDate, setSelectedDate] = useState(now.toISOString().slice(0, 10)); 
 
+    const [showBookingModal, setShowBookingModal] = useState(false);
+
     const getSlots = async () => {
 
         try {
@@ -48,10 +50,18 @@ function Booking () {
                     <span className="visually-hidden">Loading...</span>
                 </div>
             )}
-            <BookingList availableSlots={availableSlots} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot}/>
+            <BookingList availableSlots={availableSlots} 
+                selectedSlot={selectedSlot} 
+                setSelectedSlot={setSelectedSlot}
+                setShowBookingModal={setShowBookingModal}
+            />
 
             {selectedSlot && (
-                <BookingModal selectedSlot={selectedSlot} onBooking={getSlots}/>
+                <BookingModal show={showBookingModal}
+                    onClose={() => setShowBookingModal(false)} 
+                    selectedSlot={selectedSlot} 
+                    onBooking={getSlots}
+                />
             )}
         </div>
     )

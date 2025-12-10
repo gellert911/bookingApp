@@ -69,3 +69,22 @@ export async function updateUserPassword(id, newPassword) {
         console.error(e);
     }
 }
+
+export async function deleteUser(id) {
+    try {
+        const response = await fetch(`/users/${id}`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+
+        const result = await response.json();
+
+        return result;
+    } catch (e) {
+        console.error(e);
+    }
+}

@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import AppointmentDetailsModal from "./AppointmentDetailsModal";
-import { showModal } from "@/utility/modal";
 
-function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange, setCurrentRange, currentView, setCurrentView, loader, appointments, onDelete } ) {
+function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, loader, appointments, setSelectedAppointment, setShowAppointmentDetailsModal, onDelete } ) {
     
     const now = moment();
     const [events, setEvents] = useState([])
-    const [selectedAppointment, setSelectedAppointment] = useState([])
 
     const [initializing, setInitializing] = useState(true);
 
@@ -93,14 +90,11 @@ function AppointmentsDatepicker ( { selectedDate, setSelectedDate, currentRange,
                         onSelectEvent={(event) => {
                             const appointment = appointments.find(item => item.id === event.dbId);
                             setSelectedAppointment(appointment);
-                            showModal("appointmentDetails")}
+                            setShowAppointmentDetailsModal(true);
+                        }
                         }
                     />
                 </div>
-            )}
-
-            {selectedAppointment && (
-                <AppointmentDetailsModal selectedAppointment={selectedAppointment} onDelete={onDelete}/>
             )}
         </div>
     )

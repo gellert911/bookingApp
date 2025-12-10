@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import AppointmentDetailsModal from "./AppointmentDetailsModal";
-import {showModal} from "@/utility/modal"
 
 const AppointmentsList = ( { activeAppointments, inactiveAppointments, selectedFilter, selectedAppointment, setSelectedAppointment, onCancel }) => {
+    const [showAppointmentDetailsModal, setShowAppointmentDetailsModal] = useState(false);
 
     return (
         <div>
@@ -17,7 +17,7 @@ const AppointmentsList = ( { activeAppointments, inactiveAppointments, selectedF
                                 <div className="card-body">
                                     <h5 className="card-title">{appointment.date}</h5>
                                     <p className="card-text">{appointment.start_at.slice(0, 5)} ➔ {appointment.end_at.slice(0, 5)}</p>
-                                    <a href="#" className="btn btn-primary" data-bs-target="appointmentDetails" onClick={() => {setSelectedAppointment(appointment); showModal("appointmentDetails")}}>Details</a>
+                                    <a href="#" className="btn btn-primary" data-bs-target="appointmentDetails" onClick={() => {setSelectedAppointment(appointment); setShowAppointmentDetailsModal(true)}}>Details</a>
                                 </div>
                             </div>
                         </div>
@@ -43,6 +43,8 @@ const AppointmentsList = ( { activeAppointments, inactiveAppointments, selectedF
 
             {selectedAppointment && (
                 <AppointmentDetailsModal 
+                    show={showAppointmentDetailsModal}
+                    onClose={() => setShowAppointmentDetailsModal(false)}
                     selectedAppointment={selectedAppointment}
                     onCancel={onCancel}
                 />

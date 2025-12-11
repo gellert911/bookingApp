@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export function getNonEmptyFields(data) {
     return Object.fromEntries(
         Object.entries(data).filter(
@@ -12,4 +14,14 @@ export function toISOFormat(date) {
     const d = String(date.getDate()).padStart(2, "0");
    
     return `${y}-${m}-${d}`;
+}
+
+export function toLuxon(date) {
+    if (DateTime.isDateTime(date)) {
+        return date;
+    }
+
+    if (date instanceof Date) {
+        return DateTime.fromJSDate(date);
+    }
 }

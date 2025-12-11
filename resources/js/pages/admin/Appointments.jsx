@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-import AppointmentsDatepicker from './appointments/AppointmentsDatepicker';
-import AppointmentDetailsModal from "./appointments/AppointmentDetailsModal";
+import { DateTime } from "luxon";
+
 import { getAppointments, deleteAppointment } from "@/api/appointment";
 
+import AppointmentsDatepicker from './appointments/AppointmentsDatepicker';
+import AppointmentDetailsModal from "./appointments/AppointmentDetailsModal";
+
+const now = DateTime.now();
+
 function Appointments() {
-    const now = new Date()
 
-    const [selectedDate, setSelectedDate] = useState(now.toISOString().slice(0, 10))
-    const [currentRange, setCurrentRange] = useState([])
+    const [currentRange, setCurrentRange] = useState({start: null, end: null}) // luxon date
     const [currentView, setCurrentView] = useState("week");
+    
     const [appointments, setAppointments] = useState([]);
-
     const [selectedAppointment, setSelectedAppointment] = useState(null)
 
     const [showAppointmentDetailsModal, setShowAppointmentDetailsModal] = useState(false);
@@ -19,10 +22,11 @@ function Appointments() {
     const [loading, setLoading] = useState(false);
 
     async function loadAppointments(dateStart, dateEnd, view = 'week') {
+        if (!dateStart || !dateEnd) return;
         const filters = {
             employee_id: 1,
-            start: dateStart?.toISOString().slice(0, 10),
-            end: dateEnd?.toISOString().slice(0, 10),
+            start: dateStart?.toISODate(),
+            end: dateEnd?.toISODate(),
             view: view,
         }
 
@@ -50,7 +54,7 @@ function Appointments() {
             const result = await deleteAppointment(id);
 
             if (result.success) {
-                loadAppointments(currentRange[0], currentRange[1])
+                loadAppointments(currentRange.start, currentRange.end)
                 setShowAppointmentDetailsModal(false)
             } else {
                 console.log(result.message);
@@ -59,6 +63,12 @@ function Appointments() {
             console.log(e)
         }
     }
+
+    useEffect(() => {
+        if (currentRange.start && currentRange.end) {
+            loadAppointments(currentRange.start, currentRange.end, currentView);
+        }
+    }, [currentRange]);
 
     useEffect(() => {
         if (selectedAppointment) {
@@ -77,7 +87,6 @@ function Appointments() {
                     setCurrentRange={setCurrentRange}
                     currentView={currentView}
                     setCurrentView={setCurrentView}
-                    loader={loadAppointments} 
                     appointments={appointments} 
                     setSelectedAppointment={setSelectedAppointment}
                     setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}

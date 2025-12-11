@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from 'moment';
+import { Calendar, luxonLocalizer } from "react-big-calendar";
+import { DateTime } from 'luxon';
+import { toLuxon } from '@/utility/helpers';
+
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, loader, appointments, setSelectedAppointment, setShowAppointmentDetailsModal, onDelete } ) {
-    
-    const now = moment();
+const now = DateTime.now();
+
+function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, appointments, setShowAppointmentDetailsModal, onDelete } ) {
+
     const [events, setEvents] = useState([])
 
     const [initializing, setInitializing] = useState(true);
 
-    const localizer = momentLocalizer(moment);
+    const localizer = luxonLocalizer(DateTime);
+
 
     async function preLoadCalendar () {
        
-        const weekStart = now.clone().startOf("week").add(1, "day")
-        const weekEnd = now.clone().endOf("week").add(1, "day")
-        setCurrentRange([weekStart, weekEnd])
+        const weekStart = now.startOf("week")
+        const weekEnd = now.endOf("week")
 
-        await loader(weekStart, weekEnd);
-
+        setCurrentRange({start: weekStart, end: weekEnd})
         setInitializing(false)
-
     }
 
     async function prepareAppointmentsForCalendar(appointments) {
@@ -30,8 +31,8 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
             id: index,
             dbId: appointment.id,
             title: "Appointment " + index,
-            start: new Date(`${appointment.date}T${appointment.start_at}`),
-            end: new Date(`${appointment.date}T${appointment.end_at}`),
+            start: DateTime.fromISO(`${appointment.date}T${appointment.start_at}`).toJSDate(),
+            end: DateTime.fromISO(`${appointment.date}T${appointment.end_at}`).toJSDate(),
         }))
         setEvents(prepared)
         console.log("event set")
@@ -39,12 +40,21 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
 
     function handleRangeChange (range, view = currentView) {
         if (view == "week") {
-            setCurrentRange([range[0], range[6]])
+            setCurrentRange({ 
+                start: toLuxon(range[0]), 
+                end: toLuxon(range[6]) 
+            })
         } else if (view == "day") {
-            setCurrentRange([range[0], range[0]]);
+            setCurrentRange({
+                start: toLuxon(range[0]),
+                end: toLuxon(range[0]),
+            });
             console.log(range)
         } else if (view == "month") {
-            setCurrentRange([range.start, range.end])
+            setCurrentRange({
+                start: toLuxon(range.start),
+                end: toLuxon(range.end),
+            })
         }
     }
 
@@ -53,46 +63,38 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
     }, [])
 
     useEffect(() => {
-        loader(currentRange[0], currentRange[1], currentView);
-    }, [currentRange])
-
-    useEffect(() => {
         prepareAppointmentsForCalendar(appointments);
     }, [appointments])
 
     return (
         <div>
             {initializing && (
-                <div class="spinner-border spinner-border-sm" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                <div className="spinner-border spinner-border-sm" role="status">
+                    <span className="visually-hidden">Loading...</span>
                 </div>
             )}
             {!initializing && (
-                <div className="container-fluid" style={{ height: "100vh" }}>
+                <div className="container" style={{ height: "80vh" }}>
                     <Calendar
+                        culture="en-GB"
                         localizer={localizer}
                         events={events}
-                        defaultDate={now}
+                        defaultDate={now.toJSDate()}
                         defaultView={currentView}
                         startAccessor="start"
                         endAccessor="end"
                         views={["month", "week", "day"]}
-                        
                         onRangeChange={(range, view) => {
-                            //setCurrentRange([range[0], range[6]]);
                             handleRangeChange(range, view);
                         }}
-                        
                         onView={(view) => {
                             setCurrentView(view);
                         }}
-
                         onSelectEvent={(event) => {
                             const appointment = appointments.find(item => item.id === event.dbId);
                             setSelectedAppointment(appointment);
                             setShowAppointmentDetailsModal(true);
-                        }
-                        }
+                        }}
                     />
                 </div>
             )}

@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { UserContext } from '@/context/UserContext';
-import { login } from '@/api/auth';
+import { login, refreshCsrf } from '@/api/auth';
 
 import { showAlert } from '@/utility/alert';
 import PasswordInput from '@/components/ui/PasswordInput';
@@ -25,11 +26,7 @@ function Login() {
             const result = await login({email, password});
 
             if (result.success) {
-                const csrfRefresh = await fetch("/csrf-refresh", {credentials: "include"})
-                const newCsrf = await csrfRefresh.json()
-
-                document.querySelector('meta[name="csrf-token"]').setAttribute("content", newCsrf.token);
-
+                refreshCsrf();
                 setUser(result.user)
                 showAlert(result.message, "success")
     

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { showAlert } from '@/utility/alert';
 
 import { updateUser, updateUserPassword, deleteUser } from "@/api/user";
-import { logout } from '@/api/auth';
+import { logout, refreshCsrf } from '@/api/auth';
 
 import PasswordInput from "@/components/ui/PasswordInput";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
@@ -90,10 +90,7 @@ function Settings ( { user, onEdit } ) {
                 navigate("/");
                 showAlert(result.message, "danger");
 
-                const csrfRefresh = await fetch("/csrf-refresh", {credentials: "include"})
-                const newCsrf = await csrfRefresh.json()
-
-                document.querySelector('meta[name="csrf-token"]').setAttribute("content", newCsrf.token);
+                refreshCsrf();
             }
         } catch (e) {
             console.error(e);

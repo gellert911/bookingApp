@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import Modal from '@/components/ui/Modal';
 
 const DeleteAccountModal = ({ user, show, onClose, onAccountDelete }) => {
     const [email, setEmail] = useState("");
 
-    const handleAccountDelete = async () => {
-        if (email != user.email) {
-            // folyt kov
-        }
-    }
+    useEffect(() => setEmail(""), [show]);
 
     return (
        <Modal show={show} onClose={onClose}>
             <div className="modal-header">
                 <h5 className="modal-title" id="staticBackdropLabel">Delete account</h5>
+                <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
             </div>
 
             <div className="modal-body">

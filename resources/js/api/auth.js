@@ -59,3 +59,17 @@ export async function register(credentials) {
         console.log(e)
     }
 }
+
+export async function refreshCsrf() {
+    try {
+        const response = await fetch("/csrf-refresh", { credentials: "include" })
+        
+        const result = await response.json();
+
+        if (result?.token) {
+            document.querySelector('meta[name="csrf-token"]').setAttribute("content", result.token);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}

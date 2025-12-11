@@ -7,7 +7,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const now = DateTime.now();
 
-function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, appointments, setShowAppointmentDetailsModal, onDelete } ) {
+function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, appointments, setSelectedAppointment, setShowAppointmentDetailsModal, onDelete } ) {
 
     const [events, setEvents] = useState([])
 

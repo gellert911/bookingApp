@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { toLuxon } from '@/utility/helpers';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import CalendarToolbar from "@/components/ui/CalendarToolbar";
 
 const now = DateTime.now();
 
@@ -77,6 +78,7 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
                 <div className="container" style={{ height: "80vh" }}>
                     <Calendar
                         culture="en-GB"
+                        components={{toolbar: CalendarToolbar}}
                         localizer={localizer}
                         events={events}
                         defaultDate={now.toJSDate()}

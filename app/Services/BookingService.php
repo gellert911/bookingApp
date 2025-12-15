@@ -69,30 +69,36 @@ class BookingService {
     }
 
     public function getFreeSlots($employeeId, $date) {
-        $today = new DateTime($date);
+        $dateTime = new DateTime($date);
+
         $schedule = Schedule::where("employee_id", $employeeId)
-            ->where("day_of_week", $today->format("N") - 1)
+            ->where("day_of_week", $dateTime->format("N") - 1)
             ->first();
 
         if ($schedule->closed) {
             return [];
         }
 
-        $slots = $this->sliceInterval($today->format("Y-m-d"), $schedule->open_at, $schedule->close_at);
+        $slots = $this->sliceInterval($dateTime->format("Y-m-d"), $schedule->open_at, $schedule->close_at);
         $free_slots = [];
+        
+        $now = new DateTime();
 
         foreach ($slots as $slot) {
-            $available = $this->isSlotAvailable([
-                "employee_id" => $employeeId, 
-                "date" => $date, 
-                "start_at" => $slot["start"], 
-                "end_at" => $slot["end"]
-            ]);
+            $slotTime = new DateTime($slot["date"] . ' ' . $slot["start"]);
 
-            if ($available) {
-                $free_slots[] = $slot;
+            if ($now <= $slotTime) {
+                $available = $this->isSlotAvailable([
+                    "employee_id" => $employeeId, 
+                    "date" => $date, 
+                    "start_at" => $slot["start"], 
+                    "end_at" => $slot["end"]
+                ]);
+
+                if ($available) {
+                    $free_slots[] = $slot;
+                }
             }
-            
         }
         return $free_slots;
     }

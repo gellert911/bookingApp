@@ -87,17 +87,15 @@ function Appointments() {
                 </div>
             )*/}
 
-            {!loading && (
-                <AppointmentsDatepicker currentRange={currentRange}
-                    setCurrentRange={setCurrentRange}
-                    currentView={currentView}
-                    setCurrentView={setCurrentView}
-                    currentDate={currentDate}
-                    setCurrentDate={setCurrentDate}
-                    appointments={appointments}
-                    onAppointmentOpen={openAppointment}
-                />
-            )}
+            <AppointmentsDatepicker currentRange={currentRange}
+                setCurrentRange={setCurrentRange}
+                currentView={currentView}
+                setCurrentView={setCurrentView}
+                currentDate={currentDate}
+                setCurrentDate={setCurrentDate}
+                appointments={appointments}
+                onAppointmentOpen={openAppointment}
+            />
 
             <AppointmentDetailsModal show={showAppointmentDetailsModal}
                 onClose={() => {setShowAppointmentDetailsModal(false); setSelectedAppointment(null)}}

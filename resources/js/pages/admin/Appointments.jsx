@@ -51,6 +51,11 @@ function Appointments() {
         }
     }
 
+    const openAppointment = (appointment) => {
+        setSelectedAppointment(appointment);
+        setShowAppointmentDetailsModal(true);
+    }
+
     const handleDelete = async (id) => {
         try {
             const result = await deleteAppointment(id);
@@ -89,10 +94,8 @@ function Appointments() {
                     setCurrentView={setCurrentView}
                     currentDate={currentDate}
                     setCurrentDate={setCurrentDate}
-                    appointments={appointments} 
-                    setSelectedAppointment={setSelectedAppointment}
-                    setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}
-                    onDelete={handleDelete}
+                    appointments={appointments}
+                    onAppointmentOpen={openAppointment}
                 />
             )}
 

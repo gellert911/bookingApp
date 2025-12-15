@@ -1,0 +1,108 @@
+.rbc-allday-cell,
+.rbc-allday-events,
+.rbc-event-label {
+    display: none !important;
+}
+
+.rbc-event { /* event badge */
+    display: flex;
+
+    background-color: rgba(var(--bs-primary-rgb), 0.75);
+    color: var(--bs-white);
+
+    font-family: var(--bs-font-sans-serif);
+    font-size: calc(var(--bs-body-font-size) * 0.875);
+
+    border: 0px;
+}
+
+.rbc-event.rbc-selected {
+    background-color: var(--bs-primary);
+}
+
+.rbc-event:hover {
+    background-color: var(--bs-primary);
+}
+
+.rbc-show-more {
+    background: transparent;
+    font-weight: var(--bs-body-font-weight) !important;
+    color: var(--bs-primary);
+}
+
+.rbc-time-view .rbc-row {
+    min-height: 0;
+}
+
+.rbc-day-slot .rbc-events-container {
+    margin-right: 0px;
+}
+
+.rbc-time-header {
+    background-color: var(--bs-dark-bg-subtle);
+    border-color: var(--bs-secondary-border-subtle);
+}
+
+.rbc-month-header {
+    background-color: var(--bs-dark-bg-subtle);
+}
+
+.rbc-time-content {
+    border-top: 0px;
+}
+
+.rbc-today {
+    background-color: var(--bs-primary-bg-subtle);
+}
+
+.rbc-off-range-bg {
+    background-color: var(--bs-secondary-bg-subtle);
+}
+
+.rbc-month-row {
+    border-top: 1px solid var(--bs-border-color);
+}
+
+.rbc-month-row + .rbc-month-row {
+    border-top: 1px solid var(--bs-border-color);
+}
+
+.rbc-day-bg + .rbc-day-bg {
+    border-left: 1px solid var(--bs-border-color);
+}
+
+.rbc-time-slot,
+.rbc-timeslot-group,
+.rbc-day-slot,
+.rbc-time-column,
+.rbc-time-gutter {
+    border-color: var(--bs-border-color);
+}
+
+.rbc-day-slot .rbc-time-slot {
+    border-top: 1px solid var(--bs-border-color);
+}
+
+.rbc-time-content > * + * > * {
+    border-left: 1px solid var(--bs-border-color);
+}
+
+.rbc-time-header-content.rbc-overflowing {
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.rbc-time-header-content {
+    border-left: 1px solid var(--bs-border-color);
+}
+
+.rbc-header {
+    border-left: 1px solid var(--bs-border-color);
+}
+
+.rbc-time-view {
+    border:none;
+}
+
+.rbc-month-view {
+    border-color: var(--bs-border-color);
+}

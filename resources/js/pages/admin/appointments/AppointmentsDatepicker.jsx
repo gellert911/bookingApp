@@ -4,11 +4,12 @@ import { DateTime } from 'luxon';
 import { toLuxon } from '@/utility/helpers';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import "@/styles/calendar-override.css";
 import CalendarToolbar from "@/components/ui/CalendarToolbar";
 
 const now = DateTime.now();
 
-function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, currentDate, setCurrentDate, appointments, setSelectedAppointment, setShowAppointmentDetailsModal, onDelete } ) {
+function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, currentDate, setCurrentDate, appointments, onAppointmentOpen } ) {
 
     const [events, setEvents] = useState([])
 
@@ -18,7 +19,7 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
         if (!appointments) return
         const prepared = appointments.map((appointment, index) => ({
             id: appointment.id,
-            title: "Appointment " + index,
+            title: "Appointment " + (index+1),
             start: DateTime.fromISO(`${appointment.date}T${appointment.start_at}`).toJSDate(),
             end: DateTime.fromISO(`${appointment.date}T${appointment.end_at}`).toJSDate(),
             resource: appointment,
@@ -58,6 +59,7 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
                 <Calendar
                     culture="en-GB"
                     components={{toolbar: CalendarToolbar}}
+                    showMultiDayTimes={false}
                     localizer={localizer}
                     events={events}
                     date={currentDate.toJSDate()}
@@ -76,8 +78,7 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
                     }}
                     onSelectEvent={(event) => {
                         const appointment = event.resource;
-                        setSelectedAppointment(appointment);
-                        setShowAppointmentDetailsModal(true);
+                        onAppointmentOpen(appointment);
                     }}
                 />
             </div>

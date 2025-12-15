@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const Modal = ({ show, onClose, size = "md", children}) => {
-    const [visible, setVisible] = useState(false);
-
+    
     const modalRef = useRef(null);
     const instanceRef = useRef(null);
 

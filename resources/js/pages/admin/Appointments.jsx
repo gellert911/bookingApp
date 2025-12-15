@@ -11,8 +11,9 @@ const now = DateTime.now();
 
 function Appointments() {
 
-    const [currentRange, setCurrentRange] = useState({start: null, end: null}) // luxon date
+    const [currentRange, setCurrentRange] = useState({start: now.startOf("week"), end: now.endOf("week")}) // luxon date
     const [currentView, setCurrentView] = useState("week");
+    const [currentDate, setCurrentDate] = useState(now);
     
     const [appointments, setAppointments] = useState([]);
     const [selectedAppointment, setSelectedAppointment] = useState(null)
@@ -23,6 +24,9 @@ function Appointments() {
 
     async function loadAppointments(dateStart, dateEnd, view = 'week') {
         if (!dateStart || !dateEnd) return;
+
+        setLoading(true)
+
         const filters = {
             employee_id: 1,
             start: dateStart?.toISODate(),
@@ -30,8 +34,7 @@ function Appointments() {
             view: view,
         }
 
-        //setLoading(true)
-        console.log("loading -> " + dateStart + " - " + dateEnd)
+        console.log("loading -> " + dateStart.toISODate() + " - " + dateEnd.toISODate())
         try {
             const result = await getAppointments(filters);
 
@@ -44,9 +47,8 @@ function Appointments() {
         } catch (e) {
             console.log(e)
         } finally {
-            //setLoading(false);
+            setLoading(false);
         }
-
     }
 
     const handleDelete = async (id) => {
@@ -68,25 +70,25 @@ function Appointments() {
         if (currentRange.start && currentRange.end) {
             loadAppointments(currentRange.start, currentRange.end, currentView);
         }
-    }, [currentRange]);
-
-    useEffect(() => {
-        if (selectedAppointment) {
-            setShowAppointmentDetailsModal(true);
-        } else {
-            setShowAppointmentDetailsModal(false);
-        }
-    }, [selectedAppointment])
+    }, [currentRange, currentView]);
 
     return (
         <div className="container">
-            <h5>View Appointments</h5>
+            <h5 className="mb-3">View Appointments</h5>
+
+            {/*loading && (
+                <div className="spinner-border spinner-border-sm" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            )*/}
 
             {!loading && (
                 <AppointmentsDatepicker currentRange={currentRange}
                     setCurrentRange={setCurrentRange}
                     currentView={currentView}
                     setCurrentView={setCurrentView}
+                    currentDate={currentDate}
+                    setCurrentDate={setCurrentDate}
                     appointments={appointments} 
                     setSelectedAppointment={setSelectedAppointment}
                     setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}
@@ -94,14 +96,11 @@ function Appointments() {
                 />
             )}
 
-            {selectedAppointment && (
-                <AppointmentDetailsModal show={showAppointmentDetailsModal}
-                    onClose={() => setShowAppointmentDetailsModal(false)}
-                    selectedAppointment={selectedAppointment} 
-                    onDelete={handleDelete}
-                />
-            )}
-
+            <AppointmentDetailsModal show={showAppointmentDetailsModal}
+                onClose={() => {setShowAppointmentDetailsModal(false); setSelectedAppointment(null)}}
+                selectedAppointment={selectedAppointment} 
+                onDelete={handleDelete}
+            />
         </div>
     )
 }

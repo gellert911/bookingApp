@@ -8,33 +8,22 @@ import CalendarToolbar from "@/components/ui/CalendarToolbar";
 
 const now = DateTime.now();
 
-function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, appointments, setSelectedAppointment, setShowAppointmentDetailsModal, onDelete } ) {
+function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, currentDate, setCurrentDate, appointments, setSelectedAppointment, setShowAppointmentDetailsModal, onDelete } ) {
 
     const [events, setEvents] = useState([])
 
-    const [initializing, setInitializing] = useState(true);
-
     const localizer = luxonLocalizer(DateTime);
 
-
-    async function preLoadCalendar () {
-       
-        const weekStart = now.startOf("week")
-        const weekEnd = now.endOf("week")
-
-        setCurrentRange({start: weekStart, end: weekEnd})
-        setInitializing(false)
-    }
-
-    async function prepareAppointmentsForCalendar(appointments) {
+    function prepareAppointmentsForCalendar(appointments) {
         if (!appointments) return
         const prepared = appointments.map((appointment, index) => ({
-            id: index,
-            dbId: appointment.id,
+            id: appointment.id,
             title: "Appointment " + index,
             start: DateTime.fromISO(`${appointment.date}T${appointment.start_at}`).toJSDate(),
             end: DateTime.fromISO(`${appointment.date}T${appointment.end_at}`).toJSDate(),
+            resource: appointment,
         }))
+
         setEvents(prepared)
         console.log("event set")
     }
@@ -60,46 +49,38 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
     }
 
     useEffect(() => {
-        preLoadCalendar()
-    }, [])
-
-    useEffect(() => {
         prepareAppointmentsForCalendar(appointments);
     }, [appointments])
 
     return (
         <div>
-            {initializing && (
-                <div className="spinner-border spinner-border-sm" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-            )}
-            {!initializing && (
-                <div className="container" style={{ height: "80vh" }}>
-                    <Calendar
-                        culture="en-GB"
-                        components={{toolbar: CalendarToolbar}}
-                        localizer={localizer}
-                        events={events}
-                        defaultDate={now.toJSDate()}
-                        defaultView={currentView}
-                        startAccessor="start"
-                        endAccessor="end"
-                        views={["month", "week", "day"]}
-                        onRangeChange={(range, view) => {
-                            handleRangeChange(range, view);
-                        }}
-                        onView={(view) => {
-                            setCurrentView(view);
-                        }}
-                        onSelectEvent={(event) => {
-                            const appointment = appointments.find(item => item.id === event.dbId);
-                            setSelectedAppointment(appointment);
-                            setShowAppointmentDetailsModal(true);
-                        }}
-                    />
-                </div>
-            )}
+            <div className="container" style={{ height: "80vh" }}>
+                <Calendar
+                    culture="en-GB"
+                    components={{toolbar: CalendarToolbar}}
+                    localizer={localizer}
+                    events={events}
+                    date={currentDate.toJSDate()}
+                    view={currentView}
+                    startAccessor="start"
+                    endAccessor="end"
+                    views={["month", "week", "day"]}
+                    onNavigate={(date) => {
+                        setCurrentDate(toLuxon(date))
+                    }}
+                    onRangeChange={(range, view) => {
+                        handleRangeChange(range, view);
+                    }}
+                    onView={(view) => {
+                        setCurrentView(view);
+                    }}
+                    onSelectEvent={(event) => {
+                        const appointment = event.resource;
+                        setSelectedAppointment(appointment);
+                        setShowAppointmentDetailsModal(true);
+                    }}
+                />
+            </div>
         </div>
     )
 }

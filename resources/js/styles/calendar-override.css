@@ -95,12 +95,21 @@
     border-left: 1px solid var(--bs-border-color);
 }
 
+.rbc-time-header.rbc-overflowing {
+    border-right: 1px solid var(--bs-border-color);
+}
+
 .rbc-header {
+    border-left: 1px solid var(--bs-border-color);
+    border-bottom: 0px;
+}
+
+.rbc-header + .rbc-header {
     border-left: 1px solid var(--bs-border-color);
 }
 
 .rbc-time-view {
-    border:none;
+    border-color: var(--bs-border-color);
 }
 
 .rbc-month-view {

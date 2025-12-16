@@ -29,10 +29,13 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        /*if (!$this->app->runningInConsole()) {
-            return;
-        }*/
+        $this->app->booted(function() {
+            if (!$this->app->runningInConsole()) {
+                return;
+            }
 
-        EnsureDefaultService::ensureDefaultService();
+            EnsureDefaultService::ensureDefaultService();
+
+        });
     }
 }

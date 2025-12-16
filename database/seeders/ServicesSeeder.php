@@ -14,6 +14,7 @@ class ServicesSeeder extends Seeder
     public function run(): void
     {
         //
+        logger("Seeed");
         Service::firstOrCreate(
             ["is_default" => true],
             [

@@ -16,9 +16,6 @@ function BookingList ( { availableSlots, selectedSlot, setSelectedSlot, setShowB
 
     return (
         <div className="row g-3">
-            {(availableSlots.length == 0) && (
-                <center>No appointments available for this date.</center>
-            )}
             {availableSlots.map((slot, index) => (
                 <div key={index} className="col-12 col-md-6 col-lg-3">
                     <div className="card">

@@ -17,7 +17,8 @@ function Booking () {
     const [showBookingModal, setShowBookingModal] = useState(false);
 
     const getSlots = async () => {
-
+        setLoading(true);
+        setAvailableSlots([]);
         try {
             const result = await getAvailableSlots(selectedDate);
 
@@ -50,6 +51,11 @@ function Booking () {
                     <span className="visually-hidden">Loading...</span>
                 </div>
             )}
+            
+            {(availableSlots.length == 0 && !loading) && (
+                <center>No appointments available for this date.</center>
+            )}
+
             <BookingList availableSlots={availableSlots} 
                 selectedSlot={selectedSlot} 
                 setSelectedSlot={setSelectedSlot}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 function Menu ({selectedMenu, setSelectedMenu}) {
-    const menus = ["Overview", "Settings", "Opening hours", "Appointments"]
-    const icons = ["fa-bars-progress", "fa-gear", "fa-clock", "fa-calendar-days"]
+    const menus = ["Overview", "Settings", "Services", "Opening hours", "Appointments"]
+    const icons = ["fa-bars-progress", "fa-gear", "fa-layer-group", "fa-clock", "fa-calendar-days"]
 
     return (
         <div className="position-static d-flex flex-column flex-lg-row align-items-stretch justify-content-start p-3" style={{width: "200px"}}>

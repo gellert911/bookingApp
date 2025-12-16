@@ -40,7 +40,6 @@ function AppointmentDetailsModal ( { show, onClose, selectedAppointment, onDelet
     return (
         <>
             {selectedAppointment && (
-
                 <Modal show={show} onClose={onClose}>
                     <div className="modal-header">
                         <h5 className="modal-title" id="staticBackdropLabel">Appointment details</h5>

@@ -1,14 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import { UserContext } from '@/context/UserContext';
 import { ThemeContext } from '@/context/ThemeContext';
 import { logout, refreshCsrf } from '@/api/auth';
 
 function Navbar () {
-
-    const {user, loading, setUser} = useContext(UserContext);
-
+    const { user, loading, setUser } = useContext(UserContext);
     const { theme, setTheme } = useContext(ThemeContext);
 
     const navigate = useNavigate();
@@ -53,10 +51,10 @@ function Navbar () {
                         <a className="navbar-brand col-lg-3 me-0" href="#">BookingApp</a>
                         <ul className="navbar-nav col-lg-6 justify-content-lg-center">
                             <li className="nav-item">
-                                <Link to="/" className="nav-link active" aria-current="page">Home</Link>
+                                <NavLink to="/" end className="nav-link" aria-current="page">Home</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link to="/booking" className="nav-link">Booking</Link>
+                                <NavLink to="/booking" end className="nav-link">Booking</NavLink>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Pricing</a>

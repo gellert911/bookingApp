@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { UserProvider } from '@/context/UserContext';
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 import Navbar from '@/components/layout/Navbar';
 import Home from '@/pages/Home';
@@ -24,8 +24,8 @@ function App() {
                     <Routes>
                         <Route path="/" element={ <Home/> }></Route>
                         <Route path="/login" element={ <Login/> }></Route>
-                        <Route path="/register" element={<Register/>}></Route>
-                        <Route path="/booking" element={<Booking/>}></Route>
+                        <Route path="/register" element={ <Register/> }></Route>
+                        <Route path="/booking" element={ <Booking/> }></Route>
 
                         <Route path="/profile/:id?" element={
                             <LoggedinRoute>

@@ -30,11 +30,11 @@ function Admin() {
                         </div>
                     )}
 
-                    {selectedMenu == 2 && (
+                    {selectedMenu == 3 && (
                         <OpeningHours/>
                     )}
 
-                    {selectedMenu == 3 && (
+                    {selectedMenu == 4 && (
                         <Appointments/>
                     )}
                 </main>

@@ -6,6 +6,7 @@ import Menu from './admin/Menu';
 import Settings from './admin/Settings';
 import OpeningHours from './admin/OpeningHours';
 import Appointments from './admin/Appointments';
+import Services from './admin/Services';
 
 function Admin() {
    const [selectedMenu, setSelectedMenu] = useState(0);
@@ -28,6 +29,10 @@ function Admin() {
                         <div>
                             <Settings/>
                         </div>
+                    )}
+
+                    {selectedMenu == 2 && (
+                        <Services/>
                     )}
 
                     {selectedMenu == 3 && (

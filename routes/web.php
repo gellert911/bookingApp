@@ -7,6 +7,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServicesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +84,8 @@ Route::get("/csrf-refresh", function () {
 
 Route::put("/schedules/{employee_id}", [ScheduleController::class, "updateSchedule"]);
 Route::get("/schedules/{employee_id}", [ScheduleController::class, "getSchedule"]);
+
+Route::get("/services", [ServicesController::class, "get"]);
 
 Route::get('/{any}', function () {
     return view('layouts.app');

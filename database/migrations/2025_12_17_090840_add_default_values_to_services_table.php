@@ -16,6 +16,7 @@ return new class extends Migration
             [
                 "name" => "Default service",
                 "price" => 10,
+                "description" => "Your default service.",
                 "active" => true,
                 "created_at" => now(),
                 "updated_at" => now()

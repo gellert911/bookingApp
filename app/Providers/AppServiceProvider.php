@@ -28,14 +28,5 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
-
-        $this->app->booted(function() {
-            if (!$this->app->runningInConsole()) {
-                return;
-            }
-
-            EnsureDefaultService::ensureDefaultService();
-
-        });
     }
 }

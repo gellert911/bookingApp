@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { fetchServices } from '@/api/service';
+import { fetchServices, createService } from '@/api/service';
+import { showAlert } from '@/utility/alert';
 import ServicesList from './services/ServicesList';
 import AddServiceModal from './services/AddServiceModal';
 
@@ -26,6 +27,22 @@ const Services = () => {
         }
     }
 
+    const handleServiceAdd = async (data) => {
+        try {
+            const result = await createService(data);
+
+            if (result.success) {
+                showAlert(result.message, "success")
+                loadServices();
+                setShowAddModal(false);
+            } else {
+                showAlert(result.message, "danger")
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     useEffect(() => {
         loadServices();
     }, [])
@@ -42,7 +59,7 @@ const Services = () => {
                 <AddServiceModal 
                     show={showAddModal} 
                     onClose={() => setShowAddModal(false)}
-                    onSubmit={(value) => alert(value.name)}
+                    onSubmit={handleServiceAdd}
                 />
             </div>
 

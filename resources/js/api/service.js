@@ -9,3 +9,23 @@ export async function fetchServices() {
         console.error(e);
     }
 }
+
+export async function createService(data) {
+    try {
+        const response = await fetch("/services", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(data)
+        })
+
+        const result = await response.json();
+        return result;
+    } catch (e) {
+        console.error(e);
+    }
+}

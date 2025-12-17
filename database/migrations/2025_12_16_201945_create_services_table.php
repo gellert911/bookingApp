@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->integer("price");
-            $table->text("description");
-            $table->boolean("active");
-            $table->boolean("is_default");
+            $table->text("description")->nullable(true);
+            $table->boolean("active")->default(false);
+            $table->boolean("is_default")->default(false);
             $table->timestamps();
         });
     }

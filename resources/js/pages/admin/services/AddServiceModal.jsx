@@ -7,6 +7,7 @@ function AddServiceModal({ show, onClose, onSubmit }) {
         name: "",
         price: 0,
         description: "",
+        active: true,
     }
 
     const [input, setInput] = useState(defaultInput);

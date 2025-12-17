@@ -32,10 +32,6 @@ Route::middleware(["auth", "admin"])->group(
     }
 );
 
-/*Route::get("/login", function () {
-    return view("login");
-})->name("login");*/
-
 Route::get("/user", function () {
     $user = auth()->user();
 
@@ -43,15 +39,6 @@ Route::get("/user", function () {
 });
 
 Route::post("/login", [LoginController::class, "login"]);
-
-/*Route::get("/register", function () {
-    return view("register");
-});*/
-
-/*Route::get("/home", function () {
-    $user = Auth::user();
-    return view("home", compact('user'));
-})->middleware('auth')->name('home');*/
 
 Route::get("/profile/{id}", [ProfileController::class, 'show']);
 Route::patch("/profile/{id}", [ProfileController::class, "partialUpdate"]);
@@ -85,7 +72,8 @@ Route::get("/csrf-refresh", function () {
 Route::put("/schedules/{employee_id}", [ScheduleController::class, "updateSchedule"]);
 Route::get("/schedules/{employee_id}", [ScheduleController::class, "getSchedule"]);
 
-Route::get("/services", [ServicesController::class, "get"]);
+Route::get("/services", [ServicesController::class, "index"]);
+Route::post("/services", [ServicesController::class, "store"]);
 
 Route::get('/{any}', function () {
     return view('layouts.app');

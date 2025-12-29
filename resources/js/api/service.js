@@ -29,3 +29,23 @@ export async function createService(data) {
         console.error(e);
     }
 }
+
+export async function deleteService(id) {
+    try {
+        const response = await fetch(`/services/${id}`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+        })
+
+        const result = await response.json();
+
+        return result;
+    } catch (e) {
+        console.error(e);
+    }
+}

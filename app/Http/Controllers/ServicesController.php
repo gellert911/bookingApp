@@ -25,6 +25,21 @@ class ServicesController extends Controller {
 
         return response()->json(["success" => true, "message" => __("services.add_success")]);
     }
+
+    public function destroy($id) {
+        $service = Service::find($id);
+
+        if ($service) {
+            if ($service->is_default) {
+                return response()->json(["success" => false, "message" => __("services.delete_default")], 409);
+            }
+
+            $service->delete();
+
+            return response()->json(["success" => true, "message" => __("services.delete_success")]);
+        }
+        return response()->json(["success" => false, "message" => __("global.unknown_error")], 404);
+    }
 }
 
 ?>

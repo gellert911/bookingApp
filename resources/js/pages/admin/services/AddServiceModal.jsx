@@ -13,8 +13,11 @@ function AddServiceModal({ show, onClose, onSubmit }) {
     const [input, setInput] = useState(defaultInput);
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setInput({...input, [name]: value})
+        const { name, type, checked, value } = e.target;
+        setInput({
+            ...input, 
+            [name]: type === "checkbox" ? checked : value,
+        })
     }
 
     const handleSubmit = () => {
@@ -41,6 +44,13 @@ function AddServiceModal({ show, onClose, onSubmit }) {
                 <div className="mb-3">
                     <label className='col-form-label'>Service description</label>
                     <textarea type="text" name="description" className='form-control' value={input.description} onChange={handleInputChange}/>
+                </div>
+
+                <div className="mb-3">
+                    <div className="form-check form-switch">
+                        <input type="checkbox" name="active" className="form-check-input" checked={input.active} onChange={handleInputChange} switch/>
+                        <label className="form-check-label">Active</label>
+                    </div>
                 </div>
             </div>
             <div className="modal-footer">

@@ -74,6 +74,7 @@ Route::get("/schedules/{employee_id}", [ScheduleController::class, "getSchedule"
 
 Route::get("/services", [ServicesController::class, "index"]);
 Route::post("/services", [ServicesController::class, "store"]);
+Route::delete("/services/{id}", [ServicesController::class, "destroy"]);
 
 Route::get('/{any}', function () {
     return view('layouts.app');

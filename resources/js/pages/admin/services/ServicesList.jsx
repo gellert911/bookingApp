@@ -1,8 +1,13 @@
 import React from 'react';
 
-function ServicesList ({ services }) {
+function ServicesList ({ services, loading, onActionClick }) {
     return (
         <div>
+            {loading && (
+                <div className="spinner-border spinner-border-sm" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            )}
             {services.map((service, index) => (
                 <div key={index} className='card mb-2'>
                     <div className='card-body'>
@@ -16,8 +21,8 @@ function ServicesList ({ services }) {
                             <i className="fa-regular fa-pen-to-square me-2"></i>
                             Edit
                         </button>
-                        <button className='btn btn-outline-danger'>
-                            <i class="fa-regular fa-trash-can me-2"></i>
+                        <button className='btn btn-outline-danger' onClick={() => onActionClick("delete", service)}>
+                            <i className="fa-regular fa-trash-can me-2"></i>
                             Delete
                         </button>
                     </div>

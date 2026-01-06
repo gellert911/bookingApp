@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Modal from '@/components/ui/Modal';
 
-function AddServiceModal({ show, onClose, onSubmit }) {
+function EditServiceModal({ show, onClose, onSubmit, selectedService }) {
     const defaultInput = {
         name: "",
         price: 0,
@@ -24,10 +24,21 @@ function AddServiceModal({ show, onClose, onSubmit }) {
         onSubmit(input)
     }
 
+    useEffect(() => {
+        if (selectedService) {
+            setInput({
+                name: selectedService?.name,
+                price: selectedService?.price,
+                description: selectedService?.description,
+                active: selectedService.active,
+            })
+        }
+    }, [selectedService])
+
     return (
         <Modal show={show} onClose={onClose}>
              <div className="modal-header">
-                <h5 className="modal-title" id="staticBackdropLabel">Create new service</h5>
+                <h5 className="modal-title" id="staticBackdropLabel">Edit {selectedService?.name}</h5>
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
@@ -55,10 +66,10 @@ function AddServiceModal({ show, onClose, onSubmit }) {
             </div>
             <div className="modal-footer">
                 <button className='btn btn-secondary' data-bs-dismiss="modal">Close</button>
-                <button className='btn btn-primary' onClick={handleSubmit}>Add service</button>
+                <button className='btn btn-primary' onClick={handleSubmit}>Edit</button>
             </div>
         </Modal>
     )
 }
 
-export default AddServiceModal;
+export default EditServiceModal;

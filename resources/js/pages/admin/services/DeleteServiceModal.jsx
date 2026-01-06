@@ -9,7 +9,7 @@ function DeleteServiceModal({ show, onClose, onDelete, loading }) {
     }
 
     return (
-        <Modal show={show} onClose={onClose} size="sm">
+        <Modal show={show} onClose={onClose}>
              <div className="modal-header">
                 <h5 className="modal-title" id="staticBackdropLabel">Delete service</h5>
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

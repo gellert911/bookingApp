@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { fetchServices, createService, deleteService } from '@/api/service';
+import { fetchServices, createService, deleteService, updateService } from '@/api/service';
 import { showAlert } from '@/utility/alert';
 import ServicesList from './services/ServicesList';
 import AddServiceModal from './services/AddServiceModal';
 import DeleteServiceModal from './services/DeleteServiceModal';
+import EditServiceModal from './services/EditServiceModal';
 
 const Services = () => {
 
@@ -14,6 +15,7 @@ const Services = () => {
 
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     const loadServices = async () => {
         setLoading(true);
@@ -71,10 +73,34 @@ const Services = () => {
         }
     }
 
+    const handleServiceEdit = async (data) => {
+        if (loading) return;
+        setLoading(true);
+        try {
+            const result = await updateService(selectedService.id, data)
+
+            if (result.success) {
+                showAlert(result.message, "success");
+                setSelectedService(null)
+                loadServices()
+                setShowEditModal(false)
+            } else {
+                showAlert(result.message, "danger")
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     const handleActionClick = (action, service) => {
+        setSelectedService(service);
+
         if (action == "delete") {
-            setSelectedService(service);
             setShowDeleteModal(true);
+        } else if (action == "edit") {
+            setShowEditModal(true);
         }
     }
 
@@ -103,6 +129,14 @@ const Services = () => {
                     onDelete={handleServiceDelete}
                     loading={loading}
                 />
+
+                <EditServiceModal 
+                    show={showEditModal}
+                    onClose={() => setShowEditModal(false)}
+                    onSubmit={handleServiceEdit}
+                    selectedService={selectedService}
+                />
+
             </div>
 
             <ServicesList services={services} loading={loading} onActionClick={handleActionClick}/>

@@ -30,6 +30,25 @@ export async function createService(data) {
     }
 }
 
+export async function updateService(id, data) {
+    try {
+        const response = await fetch(`/services/${id}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(data)
+        })
+        
+        return await response.json();
+    } catch (e) {
+        console.error(e);
+    }
+}
+
 export async function deleteService(id) {
     try {
         const response = await fetch(`/services/${id}`, {

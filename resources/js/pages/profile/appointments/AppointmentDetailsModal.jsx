@@ -25,7 +25,12 @@ const AppointmentDetailsModal = ({ show, onClose, selectedAppointment, onCancel 
                             {selectedAppointment?.start_at?.slice(0, 5)} ➔ {selectedAppointment?.end_at?.slice(0, 5)}
                         </div>
                     </div>
-
+                    <div className="row mb-3">
+                        <label htmlFor="note" className='col-sm-6'>Service</label>
+                        <div className="col-sm-6 text-muted" id='note'>
+                            {selectedAppointment.service.name}
+                        </div>
+                    </div>
                     <div className="row mb-3">
                         <label htmlFor="note" className='col-sm-6'>Note</label>
                         <div className="col-sm-6 text-muted" id='note'>

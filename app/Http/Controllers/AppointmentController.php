@@ -15,43 +15,26 @@ class AppointmentController extends Controller {
         $this->service = new AppointmentService;
     }
 
-    public function getAppointments(Request $request) {
+    public function index(Request $request) {
 
         $appointments = $this->service->getAppointmentsInRange($request->query("employee_id"), $request->query("start"), $request->query("end"), $request->query("view"));
         return response()->json(["success" => true, "message" => $appointments]);
     }
 
-    public function getAppointment(Request $request) {
-        $appointment = $this->service->getAppointmentById($request->route("id"));
-
+    public function show(Appointment $appointment) {
         return response()->json(["success" => true, "message" => $appointment]);
     }
 
-    public function getAppointmentsByUser(Request $request, $userId) {
-        //$activeAppointments = $this->service->getActiveAppointmentsByUser($userId);
-        $user = User::find($userId);
+    public function delete (Appointment $appointment) {
+        $appointment->delete();
 
-        if ($user) {
-            $appointments = $user->appointments()->get();
-            return response()->json(["success" => true, "message" => $appointments]);
-        }
-        return response()->json(["success" => false, "message" => "error"]);
+        return response()->json(["success" => true, "message" => "Appointment deleted."]);
     }
 
-    public function deleteAppointment (Request $request) {
-        $delete = $this->service->deleteAppointment($request->route("id"));
+    public function cancel(Appointment $appointment) {
+        $appointment->cancel();
 
-        return response()->json(["success" => true, "message" => $delete]);
-    }
-
-    public function cancelAppointment(Request $request, $appointmentId) {
-        $appointment = Appointment::find($appointmentId);
-
-        if ($appointment) {
-            $appointment->cancel();
-
-            return response()->json(["success" => true, "message" => __("booking.appointment_cancelled")]);
-        }
+        return response()->json(["success" => true, "message" => __("booking.appointment_cancelled")]);
     }
 }
 

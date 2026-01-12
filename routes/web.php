@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServicesController;
@@ -44,19 +45,20 @@ Route::get("/profile/{id}", [ProfileController::class, 'show']);
 Route::patch("/profile/{id}", [ProfileController::class, "partialUpdate"]);
 Route::put("profile/{id}", [ProfileController::class, "update"]);
 Route::delete("users/{id}", [ProfileController::class, "delete"]);
-Route::get("users/{id}/appointments", [AppointmentController::class, "getAppointmentsByUser"]);
+
+Route::get("users/{user}/appointments", [UserAppointmentController::class, "index"]);
 
 /*Route::get("/booking", function () {
     return view("booking");
 });*/
 
 Route::get("/booking/slots", [BookingController::class, "getFreeSlots"]);
-Route::post("/appointments", [BookingController::class, "createAppointment"]);
+Route::post("/appointments", [BookingController::class, "store"]);
 
-Route::get("/appointments", [AppointmentController::class, "getAppointments"]);
-Route::get("/appointments/{id}", [AppointmentController::class, "getAppointment"]);
-Route::delete("/appointments/{id}/delete", [AppointmentController::class, "deleteAppointment"]);
-Route::patch("/appointments/{id}/cancel", [AppointmentController::class, "cancelAppointment"]);
+Route::get("/appointments", [AppointmentController::class, "index"]);
+Route::get("/appointments/{appointment}", [AppointmentController::class, "show"]);
+Route::delete("/appointments/{appointment}/delete", [AppointmentController::class, "delete"]);
+Route::patch("/appointments/{appointment}/cancel", [AppointmentController::class, "cancel"]);
 
 Route::post('/logout', function () {
     Auth::logout();

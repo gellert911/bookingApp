@@ -13,7 +13,7 @@ import Modal from '@/components/ui/Modal';
 import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
 
 
-function BookingModal ( { show, onClose, selectedSlot, onBooking }) {
+function BookingModal ( { show, onClose, availableServices, selectedSlot, onBooking }) {
     const { user, refreshUser } = useContext(UserContext);
 
     const navigate = useNavigate()
@@ -26,6 +26,7 @@ function BookingModal ( { show, onClose, selectedSlot, onBooking }) {
 
     const [formData, setFormData] = useState(initialFormData)
 
+    const [selectedService, setSelectedService] = useState(1);
     const [comment, setComment] = useState("");
 
     const [loading, setLoading] = useState(false)
@@ -60,12 +61,13 @@ function BookingModal ( { show, onClose, selectedSlot, onBooking }) {
                 }
                 refreshUser();
             }
-
+            
             const result = await createAppointment({
                 employee_id, 
                 date: selectedSlot.date, 
                 start_at: selectedSlot.start, 
-                end_at: selectedSlot.end, 
+                end_at: selectedSlot.end,
+                service_id: selectedService,
                 comment,
             })
 
@@ -108,6 +110,17 @@ function BookingModal ( { show, onClose, selectedSlot, onBooking }) {
                     <label htmlFor="duration" className='col-sm-6'>Interval</label>
                     <div className="col-sm-6" id='duration'>
                         {selectedSlot?.start?.slice(0, 5)} ➔ {selectedSlot?.end?.slice(0, 5)}
+                    </div>
+                </div>
+
+                <div className="row mb-3">
+                    <label className="col-form-label col-sm-6">Service</label>
+                    <div className="col-sm-6">
+                        <select className="form-select" value={selectedService} onChange={(e) => setSelectedService(e.target.value)}>
+                            {availableServices?.map((service, index) => (
+                                <option key={index} value={service.id}>{service.name}</option>
+                            ))}
+                        </select>
                     </div>
                 </div>
 

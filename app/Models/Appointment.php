@@ -11,6 +11,7 @@ class Appointment extends Model {
         "date",
         "start_at",
         "end_at",
+        "service_id",
         "comment",
         "active",
         "cancelled_at"
@@ -24,6 +25,10 @@ class Appointment extends Model {
     public function cancel () {
         $this->cancelled_at = now();
         $this->save();
+    }
+
+    public function service() {
+        return $this->belongsTo(Service::class);
     }
 }
 

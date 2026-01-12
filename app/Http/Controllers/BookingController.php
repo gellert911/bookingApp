@@ -17,18 +17,20 @@ class BookingController extends Controller {
         $this->service = new BookingService;
     }
 
-    public function createAppointment(Request $request) {
+    public function store(Request $request) {
         $loggedin = Auth::check();
 
         if (!$loggedin) {
-            return response()->json(["success" => false, "message" => __("booking.not_loggedin"), "redirect" => "login"]);
+            return response()->json(["success" => false, "message" => __("booking.not_loggedin"), "redirect" => "login"], 401);
         }
 
-        $data = $request->only(["employee_id", "date", "start_at", "end_at", "comment"]);
+        $data = $request->only(["employee_id", "date", "start_at", "end_at", "service_id", "comment"]);
 
         $validator = Validator::make($data, [
             "start_at" => "required",
             "end_at" => "required",
+            "service_id" => "integer",
+            "comment" => "sometimes",
         ]);
 
         $validator->after(function ($validator) use (&$data) {
@@ -37,7 +39,7 @@ class BookingController extends Controller {
         });
 
         if ($validator->fails()) {
-            return response()->json(["success" => false, "message" => __("booking.booking_error")]);
+            return response()->json(["success" => false, "message" => __("booking.booking_error")], 422);
         }
 
         $available = $this->service->isSlotAvailable($data);
@@ -51,8 +53,6 @@ class BookingController extends Controller {
         if ($created) {
             return response()->json(["success" => true, "message" => __("booking.booking_successful")]);
         }
-
-        return response()->json(["success" => false, "message" => "booking.booking_error"]);
     }
 
     public function getFreeSlots(Request $request) {

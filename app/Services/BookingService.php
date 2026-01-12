@@ -17,14 +17,10 @@ use DatePeriod;
 class BookingService {
 
     public function createAppointment(array $data) {
-        try {            
+        try {           
             Appointment::create([
+                ...$data,
                 "user_id" => Auth::user()->id,
-                "employee_id" => $data["employee_id"],
-                "date" => $data["date"],
-                "start_at" => $data["start_at"],
-                "end_at" => $data["end_at"],
-                "comment" => $data["comment"],
                 "active" => 1,
             ]);
             return true;

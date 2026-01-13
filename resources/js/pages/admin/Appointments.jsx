@@ -78,7 +78,7 @@ function Appointments() {
     }, [currentRange, currentView]);
 
     return (
-        <div className="container">
+        <div>
             <h5 className="mb-3">View Appointments</h5>
 
             {/*loading && (

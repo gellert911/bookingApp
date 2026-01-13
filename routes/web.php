@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LoginController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\AdminStatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +80,8 @@ Route::get("/services", [ServicesController::class, "index"]);
 Route::post("/services", [ServicesController::class, "store"]);
 Route::put("/services/{service}", [ServicesController::class, "update"]);
 Route::delete("/services/{service}", [ServicesController::class, "destroy"]);
+
+Route::get("/admin/stats/overview", [AdminStatsController::class, "overview"]);
 
 Route::get('/{any}', function () {
     return view('layouts.app');

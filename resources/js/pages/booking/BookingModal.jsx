@@ -117,8 +117,9 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
                     <label className="col-form-label col-sm-6">Service</label>
                     <div className="col-sm-6">
                         <select className="form-select" value={selectedService} onChange={(e) => setSelectedService(e.target.value)}>
-                            {availableServices?.map((service, index) => (
-                                <option key={index} value={service.id}>{service.name}</option>
+                            {availableServices?.filter(service => service.active)
+                            .map(service => (
+                                <option key={service.id} value={service.id}>{service.name}</option>
                             ))}
                         </select>
                     </div>

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { showAlert } from '@/utility/alert';
 
 import Menu from './admin/Menu';
+import Overview from './admin/Overview';
 import Settings from './admin/Settings';
 import OpeningHours from './admin/OpeningHours';
 import Appointments from './admin/Appointments';
@@ -25,6 +26,9 @@ function Admin() {
                     />
                 </aside>
                 <main className="flex-grow-1">
+                    {selectedMenu == 0 && (
+                        <Overview/>
+                    )}
                     {selectedMenu == 1 && (
                         <div>
                             <Settings/>

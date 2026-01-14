@@ -2,7 +2,7 @@ import React from 'react';
 
 const TodaysStatistics = ({ stats }) => {
     return (
-        <div className="row gx-3">
+        <div className="row mb-3">
             <h6>Today's statistics</h6>
             <div className="col-md-3">
                 <div className="card shadow-sm h-100">

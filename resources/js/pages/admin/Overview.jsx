@@ -4,6 +4,7 @@ import { getOverviewStats } from '@/api/adminStats';
 import { DateTime } from "luxon";
 
 import TodaysStatistics from './overview/TodaysStatistics';
+import WeekStatistics from './overview/WeekStatistics';
 
 const now = DateTime.now()
 const Overview = () => {
@@ -33,6 +34,8 @@ const Overview = () => {
         <div>
             <h5>Overview</h5>
             <TodaysStatistics stats={overviewStats}/>
+            <WeekStatistics stats={overviewStats}/>
+
         </div>
     )
 }

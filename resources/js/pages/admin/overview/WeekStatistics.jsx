@@ -35,12 +35,17 @@ const WeekStatistics = ({ stats }) => {
                 <div className="card shadow-sm h-100">
                     <div className="card-body">
                         <h6>Busiest day</h6>
-                        <div>
-                            <h3>{stats?.week?.most_booked_date?.day}
-                                <small className='fs-6 text-muted ms-2'>{stats?.week?.most_booked_date?.date}</small>
-                            </h3>
-                        </div>
-                        <p>{stats?.week?.most_booked_date.count} appointments</p>
+                        {stats?.week?.most_booked_date ? (
+                            <div>
+                                <h3>{stats?.week?.most_booked_date?.day}
+                                    <small className='fs-6 text-muted ms-2'>{stats?.week?.most_booked_date?.date}</small>
+                                </h3>
+                                <p>{stats?.week?.most_booked_date?.count} appointments</p>
+                            </div>
+                        ):
+                        (
+                            <p>No data to show :/</p>
+                        )}
                     </div>
                 </div>
             </div>

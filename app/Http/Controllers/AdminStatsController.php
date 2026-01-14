@@ -14,7 +14,7 @@ class AdminStatsController extends Controller
         $to = Carbon::parse($request->query("to", now()->endOfDay()));
 
         $overview = $service->overview($from, $to);
-
+       
         return response()->json(["success" => true, "message" => $overview]);
     }
 

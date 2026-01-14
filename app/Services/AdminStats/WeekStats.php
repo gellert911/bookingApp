@@ -70,6 +70,9 @@ class WeekStats {
             ->orderBy("date")
             ->first();
 
+
+        if (!$mostBookedDay) return null;
+        
         return [
             "date" => $mostBookedDay->date,
             "day" => Carbon::parse($mostBookedDay->date)->format("l"),

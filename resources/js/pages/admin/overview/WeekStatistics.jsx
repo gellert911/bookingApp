@@ -36,7 +36,7 @@ const WeekStatistics = ({ stats, loading }) => {
                     </div>
                 </div>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 mb-1">
                 <div className="card shadow-sm h-100">
                     <div className="card-body placeholder-glow">
                         <h6>Cancelled appointments</h6>
@@ -50,7 +50,7 @@ const WeekStatistics = ({ stats, loading }) => {
                     </div>
                 </div>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 mb-1">
                 <div className="card shadow-sm h-100">
                     <div className="card-body placeholder-glow">
                         <h6>Busiest day</h6>

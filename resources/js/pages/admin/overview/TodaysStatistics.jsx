@@ -4,7 +4,7 @@ const TodaysStatistics = ({ stats, loading }) => {
     return (
         <div className="row mb-3">
             <h5>Today</h5>
-            <div className="col-md-3">
+            <div className="col-md-3 mb-1">
                 <div className="card shadow-sm h-100">
                     <div className="card-body placeholder-glow">
                         <h6>Today's appointments</h6>
@@ -17,7 +17,7 @@ const TodaysStatistics = ({ stats, loading }) => {
                     </div>
                 </div>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 mb-1">
                 <div className="card shadow-sm h-100">
                     <div className="card-body placeholder-glow">
                         <h6>Free slots</h6>
@@ -30,7 +30,7 @@ const TodaysStatistics = ({ stats, loading }) => {
                     </div>
                 </div>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 mb-1">
                 <div className="card shadow-sm h-100">
                     <div className="card-body placeholder-glow">
                         <h6>Cancelled appointments</h6>
@@ -43,7 +43,7 @@ const TodaysStatistics = ({ stats, loading }) => {
                     </div>
                 </div>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 mb-1">
                 <div className="card shadow-sm h-100">
                     <div className="card-body placeholder-glow">
                         <h6>Usage %</h6>

@@ -51,6 +51,7 @@ const TodaysStatistics = ({ stats, loading }) => {
                             {loading ? (
                                 <span className='placeholder col-3'></span>):stats?.today?.usage
                             }
+                            %
                         </h3>
                     </div>
                 </div>

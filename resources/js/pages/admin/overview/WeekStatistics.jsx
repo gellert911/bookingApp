@@ -2,7 +2,7 @@ import React from 'react';
 
 const WeekStatistics = ({ stats, loading }) => {
     return (
-        <div className="row gx-3">
+        <div className="row mb-3">
             <h5>This week</h5>
             <div className="col-md-3 mb-1">
                 <div className="card shadow-sm h-100">

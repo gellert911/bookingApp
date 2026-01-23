@@ -5,6 +5,7 @@ import { DateTime } from "luxon";
 
 import TodaysStatistics from './overview/TodaysStatistics';
 import WeekStatistics from './overview/WeekStatistics';
+import UpcomingList from './overview/UpcomingList';
 
 const now = DateTime.now()
 const Overview = () => {
@@ -39,6 +40,7 @@ const Overview = () => {
             <h5>Overview</h5>
             <TodaysStatistics stats={overviewStats} loading={loading}/>
             <WeekStatistics stats={overviewStats} loading={loading}/>
+            <UpcomingList stats={overviewStats} loading={loading}/>
 
         </div>
     )

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 function Menu ({ selectedMenu, setSelectedMenu }) {
     const menus = ["Account", "Appointments"]
-    const icons = ["fa-address-card", "fa-calendar-check"]
+    const icons = ["fa-user", "fa-calendar-check"]
 
 
     return (

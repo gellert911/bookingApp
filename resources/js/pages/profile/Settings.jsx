@@ -4,6 +4,7 @@ import { showAlert } from '@/utility/alert';
 
 import { updateUser, updateUserPassword, deleteUser } from "@/api/user";
 import { logout, refreshCsrf } from '@/api/auth';
+import { requestVerificationEmail } from "@/api/emailVerification";
 
 import PasswordInput from "@/components/ui/PasswordInput";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
@@ -97,14 +98,38 @@ function Settings ( { user, onEdit } ) {
         }
     }
 
+    const handleEmailSend = async () => {
+        try {
+            const result = await requestVerificationEmail();
+
+            if (result.success) {
+                showAlert(result.message, "success");
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
 
     return (
         <div className="container py-1">
             <h3 className='mb-3'>Settings</h3>
 
-            {!(user.full_name) && (
+            {!(user?.full_name) && (
                 <div className="alert alert-warning" role="alert">
                     Your profile is not completed. <strong>Please complete it!</strong>
+                </div>
+            )}
+
+            {!user?.email_verified_at && (
+                <div className="alert alert-warning" role="alert">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <span>Your email is not verified, please verify it to start making appointments!</span>
+                        <button className="btn btn-sm" onClick={handleEmailSend}>Resend verification email
+                            <i className="fa-solid fa-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+
                 </div>
             )}
 

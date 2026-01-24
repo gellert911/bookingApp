@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Resource;
 
+use App\Http\Controllers\Controller;
 use App\Services\BookingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,9 +20,14 @@ class BookingController extends Controller {
 
     public function store(Request $request) {
         $loggedin = Auth::check();
+        $user = $request->user();
 
         if (!$loggedin) {
             return response()->json(["success" => false, "message" => __("booking.not_loggedin"), "redirect" => "login"], 401);
+        }
+
+        if (!$user->verified()) {
+            return response()->json(["success" => false, "message" => __("booking.email_not_verified")], 401);
         }
 
         $data = $request->only(["employee_id", "date", "start_at", "end_at", "service_id", "comment"]);

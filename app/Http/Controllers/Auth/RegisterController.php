@@ -1,16 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use Exception;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Services\EmailVerificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller {
+    
+    private EmailVerificationService $emailVerifyService;
+
+    public function __construct(EmailVerificationService $emailVerifyService)
+    {
+        $this->emailVerifyService = $emailVerifyService;
+    }
     
     public function register (Request $request) {
 
@@ -35,6 +43,8 @@ class RegisterController extends Controller {
                 "email" => $request["email"],
                 "password" => Hash::make($request["password"]),
             ]);
+
+            $this->emailVerifyService->send($user);
 
             if ($user) {
                 return response()->json([

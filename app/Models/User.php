@@ -49,4 +49,8 @@ class User extends Authenticatable
     public function appointments() {
         return $this->hasMany(Appointment::class);
     }
+
+    public function verified() {
+        return !is_null($this->email_verified_at);
+    }
 }

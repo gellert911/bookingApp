@@ -12,6 +12,8 @@ import Register from '@/pages/Register';
 import Booking from '@/pages/Booking';
 import Profile from '@/pages/Profile';
 import Admin from '@/pages/Admin';
+import VerifyEmail from '@/pages/VerifyEmail';
+
 import { LoggedinRoute } from '@/context/LoggedinRoute';
 import { AdminRoute } from '@/context/AdminRoute';
 
@@ -37,6 +39,8 @@ function App() {
                                 <Admin/>
                             </AdminRoute>
                         }></Route>
+
+                        <Route path="/verify-email/:token?" element={ <VerifyEmail/> }></Route>
                     </Routes>
                 </UserProvider>
             </ThemeProvider>

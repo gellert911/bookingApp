@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\VerifyEmail;
 
 use Exception;
 use DateTime;
@@ -17,7 +20,7 @@ use DatePeriod;
 class BookingService {
 
     public function createAppointment(array $data) {
-        try {           
+        try {
             Appointment::create([
                 ...$data,
                 "user_id" => Auth::user()->id,

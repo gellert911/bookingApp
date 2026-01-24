@@ -3,14 +3,15 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\UserAppointmentController;
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ServicesController;
-use App\Http\Controllers\AdminStatsController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Resource\ScheduleController;
+use App\Http\Controllers\Resource\BookingController;
+use App\Http\Controllers\User\UserAppointmentController;
+use App\Http\Controllers\Resource\AppointmentController;
+use App\Http\Controllers\Resource\ProfileController;
+use App\Http\Controllers\Resource\ServicesController;
+use App\Http\Controllers\Admin\AdminStatsController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,9 @@ Route::put("profile/{id}", [ProfileController::class, "update"]);
 Route::delete("users/{id}", [ProfileController::class, "delete"]);
 
 Route::get("users/{user}/appointments", [UserAppointmentController::class, "index"]);
+
+Route::post("email/verification/resend", [EmailVerificationController::class, "resend"]);
+Route::get("email/verification/verify/{token}", [EmailVerificationController::class, "verify"]);
 
 /*Route::get("/booking", function () {
     return view("booking");

@@ -49,6 +49,12 @@ const UpcomingList = ({ stats, loading }) => {
                             </div>
                         </li>
                     ))}
+
+                    {stats?.upcoming?.appointments?.length == 0 && (
+                        <li className='list-group-item text-center'>
+                            No upcoming appointments
+                        </li>
+                    )}
                 </ul>
             </div>
         </div>

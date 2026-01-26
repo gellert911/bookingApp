@@ -57,7 +57,7 @@ function Login() {
                             <label>Password</label>
                             <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </div>
-                        <small><a href="">Forgot my password</a></small>
+                        <small><Link to="/password-reset">Forgot my password</Link></small>
                     </div>
                     <div className="card-footer">
                         {loading ? (

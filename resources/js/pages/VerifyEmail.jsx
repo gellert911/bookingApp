@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { verifyEmail } from '@/api/emailVerification';
 
 const VerifyEmail = () => {
@@ -38,7 +38,10 @@ const VerifyEmail = () => {
     return (
         <div className="container">
             <div className={`alert ${verified ? "alert-success":"alert-danger"}`}>
-                {loading ? "Pending...":message}
+                <div className="row">
+                    <span className='col'>{loading ? "Pending...":message}</span>
+                    <Link to='/' className="col-auto link">Back to home</Link>
+                </div>
             </div>
         </div>
     )

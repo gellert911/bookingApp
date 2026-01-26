@@ -13,6 +13,7 @@ import Booking from '@/pages/Booking';
 import Profile from '@/pages/Profile';
 import Admin from '@/pages/Admin';
 import VerifyEmail from '@/pages/VerifyEmail';
+import PasswordReset from '@/pages/PasswordReset';
 
 import { LoggedinRoute } from '@/context/LoggedinRoute';
 import { AdminRoute } from '@/context/AdminRoute';
@@ -41,6 +42,7 @@ function App() {
                         }></Route>
 
                         <Route path="/verify-email/:token?" element={ <VerifyEmail/> }></Route>
+                        <Route path="/password-reset/:token?" element={ <PasswordReset/> }></Route>
                     </Routes>
                 </UserProvider>
             </ThemeProvider>

@@ -21,4 +21,9 @@ return [
     'register_success' => "Registration successful. Log in!",
     'unknown_error' => "Unknown error.",
     'user_not_exists' => "No user found with this combination.",
+    'email_verification_sent' => "Email verification sent. Check your inbox!",
+    'email_verification_success' => "Email verified successfully!",
+    'password_reset_sent' => "Password reset email sent. Check your inbox!",
+    'password_reset_success' => "Password reset successful! You can now log in.",
+    'invalid_token' => "Invalid or expired token.",
 ];

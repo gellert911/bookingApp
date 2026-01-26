@@ -1,12 +1,14 @@
-export async function requestVerificationEmail () {
+export async function requestPasswordReset(email) {
     try {
-        const response = await fetch("/auth/email/verify/resend", {
+        const response = await fetch("/auth/forgot-password", {
             method: "POST",
             credentials: "include",
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
+            body: JSON.stringify({ email })
         })
 
         return await response.json();
@@ -15,9 +17,9 @@ export async function requestVerificationEmail () {
     }
 }
 
-export async function verifyEmail(token) {
+export async function sendPasswordReset(token, newPassword) {
     try {
-        const response = await fetch(`/auth/email/verify`, {
+        const response = await fetch("/auth/reset-password/", {
             method: "POST",
             credentials: "include",
             headers: {
@@ -25,7 +27,7 @@ export async function verifyEmail(token) {
                 'Accept': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
-            body: JSON.stringify({token: token})
+            body: JSON.stringify({ token, newPassword })
         })
 
         return await response.json();

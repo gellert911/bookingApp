@@ -12,6 +12,7 @@ use App\Http\Controllers\Resource\ProfileController;
 use App\Http\Controllers\Resource\ServicesController;
 use App\Http\Controllers\Admin\AdminStatsController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Auth\PasswordResetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,8 +52,10 @@ Route::delete("users/{id}", [ProfileController::class, "delete"]);
 
 Route::get("users/{user}/appointments", [UserAppointmentController::class, "index"]);
 
-Route::post("email/verification/resend", [EmailVerificationController::class, "resend"]);
-Route::get("email/verification/verify/{token}", [EmailVerificationController::class, "verify"]);
+Route::post("/auth/email/verify/resend", [EmailVerificationController::class, "resend"]);
+Route::post("/auth/email/verify/", [EmailVerificationController::class, "verify"]);
+Route::post("/auth/forgot-password/", [PasswordResetController::class, "send"]);
+Route::post("/auth/reset-password/", [PasswordResetController::class, "reset"]);
 
 /*Route::get("/booking", function () {
     return view("booking");

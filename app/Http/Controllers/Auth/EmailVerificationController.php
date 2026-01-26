@@ -15,13 +15,17 @@ class EmailVerificationController extends Controller
         $this->service = $service;
     }
 
-    public function verify(Request $request, $token) {
-        $user = $this->service->verify($token);
+    public function verify(Request $request) {
+        $request->validate([
+            "token" => "required",
+        ]);
+
+        $user = $this->service->verify($request->token);
 
         if ($user) {
-            return response()->json(["success" => true, "message" => "Email verified successfully!"]);
+            return response()->json(["success" => true, "message" => __("auth.email_verification_success")]);
         }
-        return response()->json(["success" => false, "message" => "Invalid or expired token."]);
+        return response()->json(["success" => false, "message" => __("auth.invalid_token")]);
     }
 
     public function resend(Request $request) {
@@ -29,6 +33,6 @@ class EmailVerificationController extends Controller
 
         $this->service->send($user);
 
-        return response()->json(["success" => true, "message" => "Verification email sent!"]);
+        return response()->json(["success" => true, "message" =>  __("auth.email_verification_sent")]);
     }
 }

@@ -72,7 +72,7 @@ const PasswordReset = () => {
                                 <label className='col-form-label'>Email</label>
                                 <input type="text" className="form-control" placeholder="Your email" onChange={(e) => setEmail(e.target.value)}/>
                             </div>
-                            <button className='btn btn-outline-primary w-100' onClick={handleSend}>Send email</button>
+                            <button className='btn btn-outline-primary w-100' onClick={handleSend} disabled={loading}>Send email</button>
                         </>
                     ): (
                         <>

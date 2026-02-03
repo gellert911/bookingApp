@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+import { DateTime } from 'luxon';
 import Datepicker from "@/components/ui/Datepicker";
 import { toISOFormat } from '@/utility/helpers';
 
 function BookingDatepicker ({ selectedDate, setSelectedDate }) {
-    const now = new Date();
+    const now = DateTime.now();
 
     const pickerRef = useRef(null);
 
@@ -14,15 +15,14 @@ function BookingDatepicker ({ selectedDate, setSelectedDate }) {
     function prepareDates() {
         const temp = [];
         for (let i=currentShift; i < currentShift+4; i++) {
-            const nextDay = new Date (now);
-            nextDay.setDate(now.getDate() + i);
+            const nextDay = now.plus({ days: i})
 
             if (nextDay < now) return;
 
             temp.push({
-                date: nextDay.toISOString().slice(0, 10),
-                day: nextDay.getDate(),
-                dayName: nextDay.toLocaleDateString("en-US", {weekday: 'short'})
+                date: nextDay.toISODate(),
+                day: nextDay.day,
+                dayName: nextDay.weekdayShort
             });
         }
         setDays(temp);
@@ -34,7 +34,7 @@ function BookingDatepicker ({ selectedDate, setSelectedDate }) {
 
     return (
         <div>
-            <p>Selected date: {selectedDate}</p>
+            <p>Selected date: {DateTime.fromISO(selectedDate).toFormat("MMMM d, yyyy")}</p>
             <div className="row">
                 <div className="d-flex mb-3">
                     <button onClick={() => setCurrentShift(currentShift-1)} className='btn flex-shrink-0'>
@@ -48,9 +48,9 @@ function BookingDatepicker ({ selectedDate, setSelectedDate }) {
                             </div>
                         </button>
                     ))}
-                    <a className='btn flex-shrink-0'>
+                    <span className='d-flex btn align-items-center'>
                         <Datepicker ref={pickerRef} value={selectedDate} onChange={(date) => setSelectedDate(toISOFormat(date))} mode="icon"/>
-                    </a>
+                    </span>
                     <button onClick={() => setCurrentShift(currentShift+1)} className='btn flex-shrink-0'>
                         <i className="fa-solid fa-chevron-right"></i>
                     </button>

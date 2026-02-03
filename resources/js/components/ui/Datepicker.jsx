@@ -62,7 +62,7 @@ const Datepicker = forwardRef(function Datepicker({ value, onChange, mode = "inp
             )}
 
             {(mode === "icon") && (
-                <button ref={inputRef} className='btn'>
+                <button ref={inputRef} className='btn btn-lg align-items-center'>
                     <i className="fa-regular fa-calendar"></i>
                 </button>
             )}

@@ -25,3 +25,11 @@ export function toLuxon(date) {
         return DateTime.fromJSDate(date);
     }
 }
+
+export function dateToString(date, format = "MMMM d") {
+    if (!date) return "";
+
+    date = new DateTime(date);
+
+    return date.toFormat(format)
+}

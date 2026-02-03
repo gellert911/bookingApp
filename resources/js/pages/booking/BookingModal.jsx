@@ -7,7 +7,7 @@ import { createAppointment } from '@/api/appointment';
 import { partialUpdateUser } from "@/api/user";
 
 import { showAlert } from '@/utility/alert';
-import { getNonEmptyFields } from '@/utility/helpers';
+import { getNonEmptyFields, dateToString } from '@/utility/helpers';
 
 import Modal from '@/components/ui/Modal';
 import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
@@ -30,6 +30,8 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
     const [comment, setComment] = useState("");
 
     const [loading, setLoading] = useState(false)
+    const [confirmStep, setConfirmStep] = useState(false)
+    const [bookingSuccess, setBookingSuccess] = useState(false)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -78,6 +80,9 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
 
                 setFormData(initialFormData)
                 setComment("")
+
+                setBookingSuccess(true);
+                setConfirmStep(false);
             } else {
                 showAlert(result.message, "danger")
 
@@ -93,6 +98,7 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
     }
 
     return (
+        <>
         <Modal show={show} onClose={onClose}>
             <div className="modal-header">
                 <h5 className="modal-title" id="staticBackdropLabel">Book appointment</h5>
@@ -101,14 +107,14 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
 
             <div className="modal-body">
                 <div className="row mb-3">
-                    <label htmlFor="date" className='col-sm-6'>Date</label>
-                    <div className="col-sm-6" id='date'>
-                        {selectedSlot?.date}
+                    <label className='col-sm-6'>Date</label>
+                    <div className="col-sm-6">
+                        {dateToString(selectedSlot?.date, "MMMM d, yyyy")}
                     </div>
                 </div>
                 <div className="row mb-3">
-                    <label htmlFor="duration" className='col-sm-6'>Interval</label>
-                    <div className="col-sm-6" id='duration'>
+                    <label className='col-sm-6'>Interval</label>
+                    <div className="col-sm-6">
                         {selectedSlot?.start?.slice(0, 5)} ➔ {selectedSlot?.end?.slice(0, 5)}
                     </div>
                 </div>
@@ -149,7 +155,7 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
                 
                 {user && (
                     <div className="row mb">
-                        <label className='col-form-label col-sm-6'>Comment</label>
+                        <label className='col-form-label col-sm-6'>Note</label>
                         <div className="col-sm-6">
                         <input type="text" className="form-control" value={comment} onChange={(e) => setComment(e.target.value)} placeholder='Optional'/>
                         </div>
@@ -159,11 +165,32 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
             <div className="modal-footer">
                 <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
                 {(user) ? 
-                    (<button className='btn btn-primary' onClick={handleBooking} disabled={loading}>Book</button>):
+                    (confirmStep ? 
+                        (<button className='btn btn-primary' onClick={handleBooking} disabled={loading}>Confirm booking</button>):
+                        (<button className='btn btn-primary' onClick={() => setConfirmStep(true)} disabled={loading}>Book</button>)):
                     (<Link to="/login" className='btn btn-primary' onClick={onClose}>Log in to continue</Link>)
                 }
             </div>
         </Modal>
+
+
+        <Modal show={bookingSuccess} onClose={onClose}>
+            <div className="modal-header">
+                <h5 className="modal-title" id="staticBackdropLabel">Booking successful</h5>
+                <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
+            </div>
+            <div className="modal-body">
+                <div className="justify-content-center">
+                    <div className='text-center mb-1'>
+                        <i className="fa-regular fa-circle-check fa-4x text-primary"></i>
+                    </div>
+                    <h5 className='text-center mb-3'>Appointment booked successfully!</h5>
+                    <p className='text-center'>We are looking forward to seeing you on {dateToString(selectedSlot.date)}!</p>
+                    <button className="btn btn-primary w-100" data-bs-dismiss="modal" onClick={() => setBookingSuccess(false)}>Back to home</button>
+                </div>
+            </div>
+        </Modal>
+        </>
     )
 }
 

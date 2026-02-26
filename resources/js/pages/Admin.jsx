@@ -8,6 +8,7 @@ import Settings from './admin/Settings';
 import OpeningHours from './admin/OpeningHours';
 import Appointments from './admin/Appointments';
 import Services from './admin/Services';
+import AuditLogs from './admin/AuditLogs';
 
 function Admin() {
    const [selectedMenu, setSelectedMenu] = useState(0);
@@ -45,6 +46,10 @@ function Admin() {
 
                     {selectedMenu == 4 && (
                         <Appointments/>
+                    )}
+
+                    {selectedMenu == 5 && (
+                        <AuditLogs/>
                     )}
                 </main>
             </div>

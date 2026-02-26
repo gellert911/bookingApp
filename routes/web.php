@@ -13,6 +13,7 @@ use App\Http\Controllers\Resource\ServicesController;
 use App\Http\Controllers\Admin\AdminStatsController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\Resource\AuditLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +90,8 @@ Route::put("/services/{service}", [ServicesController::class, "update"]);
 Route::delete("/services/{service}", [ServicesController::class, "destroy"]);
 
 Route::get("/admin/stats/overview", [AdminStatsController::class, "overview"]);
+
+Route::get("/audit-logs", [AuditLogController::class, "index"]);
 
 Route::get('/{any}', function () {
     return view('layouts.app');

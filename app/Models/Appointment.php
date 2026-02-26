@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model {
+    use Auditable;
+    
     protected $fillable = [
         "user_id",
         "employee_id",

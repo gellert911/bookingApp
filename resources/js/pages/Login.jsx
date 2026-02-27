@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { UserContext } from '@/context/UserContext';
-import { login, refreshCsrf } from '@/api/auth';
+import { login } from '@/api/auth';
 
 import { showAlert } from '@/utility/alert';
 import PasswordInput from '@/components/ui/PasswordInput';

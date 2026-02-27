@@ -2,11 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Appointment;
-use App\Observers\AuditObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
-use App\Services\EnsureDefaultService;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        //Appointment::observe(AuditObserver::class);
+        Relation::enforceMorphMap([
+            'user' => \App\Models\User::class,
+            'appointment' => \App\Models\Appointment::class,
+            'schedule' => \App\Models\Appointment::class,
+            'service' => \App\Models\Service::class,
+            'user_token' => \App\Models\UserToken::class,
+        ]);
     }
 }

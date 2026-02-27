@@ -33,7 +33,7 @@ const UpcomingList = ({ stats, loading }) => {
                             {[...Array(5)].map((_, index) => (
                                 <li key={index} className="list-group-item placeholder-glow">
                                     <div className="row">
-                                        <span class="placeholder col-12"></span>
+                                        <span className="placeholder col-12"></span>
                                     </div>
                                 </li>
                             ))}

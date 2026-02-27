@@ -7,7 +7,7 @@ export function AdminRoute ( { children } ) {
 
     if (loading) return null;
 
-    if (!user.is_admin) return <Navigate to="/"/>
+    if (!user?.is_admin) return <Navigate to="/"/>
 
     return children;
 }

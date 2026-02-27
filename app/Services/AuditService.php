@@ -13,7 +13,7 @@ class AuditService {
         AuditLog::create([
             "user_id" => auth()->id() ?? null,
             "event" => $event,
-            "auditable_type" => get_class($model),
+            "auditable_type" => $model->getMorphClass(),
             "auditable_id" => $model->getKey(),
             "old_values" => $oldValues,
             "new_values" => $changes,

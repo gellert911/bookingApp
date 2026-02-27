@@ -26,7 +26,7 @@ function Admin() {
                         setSelectedMenu={setSelectedMenu}
                     />
                 </aside>
-                <main className="flex-grow-1">
+                <main className="flex-grow-1" style={{ minWidth: 0 }}>
                     {selectedMenu == 0 && (
                         <Overview/>
                     )}

@@ -37,7 +37,7 @@ const Overview = () => {
 
     return (
         <div>
-            <h5>Overview</h5>
+            <h5 className="mb-3">Overview</h5>
             <TodaysStatistics stats={overviewStats} loading={loading}/>
             <WeekStatistics stats={overviewStats} loading={loading}/>
             <UpcomingList stats={overviewStats} loading={loading}/>

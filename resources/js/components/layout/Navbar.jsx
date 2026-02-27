@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import { UserContext } from '@/context/UserContext';
 import { ThemeContext } from '@/context/ThemeContext';
-import { logout, refreshCsrf } from '@/api/auth';
+import { logout } from '@/api/auth';
 
 function Navbar () {
     const { user, loading, setUser } = useContext(UserContext);
@@ -16,10 +16,7 @@ function Navbar () {
             const result = await logout();
 
             if (result.success) {
-                setUser(null)
-
-                refreshCsrf();
-                
+                setUser(null)                
                 navigate("/")
             }
         } catch (e) {

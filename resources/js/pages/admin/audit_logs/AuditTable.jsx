@@ -14,6 +14,7 @@ function AuditTable ({ items, meta, onPageChange }) {
                         <th>Model</th>
                         <th>Timestamp</th>
                         <th>IP</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,7 @@ function AuditTable ({ items, meta, onPageChange }) {
                             <td>{log?.auditable_type}</td>
                             <td>{log?.created_at}</td>
                             <td>{log?.ip}</td>
+                            <td><a className='table-link'>Details</a></td>
                         </tr>
                     ))}
                 </tbody>

@@ -14,18 +14,14 @@ class LoginController extends Controller {
 
     public function login (Request $request) {
 
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             "email" => "required",
-            "password" => "required"
+            "password" => "required",
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(["success" => false, "message" => $request['password']]);
-        }
+        $user = User::where("email", $request["email"])->first();
 
-        $userFound = User::where("email", $request["email"])->first();
-
-        if (!$userFound) {
+        if (!$user) {
             return response()->json(["success" => false, "message" => __("auth.user_not_exists")]);
         }
 
@@ -33,8 +29,15 @@ class LoginController extends Controller {
             $login = Auth::attempt(['email' => $request["email"], "password" => $request["password"]]);
 
             if ($login) {
-                session()->regenerate();
-                return response()->json(["success" => true, "message" => "siker", "user" => auth()->user()]);
+                $userToken = $user->createToken("auth_token")->plainTextToken;
+
+                return response()->json([
+                    "success" => true, 
+                    "message" => "Login successful!", 
+                    "token" => $userToken, 
+                    "token_type" => "Bearer", 
+                    "user" => $user
+                ]);
             }
 
             return response()->json(["success" => false, "message" => __("auth.password")]);

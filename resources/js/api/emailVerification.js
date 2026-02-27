@@ -1,12 +1,9 @@
+import { apiRequest } from './apiClient'
+
 export async function requestVerificationEmail () {
     try {
-        const response = await fetch("/auth/email/verify/resend", {
+        const response = await apiRequest("/api/auth/email/verify/resend", {
             method: "POST",
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
         })
 
         return await response.json();
@@ -17,14 +14,8 @@ export async function requestVerificationEmail () {
 
 export async function verifyEmail(token) {
     try {
-        const response = await fetch(`/auth/email/verify`, {
+        const response = await apiRequest(`/api/auth/email/verify`, {
             method: "POST",
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
             body: JSON.stringify({token: token})
         })
 

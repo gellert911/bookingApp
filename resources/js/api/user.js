@@ -1,9 +1,8 @@
+import { apiRequest } from './apiClient';
+
 export async function getUser(id) {
     try {
-        const response = await fetch(`profile/${id}`, {
-            credentials: "include",
-            headers:{ "Content-Type": "application/json" }
-        })
+        const response = await apiRequest(`/api/profile/${id}`, {})
 
         const result = response.json();
 
@@ -15,12 +14,8 @@ export async function getUser(id) {
 
 export async function updateUser(id, data) {
     try {
-        const response = await fetch(`/profile/${id}`, {
+        const response = await apiRequest(`/api/profile/${id}`, {
             method: "PUT",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
             body: JSON.stringify(data)
         })
 
@@ -34,12 +29,8 @@ export async function updateUser(id, data) {
 
 export async function partialUpdateUser(id, data) {
      try {
-        const response = await fetch(`/profile/${id}`, {
+        const response = await apiRequest(`/api/profile/${id}`, {
             method: "PATCH",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
             body: JSON.stringify(data)
         })
 
@@ -53,12 +44,8 @@ export async function partialUpdateUser(id, data) {
 
 export async function updateUserPassword(id, newPassword) {
     try {
-        const response = await fetch(`/profile/${id}`, {
+        const response = await apiRequest(`/api/profile/${id}`, {
             method: "PATCH",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
             body: JSON.stringify({password: newPassword})
         })
 
@@ -72,14 +59,7 @@ export async function updateUserPassword(id, newPassword) {
 
 export async function deleteUser(id) {
     try {
-        const response = await fetch(`/users/${id}`, {
-            method: "DELETE",
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-        })
+        const response = await apiRequest(`/api/users/${id}`, { method: "DELETE" })
 
         const result = await response.json();
 

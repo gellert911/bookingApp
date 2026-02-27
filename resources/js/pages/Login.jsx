@@ -26,7 +26,7 @@ function Login() {
             const result = await login({email, password});
 
             if (result.success) {
-                refreshCsrf();
+                localStorage.setItem("auth_token", result.token);
                 setUser(result.user)
                 showAlert(result.message, "success")
     

@@ -1,11 +1,9 @@
+import { apiRequest } from "./apiClient";
+
 export async function updateSchedule(employeeId, schedule) {
     try {
-        const response = await fetch(`schedules/${employeeId}`, {
+        const response = await apiRequest(`/api/schedules/${employeeId}`, {
             method: "PUT",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
             body: JSON.stringify(schedule),
         });
 
@@ -19,12 +17,7 @@ export async function updateSchedule(employeeId, schedule) {
 
 export async function getSchedule(employeeId) {
     try {
-        const response = await fetch(`schedules/${employeeId}`, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await apiRequest(`/api/schedules/${employeeId}`, { method: "GET" });
 
         const result = await response.json();
 

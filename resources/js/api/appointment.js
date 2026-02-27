@@ -1,11 +1,9 @@
+import { apiRequest } from "./apiClient";
+
 export async function getAvailableSlots(date) {
     try {
-        const response = await fetch(`/booking/slots?date=${date}`, {
+        const response = await apiRequest(`/api/booking/slots?date=${date}`, {
             method: "GET",
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-            },
         });
     
         const result = await response.json();
@@ -18,13 +16,8 @@ export async function getAvailableSlots(date) {
 
 export async function createAppointment(data) {
     try {
-
-        const response = await fetch("/appointments", {
+        const response = await apiRequest("/api/appointments", {
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
             body: JSON.stringify(data)
         });
 
@@ -42,13 +35,7 @@ export async function getAppointments(filters) {
     const query = new URLSearchParams(filters).toString();
 
     try {
-        const response = await fetch(`/appointments?${query}`, {
-            credentials: "include",
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await apiRequest(`/api/appointments?${query}`, { method: "GET" });
 
         const result = await response.json();
 
@@ -60,13 +47,7 @@ export async function getAppointments(filters) {
 
 export async function getUserAppointments(id) {
     try {
-        const response = await fetch(`/users/${id}/appointments`, {
-            credentials: "include",
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
+        const response = await apiRequest(`/api/users/${id}/appointments`, { method: "GET" })
 
         const result = await response.json();
 
@@ -78,13 +59,7 @@ export async function getUserAppointments(id) {
 
 export async function deleteAppointment(id) {
     try {
-        const response = await fetch(`appointments/${id}/delete`, {
-            method: "DELETE",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-        })
+        const response = await apiRequest(`/api/appointments/${id}/delete`, { method: "DELETE" })
 
         const result = await response.json()
 
@@ -98,12 +73,8 @@ export async function deleteAppointment(id) {
 
 export async function cancelAppointment(id) {
     try {
-        const response = await fetch(`/appointments/${id}/cancel`, {
+        const response = await apiRequest(`/api/appointments/${id}/cancel`, {
             method: "PATCH",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
             body: JSON.stringify({"action": "cancel_appointment"})
         })
 

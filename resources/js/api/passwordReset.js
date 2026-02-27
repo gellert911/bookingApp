@@ -1,13 +1,9 @@
+import { apiRequest } from './apiClient';
+
 export async function requestPasswordReset(email) {
     try {
-        const response = await fetch("/auth/forgot-password", {
+        const response = await apiRequest("/api/auth/forgot-password", {
             method: "POST",
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
             body: JSON.stringify({ email })
         })
 
@@ -19,14 +15,8 @@ export async function requestPasswordReset(email) {
 
 export async function sendPasswordReset(token, newPassword) {
     try {
-        const response = await fetch("/auth/reset-password/", {
+        const response = await apiRequest("/api/auth/reset-password/", {
             method: "POST",
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
             body: JSON.stringify({ token, newPassword })
         })
 

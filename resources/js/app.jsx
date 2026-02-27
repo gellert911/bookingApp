@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { UserProvider } from '@/context/UserContext';
 import { ThemeProvider } from '@/context/ThemeContext';
@@ -17,37 +17,55 @@ import PasswordReset from '@/pages/PasswordReset';
 
 import { LoggedinRoute } from '@/context/LoggedinRoute';
 import { AdminRoute } from '@/context/AdminRoute';
+import { UserContext } from './context/UserContext';
+
+
+function AppContent() {
+    const { user, loading } = useContext(UserContext);
+
+    if (loading) {
+        return <p>loading...</p>;
+    }
+
+    return (
+        <>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/booking" element={<Booking />} />
+
+                <Route path="/profile/:id?" element={
+                    <LoggedinRoute>
+                        <Profile />
+                    </LoggedinRoute>
+                } />
+                <Route path="/admin" element={
+                    <AdminRoute>
+                        <Admin />
+                    </AdminRoute>
+                } />
+
+                <Route path="/verify-email/:token?" element={<VerifyEmail />} />
+                <Route path="/password-reset/:token?" element={<PasswordReset />} />
+
+                <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+        </>
+    );
+}
 
 function App() {
     return (
-       <BrowserRouter>
-        <ThemeProvider>
-                <UserProvider>
-                    <Navbar/>
-                    <Routes>
-                        <Route path="/" element={ <Home/> }></Route>
-                        <Route path="/login" element={ <Login/> }></Route>
-                        <Route path="/register" element={ <Register/> }></Route>
-                        <Route path="/booking" element={ <Booking/> }></Route>
-
-                        <Route path="/profile/:id?" element={
-                            <LoggedinRoute>
-                                <Profile/>
-                            </LoggedinRoute>
-                        }></Route>
-                        <Route path="/admin" element={
-                            <AdminRoute>
-                                <Admin/>
-                            </AdminRoute>
-                        }></Route>
-
-                        <Route path="/verify-email/:token?" element={ <VerifyEmail/> }></Route>
-                        <Route path="/password-reset/:token?" element={ <PasswordReset/> }></Route>
-                    </Routes>
-                </UserProvider>
-            </ThemeProvider>
-       </BrowserRouter>
-    )
+        <BrowserRouter>
+            <UserProvider>
+                <ThemeProvider>
+                    <AppContent />
+                </ThemeProvider>
+            </UserProvider>
+        </BrowserRouter>
+    );
 }
 
 const container = document.getElementById('app');

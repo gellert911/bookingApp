@@ -1,12 +1,8 @@
+import { apiRequest } from "./apiClient";
+
 export default async function fetchAuditLogs(page) {
     try {
-        const response = await fetch(`/audit-logs?page=${page}`, { 
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-        })
+        const response = await apiRequest(`/api/audit-logs?page=${page}`, {})
 
         return await response.json()
     } catch (e) {

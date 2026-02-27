@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { showAlert } from '@/utility/alert';
 
 import { updateUser, updateUserPassword, deleteUser } from "@/api/user";
-import { logout, refreshCsrf } from '@/api/auth';
+import { logout} from '@/api/auth';
 import { requestVerificationEmail } from "@/api/emailVerification";
 
 import PasswordInput from "@/components/ui/PasswordInput";
@@ -90,8 +90,6 @@ function Settings ( { user, onEdit } ) {
                 onEdit();
                 navigate("/");
                 showAlert(result.message, "danger");
-
-                refreshCsrf();
             }
         } catch (e) {
             console.error(e);

@@ -24,7 +24,13 @@ function AppContent() {
     const { user, loading } = useContext(UserContext);
 
     if (loading) {
-        return <p>loading...</p>;
+        return (
+            <div class="d-flex justify-content-center align-items-center vh-100">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
     }
 
     return (

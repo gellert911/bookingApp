@@ -2,7 +2,7 @@ import { apiRequest } from './apiClient';
 
 export async function requestPasswordReset(email) {
     try {
-        const response = await apiRequest("/api/auth/forgot-password", {
+        const response = await apiRequest("/auth/forgot-password", {
             method: "POST",
             body: JSON.stringify({ email })
         })
@@ -15,7 +15,7 @@ export async function requestPasswordReset(email) {
 
 export async function sendPasswordReset(token, newPassword) {
     try {
-        const response = await apiRequest("/api/auth/reset-password/", {
+        const response = await apiRequest("/auth/reset-password/", {
             method: "POST",
             body: JSON.stringify({ token, newPassword })
         })

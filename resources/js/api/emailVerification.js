@@ -2,7 +2,7 @@ import { apiRequest } from './apiClient'
 
 export async function requestVerificationEmail () {
     try {
-        const response = await apiRequest("/api/auth/email/verify/resend", {
+        const response = await apiRequest("/auth/email/verify/resend", {
             method: "POST",
         })
 
@@ -14,7 +14,7 @@ export async function requestVerificationEmail () {
 
 export async function verifyEmail(token) {
     try {
-        const response = await apiRequest(`/api/auth/email/verify`, {
+        const response = await apiRequest(`/auth/email/verify`, {
             method: "POST",
             body: JSON.stringify({token: token})
         })

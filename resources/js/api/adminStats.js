@@ -5,7 +5,7 @@ export async function getOverviewStats(interval) {
     const query = new URLSearchParams(interval)
 
     try {
-        const response = await apiRequest(`/api/admin/stats/overview?${query}`) //fetch(`/api/admin/stats/overview?${query}`, { credentials: "include" })
+        const response = await apiRequest(`/admin/stats/overview?${query}`)
 
         return await response.json();
     } catch (e) {

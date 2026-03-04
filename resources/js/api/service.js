@@ -2,7 +2,7 @@ import { apiRequest } from "./apiClient";
 
 export async function fetchServices() {
     try {
-        const response = await apiRequest("/api/services")
+        const response = await apiRequest("/services")
 
         const result = response.json();
 
@@ -14,7 +14,7 @@ export async function fetchServices() {
 
 export async function createService(data) {
     try {
-        const response = await apiRequest("/api/services", {
+        const response = await apiRequest("/services", {
             method: "POST",
             body: JSON.stringify(data)
         })
@@ -28,7 +28,7 @@ export async function createService(data) {
 
 export async function updateService(id, data) {
     try {
-        const response = await apiRequest(`/api/services/${id}`, {
+        const response = await apiRequest(`/services/${id}`, {
             method: "PUT",
             body: JSON.stringify(data)
         })
@@ -41,7 +41,7 @@ export async function updateService(id, data) {
 
 export async function deleteService(id) {
     try {
-        const response = await apiRequest(`/api/services/${id}`, {
+        const response = await apiRequest(`/services/${id}`, {
             method: "DELETE",
         })
 

@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'user' => \App\Models\User::class,
             'appointment' => \App\Models\Appointment::class,
-            'schedule' => \App\Models\Appointment::class,
+            'schedule' => \App\Models\Schedule::class,
             'service' => \App\Models\Service::class,
             'user_token' => \App\Models\UserToken::class,
         ]);

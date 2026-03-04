@@ -26,7 +26,7 @@ function AuditTable ({ items, meta, onPageChange, loading }) {
                     <tbody>
                         {items.map((log, index) => (
                             <tr key={log?.id}>
-                                <td>{index + 1}</td>
+                                <td>{meta?.from + index}</td>
                                 <td>{log?.user_id}</td>
                                 <td>{log?.event}</td>
                                 <td>{log?.auditable_type}</td>

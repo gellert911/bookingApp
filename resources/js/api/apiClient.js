@@ -1,28 +1,36 @@
+import { getCookie } from '@/utility/helpers';
+import { csrfRefresh } from './auth';
+
 export const apiRequest = async (endpoint, options = {}) => {
     const BASE_URL = '';
-    const token = localStorage.getItem('auth_token');
 
     const defaultHeaders = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
     };
 
-    if (token) {
-        defaultHeaders['Authorization'] = `Bearer ${token}`;
+    const request = async () => {
+        return await fetch(`${BASE_URL}${endpoint}`, {
+            ...options,
+            credentials: 'include',
+            headers: {
+                ...defaultHeaders,
+                "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
+                ...options.headers,
+            },
+        });
     }
 
-    const config = {
-        ...options,
-        headers: {
-            ...defaultHeaders,
-            ...options.headers,
-        },
-    };
+    let response = await request()
 
-    const response = await fetch(`${BASE_URL}${endpoint}`, config);
+    if (response.status === 419) {
+        await csrfRefresh();
+
+        response = await request()
+    }
 
     if (response.status === 401) {
-        localStorage.removeItem('auth_token');
+        window.location.href = "/login";
     }
 
     return response;

@@ -29,13 +29,11 @@ class LoginController extends Controller {
             $login = Auth::attempt(['email' => $request["email"], "password" => $request["password"]]);
 
             if ($login) {
-                $userToken = $user->createToken("auth_token")->plainTextToken;
+                $request->session()->regenerate();
 
                 return response()->json([
                     "success" => true, 
-                    "message" => "Login successful!", 
-                    "token" => $userToken, 
-                    "token_type" => "Bearer", 
+                    "message" => "Login successful!",  
                     "user" => $user
                 ]);
             }

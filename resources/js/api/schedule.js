@@ -2,7 +2,7 @@ import { apiRequest } from "./apiClient";
 
 export async function updateSchedule(employeeId, schedule) {
     try {
-        const response = await apiRequest(`/api/schedules/${employeeId}`, {
+        const response = await apiRequest(`/schedules/${employeeId}`, {
             method: "PUT",
             body: JSON.stringify(schedule),
         });
@@ -17,7 +17,7 @@ export async function updateSchedule(employeeId, schedule) {
 
 export async function getSchedule(employeeId) {
     try {
-        const response = await apiRequest(`/api/schedules/${employeeId}`, { method: "GET" });
+        const response = await apiRequest(`/schedules/${employeeId}`, { method: "GET" });
 
         const result = await response.json();
 

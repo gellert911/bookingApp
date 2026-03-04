@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Services\AuditService;
-use Illuminate\Support\Facades\Log;
 
 class AuditObserver
 {

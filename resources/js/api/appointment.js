@@ -2,7 +2,7 @@ import { apiRequest } from "./apiClient";
 
 export async function getAvailableSlots(date) {
     try {
-        const response = await apiRequest(`/api/booking/slots?date=${date}`, {
+        const response = await apiRequest(`/booking/slots?date=${date}`, {
             method: "GET",
         });
     
@@ -16,7 +16,7 @@ export async function getAvailableSlots(date) {
 
 export async function createAppointment(data) {
     try {
-        const response = await apiRequest("/api/appointments", {
+        const response = await apiRequest("/appointments", {
             method: "POST",
             body: JSON.stringify(data)
         });
@@ -35,7 +35,7 @@ export async function getAppointments(filters) {
     const query = new URLSearchParams(filters).toString();
 
     try {
-        const response = await apiRequest(`/api/appointments?${query}`, { method: "GET" });
+        const response = await apiRequest(`/appointments?${query}`, { method: "GET" });
 
         const result = await response.json();
 
@@ -47,7 +47,7 @@ export async function getAppointments(filters) {
 
 export async function getUserAppointments(id) {
     try {
-        const response = await apiRequest(`/api/users/${id}/appointments`, { method: "GET" })
+        const response = await apiRequest(`/users/${id}/appointments`, { method: "GET" })
 
         const result = await response.json();
 
@@ -59,7 +59,7 @@ export async function getUserAppointments(id) {
 
 export async function deleteAppointment(id) {
     try {
-        const response = await apiRequest(`/api/appointments/${id}/delete`, { method: "DELETE" })
+        const response = await apiRequest(`/appointments/${id}/delete`, { method: "DELETE" })
 
         const result = await response.json()
 
@@ -73,7 +73,7 @@ export async function deleteAppointment(id) {
 
 export async function cancelAppointment(id) {
     try {
-        const response = await apiRequest(`/api/appointments/${id}/cancel`, {
+        const response = await apiRequest(`/appointments/${id}/cancel`, {
             method: "PATCH",
             body: JSON.stringify({"action": "cancel_appointment"})
         })

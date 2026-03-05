@@ -67,8 +67,8 @@ Route::middleware(["web", "auth:sanctum"])->group(function () {
     Route::delete("/services/{service}", [ServicesController::class, "destroy"]);
 
     Route::middleware("admin")->group(function () {
-        Route::get("/admin/stats/overview", [AdminStatsController::class, "overview"])->middleware("admin");
-        Route::get("/audit-logs", [AuditLogController::class, "index"])->middleware("admin");
+        Route::get("/admin/stats/overview", [AdminStatsController::class, "overview"]);
+        Route::get("/audit-logs", [AuditLogController::class, "index"]);
     });
 
     Route::post("/auth/email/verify/resend", [EmailVerificationController::class, "resend"]);

@@ -2,11 +2,13 @@
 
 namespace App\Listeners;
 
+use App\Events\PasswordResetRequested;
 use App\Services\AuditService;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Failed;
+use Illuminate\Auth\Events\PasswordReset;
 
 class AuthAuditSubscriber
 {
@@ -27,6 +29,8 @@ class AuthAuditSubscriber
             Login::class => "handle",
             Logout::class => "handle",
             Failed::class => "handle",
+            PasswordReset::class => "handle",
+            PasswordResetRequested::class => "handle",
         ];
     }
 
@@ -41,6 +45,8 @@ class AuthAuditSubscriber
             "Login" => "login",
             "Logout" => "logout",
             "Failed" => "failed_login",
+            "PasswordReset" => "password_reset",
+            "PasswordResetRequested" => "password_reset_requested",
             default => 'unknown',
         };
 

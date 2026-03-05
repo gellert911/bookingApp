@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Mail\VerifyEmail;
 use App\Models\User;
 use App\Models\UserToken;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -37,6 +38,8 @@ class EmailVerificationService {
         $user->save();
 
         $userToken->delete();
+
+        event(new Verified($user));
 
         return $user;
     }

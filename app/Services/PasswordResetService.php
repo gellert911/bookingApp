@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Events\PasswordResetRequested;
 use App\Mail\PasswordReset;
 use App\Models\User;
 use App\Models\UserToken;
+use Illuminate\Auth\Events\PasswordReset as EventsPasswordReset;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -22,6 +24,7 @@ class PasswordResetService {
         ]);
 
         Mail::to($user->email)->send(new PasswordReset($user, $userToken));
+        event(new PasswordResetRequested($user));
     }
 
     public function reset($token, $newPassword) {
@@ -38,6 +41,8 @@ class PasswordResetService {
         $user->save();
 
         $userToken->delete();
+
+        event(new EventsPasswordReset($user));
 
         return $user;
     }

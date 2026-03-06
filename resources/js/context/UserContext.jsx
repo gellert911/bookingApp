@@ -1,12 +1,14 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { csrfRefresh } from '@/api/auth';
+import { csrfRefresh, logout } from '@/api/auth';
 import { apiRequest } from '@/api/apiClient';
+import { useNavigate } from 'react-router-dom';
 
 export const UserContext = createContext(null)
 
 export function UserProvider ( {children} ) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
 
     const refreshUser = async () => {
@@ -29,12 +31,25 @@ export function UserProvider ( {children} ) {
         }
     }
 
+    const logoutUser = async () => {
+        try {
+            const result = await logout();
+
+            if (result.success) {
+                setUser(null)                
+                navigate("/")
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     useEffect(() => {
         refreshUser()
     }, [])
 
     return (
-        <UserContext.Provider value={{user, loading, setUser, refreshUser}}>
+        <UserContext.Provider value={{user, loading, setUser, refreshUser, logoutUser}}>
             {children}
         </UserContext.Provider>
     )

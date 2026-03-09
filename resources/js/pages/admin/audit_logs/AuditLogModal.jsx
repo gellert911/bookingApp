@@ -19,7 +19,7 @@ function AuditLogModal({ show, onClose, selectedLog }) {
                 </div>
                 <div className="row mb-2">
                     <label className='col-sm-4 text-muted'>IP address</label>
-                    <a className='col-sm-8' href={selectedLog?.ip}>{selectedLog?.ip}</a>
+                    <a className='col-sm-8' href={`https://whatismyipaddress.com/${selectedLog?.ip}`}>{selectedLog?.ip}</a>
                 </div>
                 <div className="row mb-2">
                     <label className='col-sm-4 text-muted'>Date</label>
@@ -28,19 +28,19 @@ function AuditLogModal({ show, onClose, selectedLog }) {
                 <hr />
                 <div className="mb-2">
                     <label className='form-label'>Old values</label>
-                    <pre className='bg-light p-2' style={{maxHeight: '150px', overflow: 'auto'}}>
+                    <pre className='bg-body-tertiary p-2' style={{maxHeight: '150px', overflow: 'auto'}}>
                         <code>{JSON.stringify(selectedLog?.old_values, null, 2)}</code>
                     </pre>
                 </div>
                 <div className="mb-2">
                     <label className='form-label'>New values</label>
-                    <pre className='bg-light p-2' style={{maxHeight: '150px', overflow: 'auto'}}>
+                    <pre className='bg-body-tertiary p-2' style={{maxHeight: '150px', overflow: 'auto'}}>
                         <code>{JSON.stringify(selectedLog?.new_values, null, 2)}</code>
                     </pre>
                 </div>
                 <div>
                     <label className='form-label'>User agent</label>
-                    <pre className='bg-light p-2'>
+                    <pre className='bg-body-tertiary p-2'>
                         <code>{selectedLog?.user_agent}</code>
                     </pre>
                 </div>

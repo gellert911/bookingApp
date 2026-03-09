@@ -19,7 +19,7 @@ function AuditLogModal({ show, onClose, selectedLog }) {
                 </div>
                 <div className="row mb-2">
                     <label className='col-sm-4 text-muted'>IP address</label>
-                    <a className='col-sm-8' href={`https://whatismyipaddress.com/${selectedLog?.ip}`}>{selectedLog?.ip}</a>
+                    <a className='col-sm-8' href={`https://ipinfo.io/${selectedLog?.ip}`}>{selectedLog?.ip}</a>
                 </div>
                 <div className="row mb-2">
                     <label className='col-sm-4 text-muted'>Date</label>

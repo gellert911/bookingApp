@@ -26,7 +26,7 @@ function AddServiceModal({ show, onClose, onSubmit }) {
 
     return (
         <Modal show={show} onClose={onClose}>
-             <div className="modal-header">
+            <div className="modal-header">
                 <h5 className="modal-title" id="staticBackdropLabel">Create new service</h5>
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

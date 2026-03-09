@@ -1,7 +1,7 @@
 import React from 'react';
 import Pagination from '@/components/layout/Pagination';
 
-function AuditTable ({ items, meta, onPageChange, loading }) {
+function AuditTable ({ items, meta, onPageChange, onLogSelect, loading }) {
     return (
         <div>
             <Pagination meta={meta} onPageChange={onPageChange}/>
@@ -32,7 +32,7 @@ function AuditTable ({ items, meta, onPageChange, loading }) {
                                 <td>{log?.auditable_type}</td>
                                 <td>{log?.created_at?.slice(0, 10)} {log?.created_at?.slice(11, 19)}</td>
                                 <td>{log?.ip}</td>
-                                <td><a className='table-link'>Details</a></td>
+                                <td><a className='table-link' onClick={() => onLogSelect(log)}>Details</a></td>
                             </tr>
                         ))}
                     </tbody>

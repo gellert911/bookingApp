@@ -107,20 +107,20 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
 
             <div className="modal-body">
                 <div className="row mb-3">
-                    <label className='col-sm-6'>Date</label>
+                    <label className='col-sm-6 text-muted'>Date</label>
                     <div className="col-sm-6">
                         {dateToString(selectedSlot?.date, "MMMM d, yyyy")}
                     </div>
                 </div>
                 <div className="row mb-3">
-                    <label className='col-sm-6'>Interval</label>
+                    <label className='col-sm-6 text-muted'>Interval</label>
                     <div className="col-sm-6">
                         {selectedSlot?.start?.slice(0, 5)} ➔ {selectedSlot?.end?.slice(0, 5)}
                     </div>
                 </div>
 
                 <div className="row mb-3">
-                    <label className="col-form-label col-sm-6">Service</label>
+                    <label className="col-form-label col-sm-6 text-muted">Service</label>
                     <div className="col-sm-6">
                         <select className="form-select" value={selectedService} onChange={(e) => setSelectedService(e.target.value)}>
                             {availableServices?.filter(service => service.active)
@@ -133,7 +133,7 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
 
                 {(user && !user?.full_name) && (
                     <div className="row mb-3">
-                        <label className='col-form-label col-sm-6'>Full name</label>
+                        <label className='col-form-label col-sm-6 text-muted'>Full name</label>
                         <div className="col-sm-6">
                             <input name="full_name" type="text" className="form-control" value={formData.full_name} onChange={handleChange} placeholder='Full name'/>
                         </div>
@@ -142,7 +142,7 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
 
                 {(user && (!user?.phone_country || !user?.phone_number)) && (
                     <div className="row mb-3">
-                        <label className='col-form-label col-sm-6'>Phone number</label>
+                        <label className='col-form-label col-sm-6 text-muted'>Phone number</label>
                         <div className="col-sm-6">
                             <PhoneNumberInput 
                                 prefixValue={formData.phone_country} 
@@ -155,7 +155,7 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
                 
                 {user && (
                     <div className="row mb">
-                        <label className='col-form-label col-sm-6'>Note</label>
+                        <label className='col-form-label col-sm-6 text-muted'>Note</label>
                         <div className="col-sm-6">
                         <input type="text" className="form-control" value={comment} onChange={(e) => setComment(e.target.value)} placeholder='Optional'/>
                         </div>

@@ -14,26 +14,26 @@ const AppointmentDetailsModal = ({ show, onClose, selectedAppointment, onCancel 
 
                 <div className="modal-body">
                     <div className="row mb-3">
-                        <label className="col-sm-6">Date</label>
+                        <label className="col-sm-6 text-muted">Date</label>
                         <div className="col-sm-6">
                             {selectedAppointment.date}
                         </div>
                     </div>
                     <div className="row mb-3">
-                        <label htmlFor="interval" className='col-sm-6'>Interval</label>
+                        <label className='col-sm-6 text-muted'>Interval</label>
                         <div className="col-sm-6" id='interval'>
                             {selectedAppointment?.start_at?.slice(0, 5)} ➔ {selectedAppointment?.end_at?.slice(0, 5)}
                         </div>
                     </div>
                     <div className="row mb-3">
-                        <label htmlFor="note" className='col-sm-6'>Service</label>
-                        <div className="col-sm-6 text-muted" id='note'>
+                        <label htmlFor="note" className='col-sm-6 text-muted'>Service</label>
+                        <div className="col-sm-6" id='note'>
                             {selectedAppointment.service.name}
                         </div>
                     </div>
                     <div className="row mb-3">
-                        <label htmlFor="note" className='col-sm-6'>Note</label>
-                        <div className="col-sm-6 text-muted" id='note'>
+                        <label htmlFor="note" className='col-sm-6 text-muted'>Note</label>
+                        <div className="col-sm-6" id='note'>
                             {selectedAppointment.comment}
                         </div>
                     </div>

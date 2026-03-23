@@ -29,7 +29,7 @@ export function toLuxon(date) {
 export function dateToString(date, format = "MMMM d") {
     if (!date) return "";
 
-    date = new DateTime(date);
+    date = DateTime.fromISO(date);
 
     return date.toFormat(format)
 }

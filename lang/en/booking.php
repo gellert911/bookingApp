@@ -8,6 +8,7 @@ return [
     "not_loggedin" => "You need to log in to create an appointment!",
     "appointment_cancelled" => "Appointment cancelled successfully!",
     "email_not_verified" => "You need to verify your email to book appointments!",
+    "admin_appointment_successful" => "Appointment created successfully for the selected user!",
 ];
 
 ?>

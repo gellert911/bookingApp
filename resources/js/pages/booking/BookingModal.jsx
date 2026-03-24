@@ -11,9 +11,10 @@ import { getNonEmptyFields, dateToString } from '@/utility/helpers';
 
 import Modal from '@/components/ui/Modal';
 import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
+import ServiceSelect from '@/components/ui/ServiceSelect';
 
 
-function BookingModal ( { show, onClose, availableServices, selectedSlot, onBooking }) {
+function BookingModal ( { show, onClose, selectedSlot, onBooking }) {
     const { user, refreshUser } = useContext(UserContext);
 
     const navigate = useNavigate()
@@ -122,12 +123,7 @@ function BookingModal ( { show, onClose, availableServices, selectedSlot, onBook
                 <div className="row mb-3">
                     <label className="col-form-label col-sm-6 text-muted">Service</label>
                     <div className="col-sm-6">
-                        <select className="form-select" value={selectedService} onChange={(e) => setSelectedService(e.target.value)}>
-                            {availableServices?.filter(service => service.active)
-                            .map(service => (
-                                <option key={service.id} value={service.id}>{service.name}</option>
-                            ))}
-                        </select>
+                        <ServiceSelect value={selectedService} onChange={(e) => setSelectedService(e.target.value)}/>
                     </div>
                 </div>
 

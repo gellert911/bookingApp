@@ -9,7 +9,7 @@ import CalendarToolbar from "@/components/ui/CalendarToolbar";
 
 const now = DateTime.now();
 
-function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, setCurrentView, currentDate, setCurrentDate, appointments, onAppointmentOpen } ) {
+function AppointmentsDatepicker ( { setCurrentRange, currentView, setCurrentView, currentDate, setCurrentDate, appointments, onAppointmentOpen, onSelectSlot } ) {
 
     const [events, setEvents] = useState([])
 
@@ -56,7 +56,7 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
     return (
         <div>
             <div className="container" style={{ height: "80vh" }}>
-                <Calendar
+                <Calendar selectable
                     culture="en-GB"
                     components={{toolbar: CalendarToolbar}}
                     showMultiDayTimes={false}
@@ -77,9 +77,9 @@ function AppointmentsDatepicker ( { currentRange, setCurrentRange, currentView, 
                         setCurrentView(view);
                     }}
                     onSelectEvent={(event) => {
-                        const appointment = event.resource;
-                        onAppointmentOpen(appointment);
+                        onAppointmentOpen(event.resource);
                     }}
+                    onSelectSlot={onSelectSlot}
                 />
             </div>
         </div>

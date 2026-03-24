@@ -3,9 +3,12 @@ import React, { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 
 import { getAppointments, deleteAppointment } from "@/api/appointment";
+import { showAlert } from '@/utility/alert'
+import { createAdminAppointment } from "@/api/appointment";
 
 import AppointmentsDatepicker from './appointments/AppointmentsDatepicker';
 import AppointmentDetailsModal from "./appointments/AppointmentDetailsModal";
+import AddAppointmentModal from "./appointments/AddAppointmentModal";
 
 const now = DateTime.now();
 
@@ -17,8 +20,10 @@ function Appointments() {
     
     const [appointments, setAppointments] = useState([]);
     const [selectedAppointment, setSelectedAppointment] = useState(null)
+    const [selectedFreeSlot, setSelectedFreeSlot] = useState(null);
 
     const [showAppointmentDetailsModal, setShowAppointmentDetailsModal] = useState(false);
+    const [showAddAppointmentModal, setShowAddAppointmentModal] = useState(false);
 
     const [loading, setLoading] = useState(false);
 
@@ -34,7 +39,6 @@ function Appointments() {
             view: view,
         }
 
-        console.log("loading -> " + dateStart.toISODate() + " - " + dateEnd.toISODate())
         try {
             const result = await getAppointments(filters);
 
@@ -56,7 +60,24 @@ function Appointments() {
         setShowAppointmentDetailsModal(true);
     }
 
+    const openAddAppointment = (slotInfo) => {
+        console.log(slotInfo)
+        const startDt = DateTime.fromJSDate(slotInfo.start);
+        const endDt = DateTime.fromJSDate(slotInfo.end);
+
+        const slot = {
+            date: startDt.toISODate(),
+            start_at: startDt.toFormat("HH:mm:ss"),
+            end_at: endDt.toFormat("HH:mm:ss"),
+        }
+
+        setSelectedFreeSlot(slot);
+        setShowAddAppointmentModal(true)
+
+    }
+
     const handleDelete = async (id) => {
+        setLoading(true)
         try {
             const result = await deleteAppointment(id);
 
@@ -68,6 +89,28 @@ function Appointments() {
             }
         } catch (e) {
             console.log(e)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleAdd = async (data) => {
+        setLoading(true)
+        try {
+            const result = await createAdminAppointment(data)
+
+            if (result.success) {
+                loadAppointments(currentRange.start, currentRange.end)
+                showAlert(result.message, "success");
+                setShowAddAppointmentModal(false);
+                setSelectedFreeSlot(null);
+            } else {
+                showAlert(result.message, "danger");
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -79,28 +122,29 @@ function Appointments() {
 
     return (
         <div>
-            <h5 className="mb-3">View Appointments</h5>
+            <h5 className="mb-3">View appointments</h5>
 
-            {/*loading && (
-                <div className="spinner-border spinner-border-sm" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-            )*/}
-
-            <AppointmentsDatepicker currentRange={currentRange}
-                setCurrentRange={setCurrentRange}
+            <AppointmentsDatepicker setCurrentRange={setCurrentRange}
                 currentView={currentView}
                 setCurrentView={setCurrentView}
                 currentDate={currentDate}
                 setCurrentDate={setCurrentDate}
                 appointments={appointments}
                 onAppointmentOpen={openAppointment}
+                onSelectSlot={openAddAppointment}
             />
 
             <AppointmentDetailsModal show={showAppointmentDetailsModal}
                 onClose={() => {setShowAppointmentDetailsModal(false); setSelectedAppointment(null)}}
                 selectedAppointment={selectedAppointment} 
                 onDelete={handleDelete}
+            />
+
+            <AddAppointmentModal show={showAddAppointmentModal}
+                onClose={() => {setShowAddAppointmentModal(false), setSelectedFreeSlot(null)}}
+                selectedSlot={selectedFreeSlot}
+                onAdd={handleAdd}
+                loading={loading}
             />
         </div>
     )

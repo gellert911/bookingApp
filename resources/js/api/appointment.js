@@ -30,6 +30,22 @@ export async function createAppointment(data) {
     }
 }
 
+export async function createAdminAppointment(data) {
+    try {
+        const response = await apiRequest("/admin/appointments", {
+            method: "POST",
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        return result;
+
+    } catch (e) {
+        console.error(e);
+    }
+}
+
 export async function getAppointments(filters) {
 
     const query = new URLSearchParams(filters).toString();

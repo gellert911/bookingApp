@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { showAlert } from '@/utility/alert';
 import { getAvailableSlots } from '@/api/appointment';
-import { fetchServices } from '@/api/service';
 
 import BookingModal from './booking/BookingModal';
 import BookingDatepicker from './booking/BookingDatepicker';
@@ -14,8 +13,6 @@ function Booking () {
     const [availableSlots, setAvailableSlots] = useState([]);
     const [selectedSlot, setSelectedSlot] = useState(null);
     const [selectedDate, setSelectedDate] = useState(now.toISOString().slice(0, 10));
-
-    const [availableServices, setAvailableServices] = useState([]);
 
     const [showBookingModal, setShowBookingModal] = useState(false);
 
@@ -38,25 +35,14 @@ function Booking () {
     
     }
 
-    const getAvailableServices = async () => {
-        try {
-            const result = await fetchServices();
-
-            if (result.success) setAvailableServices(result.message);
-        } catch (e) {
-            console.error(e);
-        }
+    const onSlotSelect = (slot) => {
+        setSelectedSlot(slot)
+        setShowBookingModal(true)
     }
 
     useEffect(() => {
         getSlots()
     }, [selectedDate])
-
-    useEffect(() => {
-        if (showBookingModal) {
-            getAvailableServices();
-        }
-    }, [showBookingModal])
 
     return (
         <div className="container">
@@ -76,15 +62,12 @@ function Booking () {
             )}
 
             <BookingList availableSlots={availableSlots} 
-                selectedSlot={selectedSlot} 
-                setSelectedSlot={setSelectedSlot}
-                setShowBookingModal={setShowBookingModal}
+                onSlotSelect={onSlotSelect}
             />
 
             {selectedSlot && (
                 <BookingModal show={showBookingModal}
                     onClose={() => setShowBookingModal(false)}
-                    availableServices={availableServices}
                     selectedSlot={selectedSlot} 
                     onBooking={getSlots}
                 />

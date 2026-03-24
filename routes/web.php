@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Admin\AdminAppointmentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
@@ -69,6 +69,7 @@ Route::middleware(["web", "auth:sanctum"])->group(function () {
     Route::middleware("admin")->group(function () {
         Route::get("/admin/stats/overview", [AdminStatsController::class, "overview"]);
         Route::get("/audit-logs", [AuditLogController::class, "index"]);
+        Route::post("admin/appointments", [AdminAppointmentController::class, "store"]);
     });
 
     Route::post("/auth/email/verify/resend", [EmailVerificationController::class, "resend"]);

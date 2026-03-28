@@ -61,7 +61,7 @@ class BookingController extends Controller {
         }
     }
 
-    public function getFreeSlots(Request $request) {
+    public function index(Request $request) {
         $date = $request->query("date");
         
         $slots = $this->service->getFreeSlots(1, $date);

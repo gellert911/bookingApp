@@ -36,7 +36,7 @@ export async function logout () {
 
 export async function register(credentials) {
     try {
-        const response = await apiRequest("/register", {
+        const response = await apiRequest("/users", {
             method: "POST",
             body: JSON.stringify(credentials),
         });

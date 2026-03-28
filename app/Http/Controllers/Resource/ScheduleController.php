@@ -22,7 +22,7 @@ class ScheduleController extends Controller {
         $this->service = new ScheduleService;
     }
 
-    public function updateSchedule(Request $request, $employeeId) {
+    public function update(Request $request, $employeeId) {
         $schedule = $this->service->updateSchedule($employeeId, $request->input("schedule"));
         
         if($schedule) {
@@ -32,7 +32,7 @@ class ScheduleController extends Controller {
         return response()->json(["success" => false, "message" => __("schedule.update_error")]);
     }
 
-    public function getSchedule($employeeId) {
+    public function index($employeeId) {
         $schedule = $this->service->getSchedule($employeeId);
         if ($schedule) {
             return response()->json(["success" => true, "message" => $employeeId, "result" => $schedule]);

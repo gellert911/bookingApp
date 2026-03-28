@@ -27,7 +27,7 @@ function UserDropdown () {
 
             <ul className="dropdown-menu dropdown-menu-end p-2 rounded-3">
                 <li>
-                    <Link to="/profile" className='dropdown-item rounded'> 
+                    <Link to="/users" className='dropdown-item rounded'> 
                         <i className="fa-regular fa-user me-2"></i>
                         Account
                     </Link>

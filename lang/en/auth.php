@@ -19,6 +19,7 @@ return [
     'user_exists' => 'Username or email already exists.',
     'validation_fail' => "Please fill all fields.",
     'register_success' => "Registration successful. Log in!",
+    'login_success' => "Login successful!",
     'unknown_error' => "Unknown error.",
     'user_not_exists' => "No user found with this combination.",
     'email_verification_sent' => "Email verification sent. Check your inbox!",

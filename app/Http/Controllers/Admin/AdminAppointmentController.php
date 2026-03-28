@@ -10,14 +10,7 @@ use Illuminate\Http\Request;
 
 class AdminAppointmentController extends Controller
 {   
-    private BookingService $bookingService;
-
-    public function __construct(BookingService $bookingService)
-    {
-        $this->bookingService = $bookingService;
-    }
-
-    public function store(Request $request) {
+    public function store(Request $request, BookingService $bookingService) {
         $validated = $request->validate([
             "email" => "required|email",
             "employee_id" => "required",
@@ -34,7 +27,7 @@ class AdminAppointmentController extends Controller
             return response()->json(["success" => false, "message" => __("user.not_exists")]);
         }
 
-        $available = $this->bookingService->isSlotAvailable($validated);
+        $available = $bookingService->isSlotAvailable($validated);
 
         if (!$available) {
             return response()->json(["success" => false, "message" => __("booking.booking_not_available")]);

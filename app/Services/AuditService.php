@@ -6,6 +6,10 @@ use App\Models\AuditLog;
 
 class AuditService {
     public function logEvent($model, $event) {
+        if (!$model instanceof \Illuminate\Database\Eloquent\Model) {
+            return;
+        }
+        
         $ignore = $model->getAuditIgnore() ?? [];
 
         $original = $model->getOriginal();
